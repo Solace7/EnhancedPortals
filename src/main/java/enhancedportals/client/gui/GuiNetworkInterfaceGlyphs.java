@@ -1,11 +1,5 @@
 package enhancedportals.client.gui;
 
-import java.util.Random;
-
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
@@ -17,14 +11,22 @@ import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.tile.TileController;
 import enhancedportals.utility.Localization;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 
-public class GuiNetworkInterfaceGlyphs extends BaseGui {
+import java.util.Random;
+
+public class GuiNetworkInterfaceGlyphs extends BaseGui
+{
     public static final int CONTAINER_SIZE = 135;
     TileController controller;
     GuiButton buttonCancel, buttonSave;
     ElementGlyphSelector selector;
 
-    public GuiNetworkInterfaceGlyphs(TileController c, EntityPlayer p) {
+    public GuiNetworkInterfaceGlyphs(TileController c, EntityPlayer p)
+    {
         super(new ContainerNetworkInterfaceGlyphs(c, p.inventory), CONTAINER_SIZE);
         controller = c;
         name = "gui.networkInterface";
@@ -32,7 +34,8 @@ public class GuiNetworkInterfaceGlyphs extends BaseGui {
     }
 
     @Override
-    public void initGui() {
+    public void initGui()
+    {
         super.initGui();
         int buttonWidth = 80;
         buttonCancel = new GuiButton(0, guiLeft + 7, guiTop + containerSize - 27, buttonWidth, 20, Localization.get("gui.cancel"));
@@ -47,22 +50,31 @@ public class GuiNetworkInterfaceGlyphs extends BaseGui {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) {
-        if (isShiftKeyDown()) {
+    protected void actionPerformed(GuiButton button)
+    {
+        if (isShiftKeyDown())
+        {
             if (button.id == buttonCancel.id)
+            {
                 selector.reset();
+            }
             else if (button.id == buttonSave.id) // Random
             {
                 Random random = new Random();
                 GlyphIdentifier iden = new GlyphIdentifier();
 
                 for (int i = 0; i < (isCtrlKeyDown() ? 9 : random.nextInt(8) + 1); i++)
+                {
                     iden.addGlyph(random.nextInt(27));
+                }
 
                 selector.setIdentifierTo(iden);
             }
-        } else if (button.id == buttonCancel.id)
+        }
+        else if (button.id == buttonCancel.id)
+        {
             EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.NETWORK_INTERFACE_A));
+        }
         else if (button.id == buttonSave.id) // Save Changes
         {
             NBTTagCompound tag = new NBTTagCompound();
@@ -72,19 +84,24 @@ public class GuiNetworkInterfaceGlyphs extends BaseGui {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    {
         super.drawGuiContainerForegroundLayer(par1, par2);
         getFontRenderer().drawString(Localization.get("gui.networkIdentifier"), 7, 19, 0x404040);
     }
 
     @Override
-    public void updateScreen() {
+    public void updateScreen()
+    {
         super.updateScreen();
 
-        if (isShiftKeyDown()) {
+        if (isShiftKeyDown())
+        {
             buttonCancel.displayString = EnumChatFormatting.AQUA + Localization.get("gui.clear");
             buttonSave.displayString = (isCtrlKeyDown() ? EnumChatFormatting.GOLD : EnumChatFormatting.AQUA) + Localization.get("gui.random");
-        } else {
+        }
+        else
+        {
             buttonCancel.displayString = Localization.get("gui.cancel");
             buttonSave.displayString = Localization.get("gui.save");
         }

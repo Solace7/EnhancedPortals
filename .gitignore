@@ -21,6 +21,7 @@ gradle.properties
 /bin
 
 ## intellij
+/idea
 /out
 /.idea
 /*.iml

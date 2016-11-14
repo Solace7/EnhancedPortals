@@ -1,16 +1,15 @@
 package enhancedportals.client.gui.elements;
 
+import enhancedportals.client.gui.BaseGui;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
-import enhancedportals.client.gui.BaseGui;
-
-public abstract class BaseElement {
+public abstract class BaseElement
+{
     protected BaseGui parent;
     protected boolean visible = true, disabled = false;
     protected ArrayList<String> hoverText;
@@ -18,7 +17,8 @@ public abstract class BaseElement {
     protected String id;
     protected ResourceLocation texture;
 
-    public BaseElement(BaseGui gui, int x, int y, int w, int h) {
+    public BaseElement(BaseGui gui, int x, int y, int w, int h)
+    {
         parent = gui;
         posX = gui.getGuiLeft() + x;
         posY = gui.getGuiTop() + y;
@@ -26,18 +26,21 @@ public abstract class BaseElement {
         sizeY = h;
     }
 
-    public void draw() {
+    public void draw()
+    {
         drawBackground();
         drawContent();
     }
 
     public abstract void addTooltip(List<String> list);
 
-    public boolean keyPressed(int keyCode, char key) {
+    public boolean keyPressed(int keyCode, char key)
+    {
         return false;
     }
 
-    public void draw(int x, int y) {
+    public void draw(int x, int y)
+    {
         posX = x;
         posY = y;
         draw();
@@ -45,72 +48,89 @@ public abstract class BaseElement {
 
     protected abstract void drawContent();
 
-    protected void drawBackground() {
+    protected void drawBackground()
+    {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-        if (texture != null) {
+        if (texture != null)
+        {
             parent.getMinecraft().renderEngine.bindTexture(texture);
             parent.drawTexturedModalRect(posX, posY, 0, 0, sizeX, sizeY);
         }
     }
 
-    public String getID() {
+    public String getID()
+    {
         return id;
     }
 
-    /** Return true if this element handled this click **/
-    public boolean handleMouseClicked(int x, int y, int mouseButton) {
+    /**
+     * Return true if this element handled this click
+     **/
+    public boolean handleMouseClicked(int x, int y, int mouseButton)
+    {
         return false;
     }
 
-    public boolean intersectsWith(int mouseX, int mouseY) {
+    public boolean intersectsWith(int mouseX, int mouseY)
+    {
         mouseX += parent.getGuiLeft();
         mouseY += parent.getGuiTop();
 
         if (mouseX >= posX && mouseX < posX + sizeX && mouseY >= posY && mouseY < posY + sizeY)
+        {
             return true;
+        }
 
         return false;
     }
 
-    public boolean isDisabled() {
+    public boolean isDisabled()
+    {
         return disabled;
     }
 
-    public boolean isVisible() {
+    public boolean isVisible()
+    {
         return visible;
     }
 
-    public BaseElement setDisabled(boolean disabled) {
+    public BaseElement setDisabled(boolean disabled)
+    {
         this.disabled = disabled;
         return this;
     }
 
-    public BaseElement setId(String id) {
+    public BaseElement setId(String id)
+    {
         this.id = id;
         return this;
     }
 
-    public BaseElement setPosition(int posX, int posY) {
+    public BaseElement setPosition(int posX, int posY)
+    {
         this.posX = parent.getGuiLeft() + posX;
         this.posY = parent.getGuiTop() + posY;
         return this;
     }
 
-    public BaseElement setSize(int sizeX, int sizeY) {
+    public BaseElement setSize(int sizeX, int sizeY)
+    {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         return this;
     }
 
-    public BaseElement setVisible(boolean visible) {
+    public BaseElement setVisible(boolean visible)
+    {
         this.visible = visible;
         return this;
     }
 
     public abstract void update();
 
-    void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6) {
+    void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
+    {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;

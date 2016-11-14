@@ -1,19 +1,21 @@
 package enhancedportals.client.gui;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.inventory.ContainerRedstoneInterface;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.tile.TileRedstoneInterface;
 import enhancedportals.utility.Localization;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class GuiRedstoneInterface extends BaseGui {
+public class GuiRedstoneInterface extends BaseGui
+{
     public static final int CONTAINER_SIZE = 68;
     TileRedstoneInterface redstone;
 
-    public GuiRedstoneInterface(TileRedstoneInterface ri, EntityPlayer p) {
+    public GuiRedstoneInterface(TileRedstoneInterface ri, EntityPlayer p)
+    {
         super(new ContainerRedstoneInterface(ri, p.inventory), CONTAINER_SIZE);
         name = "gui.redstoneInterface";
         redstone = ri;
@@ -21,27 +23,31 @@ public class GuiRedstoneInterface extends BaseGui {
     }
 
     @Override
-    public void initGui() {
+    public void initGui()
+    {
         super.initGui();
         buttonList.add(new GuiButton(0, guiLeft + 8, guiTop + 18, xSize - 16, 20, ""));
         buttonList.add(new GuiButton(1, guiLeft + 8, guiTop + 40, xSize - 16, 20, ""));
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) {
+    protected void actionPerformed(GuiButton button)
+    {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setInteger("id", button.id);
         EnhancedPortals.packetPipeline.sendToServer(new PacketGuiData(tag));
     }
 
     @Override
-    public void updateScreen() {
+    public void updateScreen()
+    {
         super.updateScreen();
 
         String stateText = "";
         boolean flag = redstone.isOutput;
 
-        switch (redstone.state) {
+        switch (redstone.state)
+        {
             case 0:
                 stateText = flag ? Localization.get("gui.portalCreated") : Localization.get("gui.createPortalOnSignal");
                 break;

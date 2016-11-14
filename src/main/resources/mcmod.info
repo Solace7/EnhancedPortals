@@ -1,14 +1,17 @@
-[{
-  "modid": "${mod_id}",
+[
+{
+  "modid": "enhancedportals",
   "name": "EnhancedPortals",
-  "version": "${mod_version}",
-  "mcversion": "${mc_version}",
-  "url": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1292751",
-  "credits": "KzariusRex, SexyDexyDoo, SyiSeiko",
-  "authorList": [ "Alz454" ],
   "description": "An advanced technological portal teleportation system",
-  "logoFile": "",
-  "updateUrl": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1292751",
+  "version": "3.0.13",
+  "mcversion": "${mc_version}",
+  "logoFile": "assets/enhancedportals/textures/ep3logo.png",
+  "url": "https://github.com/enhancedportals/enhancedportals",
+  "updateUrl": "https://github.com/enhancedportals/enhancedportals/releases",
+  "authorList": ["Solace7"],
+  "credits": "KzariusRex, SexyDexyDoo, SyiSeiko, Alz454",
   "parent": "",
-  "screenshots": [ ]
-}]
+  "screenshots": [],
+  "dependencies": []
+}
+]

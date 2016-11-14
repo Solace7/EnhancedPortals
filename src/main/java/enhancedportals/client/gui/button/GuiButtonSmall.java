@@ -1,24 +1,28 @@
 package enhancedportals.client.gui.button;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
+import org.lwjgl.opengl.GL11;
 
-public class GuiButtonSmall extends GuiButton {
-    public GuiButtonSmall(int p_i1020_1_, int p_i1020_2_, int p_i1020_3_, String p_i1020_4_) {
+public class GuiButtonSmall extends GuiButton
+{
+    public GuiButtonSmall(int p_i1020_1_, int p_i1020_2_, int p_i1020_3_, String p_i1020_4_)
+    {
         super(p_i1020_1_, p_i1020_2_, p_i1020_3_, p_i1020_4_);
     }
 
-    public GuiButtonSmall(int p_i1021_1_, int p_i1021_2_, int p_i1021_3_, int p_i1021_4_, int p_i1021_5_, String p_i1021_6_) {
+    public GuiButtonSmall(int p_i1021_1_, int p_i1021_2_, int p_i1021_3_, int p_i1021_4_, int p_i1021_5_, String p_i1021_6_)
+    {
         super(p_i1021_1_, p_i1021_2_, p_i1021_3_, p_i1021_4_, p_i1021_5_, p_i1021_6_);
     }
 
     @Override
-    public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_) {
-        if (this.visible) {
+    public void drawButton(Minecraft p_146112_1_, int p_146112_2_, int p_146112_3_)
+    {
+        if (this.visible)
+        {
             FontRenderer fontrenderer = p_146112_1_.fontRenderer;
             p_146112_1_.getTextureManager().bindTexture(buttonTextures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -36,11 +40,16 @@ public class GuiButtonSmall extends GuiButton {
             this.mouseDragged(p_146112_1_, p_146112_2_, p_146112_3_);
             int l = 14737632;
 
-            if (packedFGColour != 0) {
+            if (packedFGColour != 0)
+            {
                 l = packedFGColour;
-            } else if (!this.enabled) {
+            }
+            else if (!this.enabled)
+            {
                 l = 10526880;
-            } else if (this.field_146123_n) {
+            }
+            else if (this.field_146123_n)
+            {
                 l = 16777120;
             }
 

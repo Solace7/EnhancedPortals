@@ -1,12 +1,14 @@
 package enhancedportals.inventory;
 
-import net.minecraft.entity.player.InventoryPlayer;
 import enhancedportals.tile.TileDialingDevice;
+import net.minecraft.entity.player.InventoryPlayer;
 
-public class ContainerDialingEditParticle extends ContainerTextureParticle {
+public class ContainerDialingEditParticle extends ContainerTextureParticle
+{
     TileDialingDevice dial;
 
-    public ContainerDialingEditParticle(TileDialingDevice d, InventoryPlayer p) {
+    public ContainerDialingEditParticle(TileDialingDevice d, InventoryPlayer p)
+    {
         super(d.getPortalController(), p);
         dial = d;
     }

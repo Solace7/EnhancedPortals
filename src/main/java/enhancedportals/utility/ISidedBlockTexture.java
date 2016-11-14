@@ -7,6 +7,7 @@ import net.minecraft.util.IIcon;
  *
  * @author Zeldo Kavira
  */
-public interface ISidedBlockTexture {
+public interface ISidedBlockTexture
+{
     public IIcon getBlockTexture(int side, int pass);
 }

@@ -1,11 +1,12 @@
 package enhancedportals.utility;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
 import enhancedportals.client.PortalParticleFX;
 import enhancedportals.tile.TilePortalManipulator;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 
-public interface IPortalModule {
+public interface IPortalModule
+{
     /***
      * Gets whether or not the upgrade can be installed into this module manipulator.
      *
@@ -28,6 +29,16 @@ public interface IPortalModule {
      */
     public boolean canRemoveUpgrade(TilePortalManipulator moduleManipulator, IPortalModule[] installedUpgrades, ItemStack upgrade);
 
+
+    /***
+     *
+     * @param moduleManipulator
+     * @param upgrade
+     * @return True to enable looking glass
+     */
+    public boolean enableLookingGlass(TilePortalManipulator moduleManipulator, ItemStack upgrade);
+
+
     /***
      * Return true to disable particles from being created.
      *
@@ -44,7 +55,7 @@ public interface IPortalModule {
      * @param upgrade
      * @return True to disable rendering.
      */
-    public boolean disablePortalRendering(TilePortalManipulator modulemanipulator, ItemStack upgrade);
+    public boolean disablePortalRendering(TilePortalManipulator moduleManipulator, ItemStack upgrade);
 
     /***
      * Gets the ID for this upgrade. There is no validation for this -- Multiple upgrades can have the same ID, but may cause issues.

@@ -1,29 +1,30 @@
 package enhancedportals.client.gui;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-
-import org.lwjgl.opengl.GL11;
-
 import enhancedportals.EnhancedPortals;
 import enhancedportals.inventory.ContainerTransferItem;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.tile.TileTransferItem;
 import enhancedportals.utility.Localization;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import org.lwjgl.opengl.GL11;
 
-public class GuiTransferItem extends BaseGui {
+public class GuiTransferItem extends BaseGui
+{
     public static final int CONTAINER_SIZE = 47;
     TileTransferItem item;
 
-    public GuiTransferItem(TileTransferItem i, EntityPlayer p) {
+    public GuiTransferItem(TileTransferItem i, EntityPlayer p)
+    {
         super(new ContainerTransferItem(i, p.inventory), CONTAINER_SIZE);
         name = "gui.transferItem";
         item = i;
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
+    protected void drawGuiContainerBackgroundLayer(float f, int i, int j)
+    {
         super.drawGuiContainerBackgroundLayer(f, i, j);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.renderEngine.bindTexture(playerInventoryTexture);
@@ -31,19 +32,24 @@ public class GuiTransferItem extends BaseGui {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) {
+    protected void actionPerformed(GuiButton button)
+    {
         if (button.id == 1)
+        {
             EnhancedPortals.packetPipeline.sendToServer(new PacketGuiData(new NBTTagCompound()));
+        }
     }
 
     @Override
-    public void initGui() {
+    public void initGui()
+    {
         super.initGui();
         buttonList.add(new GuiButton(1, guiLeft + 7, guiTop + 21, 140, 20, Localization.get("gui." + (item.isSending ? "sending" : "receiving"))));
     }
 
     @Override
-    public void updateScreen() {
+    public void updateScreen()
+    {
         super.updateScreen();
         ((GuiButton) buttonList.get(0)).displayString = Localization.get("gui." + (item.isSending ? "sending" : "receiving"));
     }

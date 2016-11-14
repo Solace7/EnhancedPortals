@@ -1,9 +1,5 @@
 package enhancedportals.client.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
@@ -15,8 +11,13 @@ import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.tile.TileController;
 import enhancedportals.tile.TileDialingDevice;
 import enhancedportals.utility.Localization;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 
-public class GuiDialingManual extends BaseGui {
+public class GuiDialingManual extends BaseGui
+{
     public static final int CONTAINER_SIZE = 163;
     TileDialingDevice dial;
     TileController controller;
@@ -24,7 +25,8 @@ public class GuiDialingManual extends BaseGui {
     int warningTimer;
     GuiButton buttonDial;
 
-    public GuiDialingManual(TileDialingDevice d, EntityPlayer p) {
+    public GuiDialingManual(TileDialingDevice d, EntityPlayer p)
+    {
         super(new ContainerDialingManual(d, p.inventory), CONTAINER_SIZE);
         dial = d;
         name = "gui.dialDevice";
@@ -33,12 +35,20 @@ public class GuiDialingManual extends BaseGui {
     }
 
     @Override
-    public void initGui() {
+    public void initGui()
+    {
         super.initGui();
 
         selector = new ElementGlyphSelector(this, 7, 59);
         addElement(new ElementGlyphViewer(this, 7, 27, selector));
         addElement(selector);
+
+        /////////////////////////
+        ///////Clear//Save///////
+        /////////////////////////
+        ///////Cancel//Dial//////
+        /////////////////////////
+
 
         buttonDial = new GuiButton(3, guiLeft + xSize - 87, guiTop + 136, 80, 20, Localization.get("gui.dial"));
         buttonDial.enabled = !controller.isPortalActive();
@@ -50,13 +60,15 @@ public class GuiDialingManual extends BaseGui {
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    {
         super.drawGuiContainerForegroundLayer(par1, par2);
 
         getFontRenderer().drawString(Localization.get("gui.uniqueIdentifier"), 7, 18, 0x404040);
         getFontRenderer().drawString(Localization.get("gui.glyphs"), 7, 50, 0x404040);
 
-        if (warningTimer > 0) {
+        if (warningTimer > 0)
+        {
             drawRect(7, 27, 7 + 162, 27 + 18, 0xAA000000);
             String s = Localization.get("gui.noUidSet");
             getFontRenderer().drawString(s, xSize / 2 - getFontRenderer().getStringWidth(s) / 2, 33, 0xff4040);
@@ -64,36 +76,55 @@ public class GuiDialingManual extends BaseGui {
     }
 
     @Override
-    public void updateScreen() {
+    public void updateScreen()
+    {
         super.updateScreen();
 
         if (warningTimer > 0)
+        {
             warningTimer--;
+        }
 
         buttonDial.enabled = !controller.isPortalActive();
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) {
-        if (button.id == 0)
+    protected void actionPerformed(GuiButton button)
+    {
+        if (button.id == 0) // clear
+        {
             selector.setIdentifierTo(null);
+        }
         else if (button.id == 1) // save
         {
-            if (selector.getGlyphIdentifier().size() > 0) {
+            if (selector.getGlyphIdentifier().size() > 0)
+            {
                 ClientProxy.saveGlyph = selector.getGlyphIdentifier();
                 ClientProxy.saveName = "Unnamed Portal";
                 EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_C));
-            } else
+            }
+            else
+            {
                 warningTimer = 100;
-        } else if (button.id == 2)
+            }
+        }
+        else if (button.id == 2) // cancel
+        {
             EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_A));
-        else if (button.id == 3)
-            if (selector.getGlyphIdentifier().size() > 0) {
+        }
+        else if (button.id == 3) // dial
+        {
+            if (selector.getGlyphIdentifier().size() > 0)
+            {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setString("dial", selector.getGlyphIdentifier().getGlyphString());
                 EnhancedPortals.packetPipeline.sendToServer(new PacketGuiData(tag));
                 Minecraft.getMinecraft().thePlayer.closeScreen();
-            } else
+            }
+            else
+            {
                 warningTimer = 100;
+            }
+        }
     }
 }

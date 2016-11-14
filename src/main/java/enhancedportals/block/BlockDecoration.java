@@ -1,11 +1,13 @@
 package enhancedportals.block;
 
+import enhancedportals.network.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import enhancedportals.network.CommonProxy;
 
-public class BlockDecoration extends Block {
-    protected BlockDecoration(String n) {
+public class BlockDecoration extends Block
+{
+    protected BlockDecoration(String n)
+    {
         super(Material.rock);
         setBlockName(n);
         setHardness(3);

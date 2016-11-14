@@ -1,17 +1,16 @@
 package enhancedportals.client.gui.elements;
 
-import java.util.List;
-
-import net.minecraft.client.gui.GuiScreen;
-
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
 import enhancedportals.client.gui.GuiDimensionalBridgeStabilizer;
 import enhancedportals.tile.TileStabilizerMain;
 import enhancedportals.utility.Localization;
+import net.minecraft.client.gui.GuiScreen;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
-public class ElementScrollStabilizer extends BaseElement {
+import java.util.List;
+
+public class ElementScrollStabilizer extends BaseElement
+{
 
     TileStabilizerMain stabilizer;
     float currentScroll = 0f;
@@ -19,24 +18,30 @@ public class ElementScrollStabilizer extends BaseElement {
     int scrollAmount = 0;
     int offsetX = 5, offsetY = 5, sizeMButton = 196, sizeSButton = 20, buttonSpacing = 2, entryHeight = 22;
 
-    public ElementScrollStabilizer(GuiDimensionalBridgeStabilizer gui, TileStabilizerMain d, int x, int y) {
+    public ElementScrollStabilizer(GuiDimensionalBridgeStabilizer gui, TileStabilizerMain d, int x, int y)
+    {
         super(gui, x, y, gui.getSizeX() - 14, gui.getSizeY() - 57);
         stabilizer = d;
         texture = gui.getTexture();
     }
 
     @Override
-    public void addTooltip(List<String> list) {
+    public void addTooltip(List<String> list)
+    {
         int x = parent.getMouseX() + parent.getGuiLeft(), y = parent.getMouseY() + parent.getGuiTop();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             if (scrollAmount + i >= stabilizer.connectedPortals.size())
+            {
                 break;
+            }
 
             int entryOffset = i * entryHeight;
             boolean mouseOverEntry = y >= posY + offsetY + entryOffset && y <= posY + offsetY + entryOffset + 20, mouseOverSmall = mouseOverEntry && x >= posX + offsetX + sizeMButton + buttonSpacing && x < posX + offsetX + sizeMButton + buttonSpacing + sizeSButton;
 
-            if (mouseOverSmall) {
+            if (mouseOverSmall)
+            {
                 /*
                  * if (parent.isShiftKeyDown()) { list.add(Localization.get("gui.delete")); break; } else {
                  */
@@ -48,86 +53,118 @@ public class ElementScrollStabilizer extends BaseElement {
     }
 
     @Override
-    public boolean handleMouseClicked(int x, int y, int mouseButton) {
+    public boolean handleMouseClicked(int x, int y, int mouseButton)
+    {
         x += parent.getGuiLeft();
         y += parent.getGuiTop();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             if (scrollAmount + i >= stabilizer.connectedPortals.size())
+            {
                 break;
+            }
 
             // GlyphElement e = dial.glyphList.get(scrollAmount + i);
             int entryOffset = i * entryHeight;
             boolean mouseOverEntry = y >= posY + offsetY + entryOffset && y <= posY + offsetY + entryOffset + 20, mouseOverMain = mouseOverEntry && x >= posX + offsetX && x < posX + offsetX + sizeMButton, mouseOverSmall = mouseOverEntry && x >= posX + offsetX + sizeMButton + buttonSpacing && x < posX + offsetX + sizeMButton + buttonSpacing + sizeSButton;
 
             if (mouseOverMain)
-                // ((GuiDialingDevice) parent).onEntrySelected(scrollAmount + i);
+            // ((GuiDialingDevice) parent).onEntrySelected(scrollAmount + i);
+            {
                 break;
+            }
             else if (mouseOverSmall)
-                if (GuiScreen.isShiftKeyDown()) {
+            {
+                if (GuiScreen.isShiftKeyDown())
+                {
                 }
+            }
         }
 
         return true;
     }
 
-    protected void handleMouse() {
+    protected void handleMouse()
+    {
         boolean isMouseDown = Mouse.isButtonDown(0), ignoreScroll = false;
         int mouseX = parent.getMouseX() + parent.getGuiLeft(), mouseY = parent.getMouseY() + parent.getGuiTop();
         int scrollbarX = posX + sizeX - 13, scrollbarY = posY + 1, scrollbarX2 = scrollbarX + 11, scrollbarY2 = scrollbarY + sizeY - 3;
 
         if (!wasClicking && isMouseDown && mouseX >= scrollbarX && mouseX <= scrollbarX2 && mouseY >= scrollbarY && mouseY <= scrollbarY2)
+        {
             isScrolling = true;
+        }
 
         if (!isMouseDown)
+        {
             isScrolling = false;
+        }
 
         wasClicking = isMouseDown;
 
-        if (!isScrolling && !isMouseDown && intersectsWith(mouseX - parent.getGuiLeft(), mouseY - parent.getGuiTop())) {
+        if (!isScrolling && !isMouseDown && intersectsWith(mouseX - parent.getGuiLeft(), mouseY - parent.getGuiTop()))
+        {
             int wheel = Mouse.getDWheel();
 
-            if (wheel < 0) {
+            if (wheel < 0)
+            {
                 currentScroll += 0.1;
                 isScrolling = ignoreScroll = true;
-            } else if (wheel > 0) {
+            }
+            else if (wheel > 0)
+            {
                 currentScroll -= 0.1;
                 isScrolling = ignoreScroll = true;
             }
         }
 
-        if (isScrolling) {
+        if (isScrolling)
+        {
             if (!ignoreScroll)
+            {
                 currentScroll = ((mouseY - scrollbarY) - 7.5F) / ((scrollbarY2 - scrollbarY) - 15f);
+            }
 
             if (currentScroll < 0f)
+            {
                 currentScroll = 0f;
+            }
             else if (currentScroll > 1f)
+            {
                 currentScroll = 1f;
+            }
 
             int items = stabilizer.connectedPortals.size() - 5 + 1;
             scrollAmount = (int) ((currentScroll * items) + 0.5D);
 
             if (scrollAmount < 0)
+            {
                 scrollAmount = 0;
+            }
 
             int max = stabilizer.connectedPortals.size() - 5;
 
             if (scrollAmount > max)
+            {
                 scrollAmount = max;
+            }
         }
     }
 
     @Override
-    protected void drawBackground() {
+    protected void drawBackground()
+    {
 
     }
 
     @Override
-    protected void drawContent() {
+    protected void drawContent()
+    {
         boolean canScroll = false;
 
-        if (stabilizer.connectedPortals.size() >= 6) {
+        if (stabilizer.connectedPortals.size() >= 6)
+        {
             canScroll = true;
             handleMouse();
         }
@@ -137,9 +174,12 @@ public class ElementScrollStabilizer extends BaseElement {
         parent.getMinecraft().getTextureManager().bindTexture(texture);
         drawTexturedModalRect(posX + sizeX - 13, posY + 1 + (int) ((k - l - 16) * currentScroll), 244, 226 + (canScroll ? 0 : 15), 12, 15);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             if (scrollAmount + i >= stabilizer.connectedPortals.size())
+            {
                 break;
+            }
 
             GL11.glColor3f(1f, 1f, 1f);
             // GlyphElement e = dial.glyphList.get(scrollAmount + i);
@@ -159,7 +199,8 @@ public class ElementScrollStabilizer extends BaseElement {
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
 
     }
 }

@@ -1,15 +1,5 @@
 package enhancedportals.client.gui;
 
-import java.awt.Color;
-
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import enhancedportals.EnhancedPortals;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.block.BlockPortal;
@@ -26,14 +16,24 @@ import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.PortalTextureManager;
 import enhancedportals.tile.TileController;
 import enhancedportals.utility.Localization;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
-public class GuiTextureParticle extends BaseGui {
+import java.awt.*;
+
+public class GuiTextureParticle extends BaseGui
+{
     public static final int CONTAINER_SIZE = 92, CONTAINER_WIDTH = 190;
     protected TileController controller;
     protected GuiRGBSlider sliderR, sliderG, sliderB;
     protected GuiButton buttonReset, buttonSave;
 
-    public GuiTextureParticle(TileController c, EntityPlayer p) {
+    public GuiTextureParticle(TileController c, EntityPlayer p)
+    {
         super(new ContainerTextureParticle(c, p.inventory), CONTAINER_SIZE);
         controller = c;
         xSize = CONTAINER_WIDTH;
@@ -44,12 +44,17 @@ public class GuiTextureParticle extends BaseGui {
     }
 
     @Override
-    protected void actionPerformed(GuiButton button) {
-        if (button.id == buttonSave.id || button.id == buttonReset.id) {
-            if (button.id == buttonSave.id) {
+    protected void actionPerformed(GuiButton button)
+    {
+        if (button.id == buttonSave.id || button.id == buttonReset.id)
+        {
+            if (button.id == buttonSave.id)
+            {
                 int hex = Integer.parseInt(String.format("%02x%02x%02x", sliderR.getValue(), sliderG.getValue(), sliderB.getValue()), 16);
                 getPTM().setParticleColour(hex);
-            } else if (button.id == buttonReset.id) {
+            }
+            else if (button.id == buttonReset.id)
+            {
                 int colour = 0x0077D8;
                 getPTM().setParticleColour(colour);
 
@@ -62,14 +67,20 @@ public class GuiTextureParticle extends BaseGui {
             NBTTagCompound tag = new NBTTagCompound();
             tag.setInteger("colour", Integer.parseInt(String.format("%02x%02x%02x", sliderR.getValue(), sliderG.getValue(), sliderB.getValue()), 16));
             EnhancedPortals.packetPipeline.sendToServer(new PacketGuiData(tag));
-        } else if (button.id == 500)
+        }
+        else if (button.id == 500)
+        {
             EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.TEXTURE_A));
+        }
         else if (button.id == 501)
+        {
             EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.TEXTURE_B));
+        }
     }
 
     @Override
-    public void initGui() {
+    public void initGui()
+    {
         super.initGui();
 
         Color c = new Color(getPTM().getParticleColour());
@@ -96,60 +107,82 @@ public class GuiTextureParticle extends BaseGui {
     }
 
     @Override
-    protected void mouseMovedOrUp(int par1, int par2, int par3) {
+    protected void mouseMovedOrUp(int par1, int par2, int par3)
+    {
         super.mouseMovedOrUp(par1, par2, par3);
 
         if (par3 == 0)
+        {
             for (Object o : buttonList)
-                if (o instanceof GuiBetterSlider) {
+            {
+                if (o instanceof GuiBetterSlider)
+                {
                     GuiBetterSlider slider = (GuiBetterSlider) o;
                     slider.mouseReleased(par1, par2);
                 }
+            }
+        }
     }
 
-    public void particleSelected(int particle) {
+    public void particleSelected(int particle)
+    {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setInteger("type", particle);
         EnhancedPortals.packetPipeline.sendToServer(new PacketGuiData(tag));
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(int par1, int par2)
+    {
         itemRenderer.renderWithColor = false;
         ItemStack frame = new ItemStack(BlockFrame.instance, 0, 0), portal = new ItemStack(BlockPortal.instance, 0, 0);
         Color frameColour = new Color(getPTM().getFrameColour()), portalColour = new Color(getPTM().getPortalColour());
         int particleType = 0;
 
-        if (getPTM() != null) {
+        if (getPTM() != null)
+        {
             frameColour = new Color(getPTM().getFrameColour());
             portalColour = new Color(getPTM().getPortalColour());
 
             if (getPTM().getFrameItem() != null)
+            {
                 frame = getPTM().getFrameItem();
+            }
 
             if (getPTM().getPortalItem() != null)
+            {
                 portal = getPTM().getPortalItem();
+            }
         }
 
         GL11.glColor3f(frameColour.getRed() / 255F, frameColour.getGreen() / 255F, frameColour.getBlue() / 255F);
 
         if (getPTM().hasCustomFrameTexture())
+        {
             drawIconNoReset(ClientProxy.customFrameTextures.get(getPTM().getCustomFrameTexture()), 9, containerSize - 16, 0);
+        }
         else
+        {
             drawItemStack(frame, 9, containerSize - 16);
+        }
 
         GL11.glColor3f(portalColour.getRed() / 255F, portalColour.getGreen() / 255F, portalColour.getBlue() / 255F);
 
         if (getPTM().hasCustomPortalTexture())
+        {
             drawIconNoReset(ClientProxy.customPortalTextures.get(getPTM().getCustomPortalTexture()), 30, containerSize - 16, 0);
+        }
         else
+        {
             drawItemStack(portal, 30, containerSize - 16);
+        }
 
         GL11.glColor3f(1f, 1f, 1f);
         super.drawGuiContainerForegroundLayer(par1, par2);
     }
 
-    public PortalTextureManager getPTM() {
+    public PortalTextureManager getPTM()
+    {
         return controller.activeTextureData;
     }
 }

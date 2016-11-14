@@ -1,15 +1,17 @@
 package enhancedportals.client.gui.tabs;
 
 import enhancedportals.client.gui.BaseGui;
-import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.TileStabilizerMain;
+import enhancedportals.utility.ConfigurationHandler;
 import enhancedportals.utility.GeneralUtils;
 import enhancedportals.utility.Localization;
 
-public class TabRedstoneFlux extends BaseTab {
+public class TabRedstoneFlux extends BaseTab
+{
     TileStabilizerMain stabilizer;
 
-    public TabRedstoneFlux(BaseGui gui, TileStabilizerMain s) {
+    public TabRedstoneFlux(BaseGui gui, TileStabilizerMain s)
+    {
         super(gui);
         name = "tab.redstoneFlux";
         stabilizer = s;
@@ -19,9 +21,10 @@ public class TabRedstoneFlux extends BaseTab {
     }
 
     @Override
-    public void drawFullyOpened() {
+    public void drawFullyOpened()
+    {
         int instability = stabilizer.powerState == 0 ? stabilizer.instability : stabilizer.powerState == 1 ? 20 : stabilizer.powerState == 2 ? 50 : 70;
-        int powerCost = (int) (stabilizer.intActiveConnections * CommonProxy.CONFIG_REDSTONE_FLUX_COST * GeneralUtils.getPowerMultiplier());
+        int powerCost = (int) (stabilizer.intActiveConnections * ConfigurationHandler.CONFIG_REDSTONE_FLUX_COST * GeneralUtils.getPowerMultiplier());
         powerCost -= (int) (powerCost * (instability / 100f));
 
         parent.getFontRenderer().drawStringWithShadow(Localization.get("tab.redstoneFlux.maxPower"), posX + 10, posY + 20, 0xAAAAAA);
@@ -36,7 +39,8 @@ public class TabRedstoneFlux extends BaseTab {
     }
 
     @Override
-    public void drawFullyClosed() {
+    public void drawFullyClosed()
+    {
 
     }
 }

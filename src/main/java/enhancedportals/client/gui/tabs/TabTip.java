@@ -1,14 +1,16 @@
 package enhancedportals.client.gui.tabs;
 
-import java.util.List;
-
 import enhancedportals.client.gui.BaseGui;
 import enhancedportals.utility.Localization;
 
-public class TabTip extends BaseTab {
+import java.util.List;
+
+public class TabTip extends BaseTab
+{
     String tip;
 
-    public TabTip(BaseGui gui, String n) {
+    public TabTip(BaseGui gui, String n)
+    {
         super(gui, 0);
         name = "tab." + n;
         tip = Localization.get("tab." + n + ".info").replace("<NL>", "\n").replaceAll("<([^<]*)>", "\u00A7$1");
@@ -18,12 +20,14 @@ public class TabTip extends BaseTab {
     }
 
     @Override
-    public void drawFullyOpened() {
+    public void drawFullyOpened()
+    {
         parent.getFontRenderer().drawSplitString(tip, posX - maxWidth + 7, posY + 20, maxWidth - 14, 0x000000);
     }
 
     @Override
-    public void drawFullyClosed() {
+    public void drawFullyClosed()
+    {
 
     }
 }
