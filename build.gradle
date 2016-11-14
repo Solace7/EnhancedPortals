@@ -1,3 +1,5 @@
+import scala.tools.nsc.io.Jar
+
 buildscript {
     repositories {
         mavenCentral()
@@ -15,11 +17,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
 
-apply plugin: 'forge'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 ext.configFile = file "build.properties"
 
@@ -66,17 +68,12 @@ repositories {
         name = "TechNut GuideAPI"
         url = 'http://tehnut.info/maven/'
     }
-
-    maven {
-        name = "xcompwiz"
-        url = "http://maven.xcompwiz.com"
-    }
-
 }
 
 dependencies {
-    compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.22.46:api"
-    compile "info.amerifrance.guideapi:Guide-API:1.7.10-1.0.1-20"
+    compile "li.cil.oc:OpenComputers:MC1.9.4-6.0.6:api"
+    compile "info.amerifrance.guideapi:Guide-API:1.9.4-2.0.1-44"
+    //compile "net.darkhax.tesla:Tesla:"
 }
 
 jar {
