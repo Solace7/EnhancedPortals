@@ -1,24 +1,16 @@
 package enhancedportals.crafting;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 import enhancedportals.block.BlockDecorBorderedQuartz;
 import enhancedportals.block.BlockDecorEnderInfusedMetal;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.block.BlockStabilizer;
-import enhancedportals.item.ItemBlankPortalModule;
-import enhancedportals.item.ItemBlankUpgrade;
-import enhancedportals.item.ItemGlasses;
-import enhancedportals.item.ItemLocationCard;
-import enhancedportals.item.ItemManual;
-import enhancedportals.item.ItemNanobrush;
-import enhancedportals.item.ItemPortalModule;
-import enhancedportals.item.ItemUpgrade;
-import enhancedportals.item.ItemWrench;
+import enhancedportals.item.*;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class Vanilla {
     public static void registerRecipes() {
@@ -50,7 +42,6 @@ public class Vanilla {
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemPortalModule.instance, 1, 5), new ItemStack(ItemBlankPortalModule.instance), "dyeWhite", "dyeBlack"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemPortalModule.instance, 1, 6), new ItemStack(ItemBlankPortalModule.instance), new ItemStack(Items.compass)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemPortalModule.instance, 1, 7), new Object[] { "FFF", "FXF", "FFF", 'X', new ItemStack(ItemBlankPortalModule.instance), 'F', new ItemStack(Items.feather) }));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemManual.instance), new ItemStack(Items.book), new ItemStack(ItemLocationCard.instance)));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemNanobrush.instance), new Object[] { "WT ", "TS ", "  S", 'W', Blocks.wool, 'T', Items.string, 'S', "stickWood" }));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemNanobrush.instance), new Object[] { " TW", " ST", "S  ", 'W', Blocks.wool, 'T', Items.string, 'S', "stickWood" }));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemLocationCard.instance, 16), new Object[] { "IPI", "PPP", "IDI", 'I', Items.iron_ingot, 'P', Items.paper, 'D', "dyeBlue" }));

@@ -66,12 +66,6 @@ repositories {
         name = "TechNut GuideAPI"
         url = 'http://tehnut.info/maven/'
     }
-
-    maven {
-        name = "xcompwiz"
-        url = "http://maven.xcompwiz.com"
-    }
-
 }
 
 dependencies {

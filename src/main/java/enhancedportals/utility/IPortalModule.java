@@ -34,7 +34,7 @@ public interface IPortalModule
      *
      * @param moduleManipulator
      * @param upgrade
-     * @return True to enable looking glass
+     * @return True to enable looking glass view
      */
     public boolean enableLookingGlass(TilePortalManipulator moduleManipulator, ItemStack upgrade);
 

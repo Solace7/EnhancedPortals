@@ -6,13 +6,15 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.*;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.guidebook.WormholeTunnelManual;
-import enhancedportals.lookingglass.LookingGlassPanelRenderer;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.network.PacketPipeline;
@@ -35,12 +37,10 @@ public class EnhancedPortals
     public static final String MOD_NAME = Reference.EPMod.name,
             MOD_ID = Reference.EPMod.mod_id,
             MOD_VERSION = Reference.EPMod.version,
-            MOD_DEPENDENCIES = "after:ThermalExpansion;required-after:guideapi",
+            MOD_DEPENDENCIES = "after:ThermalExpansion",
             UPDATE_URL = Reference.EPMod.URL;
 
     public static final PacketPipeline packetPipeline = new PacketPipeline();
-
-    public static LookingGlassPanelRenderer lookingGlassRenderer;
 
     @Instance(MOD_ID)
     public static EnhancedPortals instance;
@@ -75,8 +75,6 @@ public class EnhancedPortals
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        FMLInterModComms.sendMessage("LookingGlass", "API", "enhancedportals.lookingglass.LookingGlassIntegration" +
-                ".register");
         proxy.miscSetup();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         LogHelper.info("I am tampering with subatomic particles...what could go wrong?");
@@ -117,11 +115,6 @@ public class EnhancedPortals
         {
             FMLCommonHandler.instance().bus().register(new enhancedportals.network.LogOnHandler());
         }
-    }
-
-    public LookingGlassPanelRenderer getLookingGlassRenderer()
-    {
-        return this.instance.lookingGlassRenderer;
     }
 
     @EventHandler
