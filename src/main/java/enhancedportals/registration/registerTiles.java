@@ -1,6 +1,6 @@
 package enhancedportals.registration;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import enhancedportals.tile.*;
 
 public class registerTiles

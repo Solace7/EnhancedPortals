@@ -1,6 +1,6 @@
 package enhancedportals.registration;
 
-import enhancedportals.item.PotionFeatherfall;
+import enhancedportals.item.potions.PotionFeatherfall;
 import net.minecraft.potion.Potion;
 
 import java.lang.reflect.Field;
