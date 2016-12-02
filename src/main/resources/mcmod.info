@@ -3,7 +3,7 @@
   "modid": "enhancedportals",
   "name": "EnhancedPortals",
   "description": "An advanced technological portal teleportation system",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "mcversion": "${mc_version}",
   "logoFile": "assets/enhancedportals/textures/ep3logo.png",
   "url": "https://github.com/enhancedportals/enhancedportals",
