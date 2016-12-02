@@ -2,17 +2,10 @@ package enhancedportals.item;
 
 import enhancedportals.block.BlockFrame;
 import enhancedportals.network.CommonProxy;
-import enhancedportals.tile.*;
-import enhancedportals.utility.Localization;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -20,9 +13,8 @@ public class ItemUpgrade extends Item
 {
     public static ItemUpgrade instance;
 
-    static IIcon baseIcon;
-    static IIcon[] overlayIcons = new IIcon[BlockFrame.FRAME_TYPES - 2];
-
+// todo static IIcon baseIcon;
+//todo Icon Overlays
     public ItemUpgrade(String n)
     {
         super();
@@ -46,24 +38,13 @@ public class ItemUpgrade extends Item
         }
     }
 
-    @Override
-    public IIcon getIconFromDamageForRenderPass(int damage, int pass)
-    {
-        if (pass == 1)
-        {
-            return overlayIcons[damage];
-        }
-
-        return baseIcon;
-    }
-
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> subItems)
     {
-        for (int i = 0; i < overlayIcons.length; i++)
+       for (int i = 0; i < BlockFrame.FRAME_TYPES - 2; i++)
         {
-            par3List.add(new ItemStack(par1, 1, i));
+            subItems.add(new ItemStack(par1, 1, i));
         }
     }
 
@@ -73,26 +54,28 @@ public class ItemUpgrade extends Item
         return super.getUnlocalizedName() + "." + ItemFrame.unlocalizedName[par1ItemStack.getItemDamage() + 2];
     }
 
-    @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    //todo SetItemUseFirst
+
+    /*@Override
+    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (world.isRemote)
         {
             return false;
         }
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
         int blockMeta = stack.getItemDamage() + 2;
 
         if (tile instanceof TileFrame)
         {
             TileFrame frame = (TileFrame) tile;
-            TileController controller = frame.getPortalController();
+            TileController controller = frame.getPortalController(pos);
 
             if (controller == null)
             {
                 frame = null;
-                world.setBlock(x, y, z, BlockFrame.instance, blockMeta, 2);
+                world.setBlockState(x, y, z, BlockFrame.instance, blockMeta, 2);
                 decrementStack(player, stack);
                 return true;
             }
@@ -100,17 +83,17 @@ public class ItemUpgrade extends Item
             {
                 if (controller.getDiallingDevices().size() > 0 && blockMeta == BlockFrame.NETWORK_INTERFACE)
                 {
-                    player.addChatComponentMessage(new ChatComponentText(Localization.getChatError("dialAndNetwork")));
+                    player.addChatComponentMessage(new TextComponentString(Localization.getChatError("dialAndNetwork")));
                     return false;
                 }
                 else if (controller.getNetworkInterfaces().size() > 0 && blockMeta == BlockFrame.DIALLING_DEVICE)
                 {
-                    player.addChatComponentMessage(new ChatComponentText(Localization.getChatError("dialAndNetwork")));
+                    player.addChatComponentMessage(new TextComponentString(Localization.getChatError("dialAndNetwork")));
                     return false;
                 }
                 else if (controller.getModuleManipulator() != null && blockMeta == BlockFrame.MODULE_MANIPULATOR)
                 {
-                    player.addChatComponentMessage(new ChatComponentText(Localization.getChatError("multipleMod")));
+                    player.addChatComponentMessage(new TextComponentString(Localization.getChatError("multipleMod")));
                     return false;
                 }
 
@@ -118,7 +101,7 @@ public class ItemUpgrade extends Item
                 frame = null;
                 world.setBlock(x, y, z, BlockFrame.instance, blockMeta, 2);
                 decrementStack(player, stack);
-                TilePortalPart t = (TilePortalPart) world.getTileEntity(x, y, z);
+                TilePortalPart t = (TilePortalPart) world.getTileEntity(pos);
 
                 if (t instanceof TileRedstoneInterface)
                 {
@@ -157,21 +140,6 @@ public class ItemUpgrade extends Item
 
         return false;
     }
+*/
 
-    @Override
-    public void registerIcons(IIconRegister register)
-    {
-        baseIcon = register.registerIcon("enhancedportals:blank_upgrade");
-
-        for (int i = 0; i < overlayIcons.length; i++)
-        {
-            overlayIcons[i] = register.registerIcon("enhancedportals:upgrade_" + i);
-        }
-    }
-
-    @Override
-    public boolean requiresMultipleRenderPasses()
-    {
-        return true;
-    }
 }

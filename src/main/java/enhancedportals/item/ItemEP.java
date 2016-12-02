@@ -1,8 +1,13 @@
 package enhancedportals.item;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class ItemEP extends Item
 {
@@ -25,6 +30,13 @@ public class ItemEP extends Item
     public void readFromNBT(ItemStack itemStack)
     {
 
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItem)
+    {
+        subItem.add(new ItemStack(this, 1));
     }
 
 }

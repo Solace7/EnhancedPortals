@@ -1,42 +1,30 @@
 package enhancedportals.item;
 
 import enhancedportals.network.CommonProxy;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 
-public class ItemNanobrush extends Item
+public class ItemNanobrush extends ItemEP
 {
     public static ItemNanobrush instance;
 
-    public static IIcon texture;
 
-    public ItemNanobrush(String n)
+    public ItemNanobrush()
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
+        setUnlocalizedName("enhancedportals:nanobrush");
         setMaxStackSize(1);
+        setRegistryName("nanobrush");
     }
 
     @Override
-    public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player)
+    public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player)
     {
         return true;
     }
 
-    @Override
-    public IIcon getIconFromDamage(int par1)
-    {
-        return texture;
-    }
-
-    @Override
-    public void registerIcons(IIconRegister register)
-    {
-        texture = register.registerIcon("enhancedportals:paintbrush");
-    }
 }

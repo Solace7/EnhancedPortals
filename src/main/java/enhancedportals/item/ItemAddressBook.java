@@ -1,23 +1,24 @@
 package enhancedportals.item;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.portal.GlyphElement;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +27,21 @@ public class ItemAddressBook extends ItemEP
 {
     public ArrayList<GlyphElement> glyphList = new ArrayList<GlyphElement>();
     public static ItemAddressBook instance;
-    IIcon texture;
+    private  final String name = "address_book";
 
-    public ItemAddressBook(String n)
+    public ItemAddressBook()
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
+        setUnlocalizedName("address_book");
         setMaxDamage(0);
         setMaxStackSize(1);
+        setRegistryName("address_book");
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -69,24 +75,12 @@ public class ItemAddressBook extends ItemEP
     }
 
     @Override
-    public IIcon getIconFromDamage(int par1)
-    {
-        return texture;
-    }
-
-    @Override
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        texture = iconRegister.registerIcon("enhancedportals:address_book");
-    }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand)
     {
         readFromNBT(itemStack);
         GuiHandler.openGui(player, GuiHandler.ADDRESS_BOOK_A);
 
-        return itemStack;
+        return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStack);
     }
 
     @Override

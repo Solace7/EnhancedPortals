@@ -1,6 +1,5 @@
 package enhancedportals.item;
 
-import enhancedportals.EnhancedPortals;
 import enhancedportals.network.CommonProxy;
 import net.minecraft.item.Item;
 
@@ -8,12 +7,12 @@ public class ItemDiamondNugget extends Item
 {
     public static ItemDiamondNugget instance;
 
-    public ItemDiamondNugget(String n)
+    public ItemDiamondNugget()
     {
-        setTextureName(EnhancedPortals.MOD_ID + ":" + n);
-        setUnlocalizedName(n);
+        setUnlocalizedName("diamondNugget");
         setMaxStackSize(64);
         setCreativeTab(CommonProxy.creativeTab);
         instance = this;
+        setRegistryName("diamondNugget");
     }
 }

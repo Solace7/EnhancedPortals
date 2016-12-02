@@ -4,25 +4,28 @@ import buildcraft.api.tools.IToolWrench;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.utility.IDismantleable;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class ItemWrench extends Item implements IToolWrench
+import javax.annotation.Nonnull;
+
+public class ItemWrench extends ItemEP implements IToolWrench
 {
     public static ItemWrench instance;
 
-    IIcon texture;
-
-    public ItemWrench(String n)
+    public ItemWrench()
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
+        setUnlocalizedName("enhancedportals:wrench");
+        setRegistryName("wrench");
         setMaxStackSize(1);
     }
 
@@ -33,39 +36,29 @@ public class ItemWrench extends Item implements IToolWrench
     }
 
     @Override
-    public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player)
+    public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player)
     {
         return true;
     }
 
     @Override
-    public IIcon getIconFromDamage(int par1)
-    {
-        return texture;
-    }
-
-    @Override
-    public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    @Nonnull
+    public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
     {
         if (!world.isRemote && player.isSneaking())
         {
-            Block block = world.getBlock(x, y, z);
+            Block block = world.getBlockState(pos).getBlock();
 
             if (block instanceof IDismantleable)
             {
-                ((IDismantleable) block).dismantleBlock(player, world, x, y, z);
-                return true;
+                ((IDismantleable) block).dismantleBlock(player, world, pos);
+                return EnumActionResult.SUCCESS;
             }
         }
 
-        return false;
+        return EnumActionResult.FAIL;
     }
 
-    @Override
-    public void registerIcons(IIconRegister register)
-    {
-        texture = register.registerIcon("enhancedportals:wrench");
-    }
 
     @Override
     public void wrenchUsed(EntityPlayer player, int x, int y, int z)

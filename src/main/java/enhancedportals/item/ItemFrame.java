@@ -2,23 +2,21 @@ package enhancedportals.item;
 
 import enhancedportals.block.BlockFrame;
 import enhancedportals.utility.Localization;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlockWithMetadata;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class ItemFrame extends ItemBlockWithMetadata
+public class ItemFrame extends Item
 {
     public static String[] unlocalizedName = new String[]{"frame", "controller", "redstone", "network_interface", "dial_device", "program_interface", "upgrade", "fluid", "item", "energy"};
 
-    public ItemFrame(Block b)
-    {
-        super(b, BlockFrame.instance);
-    }
+//    public ItemFrame(Block b)
+//    {
+//        super(b, BlockFrame.instance);
+//    }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override

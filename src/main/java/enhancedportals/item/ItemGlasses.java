@@ -2,36 +2,22 @@ package enhancedportals.item;
 
 import enhancedportals.EnhancedPortals;
 import enhancedportals.network.CommonProxy;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 
 public class ItemGlasses extends ItemArmor
 {
     public static ItemGlasses instance;
 
-    IIcon icon;
 
-    public ItemGlasses(String n)
+    public ItemGlasses()
     {
-        super(ArmorMaterial.CLOTH, EnhancedPortals.proxy.gogglesRenderIndex, 0);
+        super(ArmorMaterial.LEATHER, EnhancedPortals.proxy.gogglesRenderIndex, EntityEquipmentSlot.HEAD);
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
-    }
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
-    {
-        return "enhancedportals:textures/models/armor/goggles.png";
-    }
-
-    @Override
-    public IIcon getIcon(ItemStack stack, int pass)
-    {
-        return icon;
+        setUnlocalizedName("enhancedportals:glasses");
+        setRegistryName("glasses");
     }
 
     @Override
@@ -40,9 +26,4 @@ public class ItemGlasses extends ItemArmor
         return false;
     }
 
-    @Override
-    public void registerIcons(IIconRegister iconRegister)
-    {
-        icon = iconRegister.registerIcon("enhancedportals:goggles");
-    }
 }
