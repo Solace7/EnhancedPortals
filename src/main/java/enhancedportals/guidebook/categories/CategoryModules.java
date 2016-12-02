@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static enhancedportals.guidebook.WormholeTunnelManual.categories;
 
-public class CategoryUpgrades
+public class CategoryModules
 {
     public static Map<ResourceLocation, EntryAbstract> buildCategory()
     {
