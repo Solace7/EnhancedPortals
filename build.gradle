@@ -1,16 +1,12 @@
-import scala.tools.nsc.io.Jar
 
 buildscript {
     repositories {
         mavenCentral()
-
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-
         maven {
-            name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
 
@@ -20,7 +16,6 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
-
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 ext.configFile = file "build.properties"
@@ -33,21 +28,26 @@ configFile.withReader {
 
 version = config.version
 group = config.mod_id
-archivesBaseName = "EnhancedPortals_${config.minecraft_version}"
+archivesBaseName = "EnhancedPortals_${project.config.mc_version}"
 
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version
+    version = "1.9.4-12.17.0.1976"
     runDir = "idea"
+    mappings = project.config.mappings_version
 }
 
 processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info'
         include '**/*.properties'
 
         expand ([
             'mod_version': version,
-            'mc_version': project.config.minecraft_version,
+            'mc_version': project.config.mc_version,
             'mod_id': project.config.mod_id
         ])
     }
@@ -71,9 +71,9 @@ repositories {
 }
 
 dependencies {
-    compile "li.cil.oc:OpenComputers:MC1.9.4-6.0.6:api"
-    compile "info.amerifrance.guideapi:Guide-API:1.9.4-2.0.1-44"
-    //compile "net.darkhax.tesla:Tesla:"
+    compile "li.cil.oc:OpenComputers:MC1.9.4-${project.config.oc_version}.+:api"
+    compile "info.amerifrance.guideapi:Guide-API:${project.config.mc_version}-${project.config.guideapi_version}"
+    compile "net.darkhax.tesla:Tesla:1.9.4-${project.config.tesla_version}"
 }
 
 jar {
