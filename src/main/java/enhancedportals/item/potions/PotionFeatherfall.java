@@ -1,15 +1,17 @@
-package enhancedportals.item;
+package enhancedportals.item.potions;
 
-import enhancedportals.utility.ConfigurationHandler;
 import net.minecraft.potion.Potion;
 
 public class PotionFeatherfall extends Potion
 {
+//todo potion id?
 
     public PotionFeatherfall(boolean isBad, int liquidColor)
     {
-        super(ConfigurationHandler.CONFIG_POTION_FEATHERFALL_ID, isBad, liquidColor);
+        super(isBad, liquidColor);
         setIconIndex(0, 0);
         setPotionName("potion.featherfall");
     }
+
+    
 }
