@@ -4,15 +4,19 @@ import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.TileStabilizer;
 import enhancedportals.tile.TileStabilizerMain;
 import enhancedportals.utility.ConnectedTexturesDetailed;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class BlockStabilizer extends BlockContainer
 {
@@ -21,31 +25,31 @@ public class BlockStabilizer extends BlockContainer
 
     public BlockStabilizer(String n)
     {
-        super(Material.rock);
+        super(Material.ROCK);
         instance = this;
         setHardness(5);
         setResistance(2000);
-        setBlockName(n);
-        setStepSound(soundTypeStone);
+        setUnlocalizedName(n);
+        setSoundType(SoundType.STONE);
         setCreativeTab(CommonProxy.creativeTab);
         connectedTextures = new ConnectedTexturesDetailed("enhancedportals:bridge/%s", this, -1);
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block b, int newID)
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileStabilizer)
         {
-            ((TileStabilizer) tile).breakBlock(b, newID);
+            ((TileStabilizer) tile).breakBlock();
         }
         else if (tile instanceof TileStabilizerMain)
         {
-            ((TileStabilizerMain) tile).breakBlock(b, newID);
+            ((TileStabilizerMain) tile).breakBlock();
         }
 
-        super.breakBlock(world, x, y, z, b, newID);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
@@ -63,29 +67,11 @@ public class BlockStabilizer extends BlockContainer
         return null;
     }
 
-    @Override
-    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side)
-    {
-        TileEntity tile = blockAccess.getTileEntity(x, y, z);
-
-        if (tile instanceof TileStabilizer)
-        {
-            return ((TileStabilizer) tile).isFormed ? connectedTextures.getIconForSide(blockAccess, x, y, z, side) : connectedTextures.getBaseIcon();
-        }
-
-        return connectedTextures.getIconForSide(blockAccess, x, y, z, side);
-    }
 
     @Override
-    public IIcon getIcon(int par1, int par2)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        return connectedTextures.getBaseIcon();
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
-    {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileStabilizer)
         {
@@ -99,9 +85,4 @@ public class BlockStabilizer extends BlockContainer
         return false;
     }
 
-    @Override
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        connectedTextures.registerIcons(iconRegister);
-    }
 }

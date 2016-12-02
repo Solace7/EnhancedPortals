@@ -1,35 +1,31 @@
 package enhancedportals.block;
 
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.common.Optional.InterfaceList;
-import cpw.mods.fml.common.Optional.Method;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralProvider;
-import enhancedportals.Reference;
-import enhancedportals.network.ClientProxy;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.*;
 import enhancedportals.utility.ConnectedTexturesDetailed;
 import enhancedportals.utility.IDismantleable;
-import enhancedportals.utility.ISidedBlockTexture;
-import enhancedportals.utility.LogHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.common.Optional.InterfaceList;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static enhancedportals.Reference.Dependencies.MODID_COMPUTERCRAFT;
@@ -39,50 +35,52 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
 {
     public static BlockFrame instance;
     public static ConnectedTexturesDetailed connectedTextures;
-    public static IIcon[] overlayIcons;
+    //public static IIcon[] overlayIcons;
     public static int PORTAL_CONTROLLER = 1, REDSTONE_INTERFACE = 2, NETWORK_INTERFACE = 3, DIALLING_DEVICE = 4, UNUSED = 5, MODULE_MANIPULATOR = 6, TRANSFER_FLUID = 7, TRANSFER_ITEM = 8, TRANSFER_ENERGY = 9;
     public static int FRAME_TYPES = 10;
-    static IIcon[] fullIcons;
 
     public BlockFrame(String n)
     {
-        super(Material.rock);
+        super(Material.ROCK);
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setHardness(5);
         setResistance(2000);
-        setBlockName(n);
-        setStepSound(soundTypeStone);
+        setUnlocalizedName(n);
+//      setRegistryName("enhancedportals","frame");
+        setSoundType(SoundType.STONE);
         connectedTextures = new ConnectedTexturesDetailed("enhancedportals:frame/%s", this, -1);
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int unknown)
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        TileEntity t = world.getTileEntity(x, y, z);
+        TileEntity t = world.getTileEntity(pos);
 
         if (t != null && t instanceof TileFrame)
         {
-            ((TileFrame) t).breakBlock(block, unknown);
+            ((TileFrame) t).breakBlock(world, pos, state);
         }
 
-        super.breakBlock(world, x, y, z, block, unknown);
+        super.breakBlock(world, pos, state);
     }
 
     @Override
-    public boolean canProvidePower()
+    public boolean canProvidePower(IBlockState state)
     {
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean canRenderInPass(int pass)
     {
         ClientProxy.renderPass = pass;
         return pass < 2;
-    }
+    }*/
 
-    @Override
+
+    //todo color multiplier?
+    /*@Override
     public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z)
     {
         TileEntity tile = blockAccess.getTileEntity(x, y, z);
@@ -93,7 +91,7 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
         }
 
         return 0xFFFFFF;
-    }
+    }*/
 
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)
@@ -139,24 +137,18 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
     }
 
     @Override
-    public int damageDropped(int par1)
+    public void dismantleBlock(EntityPlayer player, World world, BlockPos pos)
     {
-        return par1;
-    }
+        ItemStack dropBlock = new ItemStack(this, 1, world.getBlockState(pos).getBlock().getMetaFromState(getDefaultState()));
 
-    @Override
-    public void dismantleBlock(EntityPlayer player, World world, int x, int y, int z)
-    {
-        ItemStack dropBlock = new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
-
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileFrame)
         {
-            ((TileFrame) tile).onBlockDismantled();
+            ((TileFrame) tile).onBlockDismantled(pos);
         }
 
-        world.setBlockToAir(x, y, z);
+        world.setBlockToAir(pos);
 
         if (dropBlock != null)
         {
@@ -164,56 +156,37 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
             double x2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
             double y2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
             double z2 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
-            EntityItem item = new EntityItem(world, x + x2, y + y2, z + z2, dropBlock);
-            item.delayBeforeCanPickup = 10;
+            EntityItem item = new EntityItem(world, pos.getX() + x2, pos.getY() + y2, pos.getZ() + z2, dropBlock);
+            //item.delayBeforeCanPickup = 10;
             world.spawnEntityInWorld(item);
         }
     }
 
+//    @Override
+//    @Optional.Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+//    public IPeripheral getPeripheral(World world, int x, int y, int z, int side)
+//    {
+//        TileEntity t = world.getTileEntity();
+//
+//        if (t != null && (t instanceof TileController || t instanceof TileNetworkInterface || t instanceof TileDialingDevice || t instanceof TileTransferEnergy || t instanceof TileTransferFluid || t instanceof TileTransferItem))
+//        {
+//            return (IPeripheral) t;
+//        }
+//
+//        return null;
+//    }*/
+
     @Override
-    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side)
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
     {
-        TileEntity tile = blockAccess.getTileEntity(x, y, z);
-
-        if (tile instanceof TileFrame)
-        {
-            return ((ISidedBlockTexture) tile).getBlockTexture(side, ClientProxy.renderPass);
-        }
-
-        return fullIcons[0];
+        return new ItemStack(this, 1);
     }
 
-    @Override
-    public IIcon getIcon(int side, int meta)
-    {
-        return fullIcons[MathHelper.clamp_int(meta, 0, FRAME_TYPES)];
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public IPeripheral getPeripheral(World world, int x, int y, int z, int side)
-    {
-        TileEntity t = world.getTileEntity(x, y, z);
-
-        if (t != null && (t instanceof TileController || t instanceof TileNetworkInterface || t instanceof TileDialingDevice || t instanceof TileTransferEnergy || t instanceof TileTransferFluid || t instanceof TileTransferItem))
-        {
-            return (IPeripheral) t;
-        }
-
-        return null;
-    }
-
-    @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
-    {
-        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
-    }
-
-    @Override
+    /*@Override
     public int getRenderBlockPass()
     {
         return 1;
-    }
+    }*/
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
@@ -226,12 +199,12 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
     }
 
     @Override
-    public boolean isBlockSolid(IBlockAccess p_149747_1_, int p_149747_2_, int p_149747_3_, int p_149747_4_, int p_149747_5_)
+    public boolean isBlockSolid(IBlockAccess p_149747_1_, BlockPos pos, EnumFacing side)
     {
         return false;
     }
 
-    @Override
+   /* @Override
     public boolean isBlockNormalCube()
     {
         return false;
@@ -241,18 +214,30 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
     public boolean isOpaqueCube()
     {
         return false;
-    }
+    }*/
 
     @Override
-    public boolean isNormalCube(IBlockAccess world, int x, int y, int z)
+    public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
-        return true;
+
+        return state.getMaterial().isOpaque() && state.isFullCube() && !state.canProvidePower();
     }
 
-    @Override
-    public int isProvidingStrongPower(IBlockAccess blockAccess, int x, int y, int z, int side)
+    public int isProvidingStrongPower(IBlockAccess blockAccess, BlockPos pos, int side)
     {
-        TileEntity tile = blockAccess.getTileEntity(x, y, z);
+        TileEntity tile = blockAccess.getTileEntity(pos);
+
+        if (tile instanceof TileRedstoneInterface)
+        {
+            return ((TileRedstoneInterface) tile).isProvidingPower(side);
+        }
+
+        return 0;
+    }
+
+    public int isProvidingWeakPower(IBlockAccess blockAccess, BlockPos pos, int side)
+    {
+        TileEntity tile = blockAccess.getTileEntity(pos);
 
         if (tile instanceof TileRedstoneInterface)
         {
@@ -263,45 +248,31 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
     }
 
     @Override
-    public int isProvidingWeakPower(IBlockAccess blockAccess, int x, int y, int z, int side)
-    {
-        TileEntity tile = blockAccess.getTileEntity(x, y, z);
-
-        if (tile instanceof TileRedstoneInterface)
-        {
-            return ((TileRedstoneInterface) tile).isProvidingPower(side);
-        }
-
-        return 0;
-    }
-
-    @Override
-    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side)
+    public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
     {
         return true;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileFrame)
         {
-            return ((TileFrame) tile).activate(player, player.inventory.getCurrentItem());
+            return ((TileFrame) tile).activate(player, player.inventory.getCurrentItem(), pos);
         }
 
         return false;
     }
 
-    @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block b)
+    public void onNeighborBlockChange(IBlockAccess world, BlockPos pos, BlockPos neighbor, EnumFacing side)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TileRedstoneInterface)
         {
-            ((TileRedstoneInterface) tile).onNeighborBlockChange(b);
+            ((TileRedstoneInterface) tile).onNeighborBlockChange(pos, side);
         }
         else if (tile instanceof TileFrameTransfer)
         {
@@ -310,33 +281,15 @@ public class BlockFrame extends BlockContainer implements IDismantleable, IPerip
     }
 
     @Override
-    public void registerBlockIcons(IIconRegister register)
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
-        overlayIcons = new IIcon[FRAME_TYPES];
-        fullIcons = new IIcon[FRAME_TYPES];
-
-        for (int i = 0; i < overlayIcons.length; i++)
-        {
-            overlayIcons[i] = register.registerIcon("enhancedportals:frame_" + i);
-            fullIcons[i] = register.registerIcon("enhancedportals:frame_" + i + "b");
-        }
-
-        connectedTextures.registerIcons(register);
-        int counter = 0;
-        ClientProxy.customFrameTextures.clear();
-
-        while (ClientProxy.resourceExists("textures/blocks/customFrame/" + String.format("%02d", counter) + ".png"))
-        {
-            LogHelper.debug("Registered custom frame Icon: " + String.format("%02d", counter) + ".png");
-            ClientProxy.customFrameTextures.add(register.registerIcon("enhancedportals:customFrame/" + String.format("%02d", counter)));
-            counter++;
-        }
+        if (blockAccess.getBlockState(pos).getBlock() == this) return false;
+        return super.shouldSideBeRendered(state, blockAccess, pos, side);
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int s)
+    public IPeripheral getPeripheral(World world, int x, int y, int z, int side)
     {
-        if (blockAccess.getBlock(x, y, z) == this) return false;
-        return super.shouldSideBeRendered(blockAccess, x, y, z, s);
+        return null;
     }
 }

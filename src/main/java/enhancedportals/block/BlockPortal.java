@@ -1,66 +1,66 @@
 package enhancedportals.block;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import enhancedportals.client.PortalParticleFX;
-import enhancedportals.client.PortalRenderer;
 import enhancedportals.item.ItemPortalModule;
-import enhancedportals.network.ClientProxy;
 import enhancedportals.portal.EntityManager;
 import enhancedportals.tile.TileController;
 import enhancedportals.tile.TilePortal;
 import enhancedportals.tile.TilePortalManipulator;
 import enhancedportals.utility.ConfigurationHandler;
-import enhancedportals.utility.LogHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockPortal extends BlockContainer
 {
     public static BlockPortal instance;
-    IIcon texture;
 
     public BlockPortal(String n)
     {
-        super(Material.portal);
+        super(Material.PORTAL);
         instance = this;
         setBlockUnbreakable();
         setResistance(2000);
-        setBlockName(n);
+        setUnlocalizedName(n);
         setLightOpacity(0);
-        setStepSound(soundTypeGlass);
+        setSoundType(SoundType.GLASS);
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block b, int newID)
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TilePortal)
         {
-            ((TilePortal) tile).breakBlock(b, newID);
+            ((TilePortal) tile).breakBlock(world, pos, state);
         }
 
-        super.breakBlock(world, x, y, z, b, newID);
+        super.breakBlock(world, pos, state);
     }
 
-    @Override
-    public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z)
+    public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos)
     {
-        TileEntity tile = blockAccess.getTileEntity(x, y, z);
+        TileEntity tile = blockAccess.getTileEntity(pos);
 
         if (tile instanceof TilePortal)
         {
@@ -76,76 +76,58 @@ public class BlockPortal extends BlockContainer
         return new TilePortal();
     }
 
-    @Override
+    /*@Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
         return null;
     }
+    */
 
     @Override
-    public IIcon getIcon(IBlockAccess blockAccess, int x, int y, int z, int side)
-    {
-        TileEntity tile = blockAccess.getTileEntity(x, y, z);
-
-        if (tile instanceof TilePortal)
-        {
-            return ((TilePortal) tile).getBlockTexture(side);
-        }
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
 
         return null;
     }
 
     @Override
-    public IIcon getIcon(int side, int meta)
-    {
-        return texture;
-    }
-
-    @Override
-    public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_)
-    {
-        return null;
-    }
-
-    @Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos)
     {
         return 14;
     }
 
-    @Override
+    /*@Override
     public int getRenderBlockPass()
     {
         return 1;
-    }
+    }*/
 
-    @Override
-    public int getRenderType()
+    /*@Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return PortalRenderer.ID;
-    }
+    }*/
 
     @Override
-    public boolean isOpaqueCube()
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (tile instanceof TilePortal)
         {
-            return ((TilePortal) tile).activate(player, player.inventory.getCurrentItem());
+            return ((TilePortal) tile).activate(player, player.inventory.getCurrentItem(), pos);
         }
 
         return false;
     }
 
     @Override
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity)
+    public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
     {
         if (!world.isRemote)
         {
@@ -156,7 +138,7 @@ public class BlockPortal extends BlockContainer
                     ((EntityPlayer) entity).closeScreen();
                 }
 
-                TileEntity t = world.getTileEntity(x, y, z);
+                TileEntity t = world.getTileEntity(pos);
 
                 if (t instanceof TilePortal)
                 {
@@ -176,21 +158,23 @@ public class BlockPortal extends BlockContainer
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World world, int x, int y, int z, Random random)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
     {
         if (ConfigurationHandler.CONFIG_DISABLE_SOUNDS && ConfigurationHandler.CONFIG_DISABLE_PARTICLES)
         {
             return;
         }
 
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(pos);
 
         if (!(tile instanceof TilePortal))
         {
             return;
         }
 
-        int metadata = world.getBlockMetadata(x, y, z);
+        //todo get metadata as int
+        int metadata = world.getBlockState(pos).getBlock().getMetaFromState(getDefaultState());
+
         TileController controller = ((TilePortal) tile).getPortalController();
         TilePortalManipulator module = controller == null ? null : controller.getModuleManipulator();
         boolean doSounds = !ConfigurationHandler.CONFIG_DISABLE_SOUNDS && random.nextInt(100) == 0, doParticles = !ConfigurationHandler.CONFIG_DISABLE_PARTICLES;
@@ -207,16 +191,16 @@ public class BlockPortal extends BlockContainer
 
         if (doSounds)
         {
-            world.playSound(x + 0.5D, y + 0.5D, z + 0.5D, "portal.portal", 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
+            world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
         }
 
         if (doParticles)
         {
             for (int l = 0; l < 4; ++l)
             {
-                double d0 = x + random.nextFloat();
-                double d1 = y + random.nextFloat();
-                double d2 = z + random.nextFloat();
+                double d0 = (double)((float)pos.getX() + random.nextFloat());
+                double d1 = (double)((float)pos.getY() + random.nextFloat());
+                double d2 = (double)((float)pos.getZ() + random.nextFloat());
                 double d3 = 0.0D;
                 double d4 = 0.0D;
                 double d5 = 0.0D;
@@ -227,17 +211,17 @@ public class BlockPortal extends BlockContainer
 
                 if (metadata == 1)
                 {
-                    d2 = z + 0.5D + 0.25D * i1;
+                    d2 = pos.getZ() + 0.5D + 0.25D * i1;
                     d5 = random.nextFloat() * 2.0F * i1;
                 }
                 else if (metadata == 2)
                 {
-                    d0 = x + 0.5D + 0.25D * i1;
+                    d0 = pos.getX() + 0.5D + 0.25D * i1;
                     d3 = random.nextFloat() * 2.0F * i1;
                 }
                 else if (metadata == 3)
                 {
-                    d1 = y + 0.5D + 0.25D * i1;
+                    d1 = pos.getY() + 0.5D + 0.25D * i1;
                     d4 = random.nextFloat() * 2.0F * i1;
                 }
                 else if (metadata == 4)
@@ -262,22 +246,7 @@ public class BlockPortal extends BlockContainer
         }
     }
 
-    @Override
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        texture = iconRegister.registerIcon("enhancedportals:portal");
-        int counter = 0;
-        ClientProxy.customPortalTextures.clear();
-
-        while (ClientProxy.resourceExists("textures/blocks/customPortal/" + String.format("%02d", counter) + ".png"))
-        {
-            LogHelper.debug("Registered custom portal Icon: " + String.format("%02d", counter) + ".png");
-            ClientProxy.customPortalTextures.add(iconRegister.registerIcon("enhancedportals:customPortal/" + String.format("%02d", counter)));
-            counter++;
-        }
-    }
-
-    @Override
+    /*@Override
     public boolean renderAsNormalBlock()
     {
         return false;
@@ -319,22 +288,22 @@ public class BlockPortal extends BlockContainer
                 setBlockBounds(0f, 0f, 0f, 1f, 1, 1f);
             }
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void setBlockBoundsForItemRender()
     {
         setBlockBounds(0f, 0f, 0f, 1f, 1f, 1f);
-    }
+    }*/
 
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side)
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
-        if (blockAccess.getBlock(x, y, z) == this || blockAccess.getBlock(x, y, z) == BlockFrame.instance)
+        if (blockAccess.getBlockState(pos).getBlock() == this || blockAccess.getBlockState(pos).getBlock() == BlockFrame.instance)
         {
             return false;
         }
 
-        return super.shouldSideBeRendered(blockAccess, x, y, z, side);
+        return super.shouldSideBeRendered(state, blockAccess, pos, side);
     }
 }
