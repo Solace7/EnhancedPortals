@@ -2,15 +2,15 @@ package enhancedportals.utility;
 
 import buildcraft.api.tools.IToolWrench;
 import cofh.api.energy.IEnergyContainerItem;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 import enhancedportals.item.ItemGlasses;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,7 @@ public class GeneralUtils
         return i != null && i.getItem() instanceof IToolWrench;
     }
 
-    public static ChunkCoordinates loadChunkCoord(NBTTagCompound tagCompound, String string)
+    public static ChunkPos loadChunkCoord(NBTTagCompound tagCompound, String string)
     {
         if (tagCompound.getTag(string) == null)
         {
@@ -62,12 +62,12 @@ public class GeneralUtils
 
         NBTTagCompound t = (NBTTagCompound) tagCompound.getTag(string);
 
-        return t.getInteger("Y") == -1 ? null : new ChunkCoordinates(t.getInteger("X"), t.getInteger("Y"), t.getInteger("Z"));
+        return t.getInteger("Y") == -1 ? null : new ChunkPos(t.getInteger("X"), t.getInteger("Z"));
     }
 
-    public static ArrayList<ChunkCoordinates> loadChunkCoordList(NBTTagCompound tag, String name)
+    public static ArrayList<ChunkPos> loadChunkCoordList(NBTTagCompound tag, String name)
     {
-        ArrayList<ChunkCoordinates> list = new ArrayList<ChunkCoordinates>();
+        ArrayList<ChunkPos> list = new ArrayList<ChunkPos>();
 
         NBTTagList tagList = tag.getTagList(name, 10);
 
@@ -75,7 +75,7 @@ public class GeneralUtils
         {
             NBTTagCompound t = tagList.getCompoundTagAt(i);
 
-            list.add(new ChunkCoordinates(t.getInteger("X"), t.getInteger("Y"), t.getInteger("Z")));
+            list.add(new ChunkPos(t.getInteger("X"), t.getInteger("Z")));
         }
 
         return list;
@@ -90,10 +90,10 @@ public class GeneralUtils
 
         NBTTagCompound t = (NBTTagCompound) tagCompound.getTag(string);
 
-        return t.getInteger("Y") == -1 ? null : new DimensionCoordinates(t.getInteger("X"), t.getInteger("Y"), t.getInteger("Z"), t.getInteger("D"));
+        return t.getInteger("Y") == -1 ? null : new DimensionCoordinates(t.getInteger("X"), t.getInteger("Z"), t.getInteger("D"));
     }
 
-    public static void saveChunkCoord(NBTTagCompound tagCompound, ChunkCoordinates c, String string)
+    public static void saveChunkCoord(NBTTagCompound tagCompound, ChunkPos c, String string)
     {
         if (c == null)
         {
@@ -101,23 +101,21 @@ public class GeneralUtils
         }
 
         NBTTagCompound t = new NBTTagCompound();
-        t.setInteger("X", c.posX);
-        t.setInteger("Y", c.posY);
-        t.setInteger("Z", c.posZ);
+        t.setInteger("X", c.chunkXPos);
+        t.setInteger("Z", c.chunkZPos);
 
         tagCompound.setTag(string, t);
     }
 
-    public static void saveChunkCoordList(NBTTagCompound tag, List<ChunkCoordinates> list, String name)
+    public static void saveChunkCoordList(NBTTagCompound tag, List<ChunkPos> list, String name)
     {
         NBTTagList tagList = new NBTTagList();
 
-        for (ChunkCoordinates c : list)
+        for (ChunkPos c : list)
         {
             NBTTagCompound t = new NBTTagCompound();
-            t.setInteger("X", c.posX);
-            t.setInteger("Y", c.posY);
-            t.setInteger("Z", c.posZ);
+            t.setInteger("X", c.chunkXPos);
+            t.setInteger("Z", c.chunkZPos);
 
             tagList.appendTag(t);
         }
@@ -133,16 +131,15 @@ public class GeneralUtils
         }
 
         NBTTagCompound t = new NBTTagCompound();
-        t.setInteger("X", c.posX);
-        t.setInteger("Y", c.posY);
-        t.setInteger("Z", c.posZ);
+        t.setInteger("X", c.chunkXPos);
+        t.setInteger("Z", c.chunkZPos);
         t.setInteger("D", c.dimension);
 
         tagCompound.setTag(string, t);
     }
 
-    public static ChunkCoordinates offset(ChunkCoordinates c, ForgeDirection f)
+    public static ChunkPos offset(ChunkPos c, EnumFacing f)
     {
-        return new ChunkCoordinates(c.posX + f.offsetX, c.posY + f.offsetY, c.posZ + f.offsetZ);
+        return new ChunkPos(c.chunkXPos+ f.getFrontOffsetX() + f.getFrontOffsetY(), c.chunkZPos + f.getFrontOffsetZ());
     }
 }

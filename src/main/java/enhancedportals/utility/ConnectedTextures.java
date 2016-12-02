@@ -1,13 +1,12 @@
 package enhancedportals.utility;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public class ConnectedTextures
 {
-    protected IIcon[] textures;
+    //    protected IIcon[] textures;
     protected Block block;
     protected int blockMeta, subMeta = -1;
     protected String textureLoc;
@@ -21,13 +20,13 @@ public class ConnectedTextures
     public ConnectedTextures(ConnectedTextures ct, Block block, int meta)
     {
         this(ct.textureLoc, block, meta, -1);
-        textures = ct.textures;
+//        textures = ct.textures;
     }
 
     public ConnectedTextures(ConnectedTextures ct, Block block, int meta, int meta2)
     {
         this(ct.textureLoc, block, meta, meta2);
-        textures = ct.textures;
+//        textures = ct.textures;
     }
 
     public ConnectedTextures(String textureLocation, Block b, int meta)
@@ -41,39 +40,36 @@ public class ConnectedTextures
         block = b;
         blockMeta = meta;
         subMeta = meta2;
-        textures = new IIcon[16];
+//        textures = new IIcon[16];
     }
 
-    protected boolean canConnectTo(IBlockAccess blockAccess, int x, int y, int z)
+    protected boolean canConnectTo(IBlockAccess blockAccess, BlockPos pos)
     {
-        if (block == blockAccess.getBlock(x, y, z))
+        if (block == blockAccess.getBlockState(pos))
         {
             if (blockMeta == -1)
             {
                 return true;
             }
 
-            int meta = blockAccess.getBlockMetadata(x, y, z);
+            //int meta = blockAccess.getBlockState();
 
-            if (blockMeta == meta)
-            {
-                return true;
-            }
-            else
-            {
-                return subMeta == -1 ? false : meta == subMeta;
-            }
+//            if (blockMeta == meta)
+//            {
+//                return true;
+//            }
+//            else
+//            {
+//                return subMeta == -1 ? false : meta == subMeta;
+//            }
         }
 
-        return false;
-    }
+            return false;
+        }
 
-    public IIcon getBaseIcon()
-    {
-        return textures[0];
-    }
 
-    public IIcon getIconForSide(IBlockAccess blockAccess, int x, int y, int z, int side)
+
+   /* public IIcon getIconForSide(IBlockAccess blockAccess, int x, int y, int z, int side)
     {
         boolean[] connectingBlock = new boolean[4];
         int index = 0;
@@ -117,11 +113,5 @@ public class ConnectedTextures
         return textures[connectionToIndex[(connectingBlock[0] ? 8 : 0) | (connectingBlock[1] ? 4 : 0) | (connectingBlock[2] ? 2 : 0) | (connectingBlock[3] ? 1 : 0)]];
     }
 
-    public void registerIcons(IIconRegister register)
-    {
-        for (int i = 0; i < textures.length; i++)
-        {
-            textures[i] = register.registerIcon(String.format(textureLoc, i));
-        }
-    }
+    }*/
 }

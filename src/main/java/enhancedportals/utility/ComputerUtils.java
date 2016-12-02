@@ -1,6 +1,6 @@
 package enhancedportals.utility;
 
-import cpw.mods.fml.common.Optional.Method;
+import net.minecraftforge.fml.common.Optional.Method;
 import enhancedportals.Reference;
 import enhancedportals.portal.GlyphIdentifier;
 import li.cil.oc.api.machine.Arguments;

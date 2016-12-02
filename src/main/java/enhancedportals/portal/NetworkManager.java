@@ -3,13 +3,14 @@ package enhancedportals.portal;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.tile.TileController;
 import enhancedportals.utility.DimensionCoordinates;
 import enhancedportals.utility.LogHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

@@ -1,70 +1,66 @@
 package enhancedportals.utility;
 
-import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.util.ForgeDirection;
 
-public class DimensionCoordinates extends ChunkCoordinates
+public class DimensionCoordinates extends ChunkPos
 {
     public int dimension;
 
-    public DimensionCoordinates()
+    public DimensionCoordinates(int x, int z, int dim)
     {
-
-    }
-
-    public DimensionCoordinates(ChunkCoordinates chunkCoordinates, int dim)
-    {
-        super(chunkCoordinates);
+        super(x, z);
         dimension = dim;
     }
 
-    public DimensionCoordinates(int x, int y, int z, int dim)
+    public DimensionCoordinates(BlockPos pos, int dim)
     {
-        super(x, y, z);
+        super(pos);
         dimension = dim;
     }
 
     public DimensionCoordinates(NBTTagCompound tag)
     {
-        this(tag.getInteger("X"), tag.getInteger("Y"), tag.getInteger("Z"), tag.getInteger("D"));
+        this(tag.getInteger("X"), tag.getInteger("Z"), tag.getInteger("D"));
     }
 
     public DimensionCoordinates(DimensionCoordinates coord)
     {
-        super(coord.posX, coord.posY, coord.posZ);
+        super(coord.chunkXPos, coord.chunkZPos);
         dimension = coord.dimension;
     }
 
-    public Block getBlock()
+    public BlockPos getBlock(int x, int y, int z)
     {
         WorldServer world = getWorld();
 
-        if (!world.getChunkProvider().chunkExists(posX >> 4, posY >> 4))
+        if (!world.getChunkProvider().chunkExists(this.chunkXPos >> 4, this.chunkZPos >> 4))
         {
-            world.getChunkProvider().loadChunk(posX >> 4, posY >> 4);
+            world.getChunkProvider().loadChunk(this.chunkXPos >> 4, this.chunkZPos >> 4);
         }
 
-        return world.getBlock(posX, posY, posZ);
+        return new BlockPos(this.chunkXPos << 4 + x, y, (this.chunkZPos << 4) + z);
     }
 
-    public int getMetadata()
+    //todo getMeta
+    /*public int getMetadata()
     {
         WorldServer world = getWorld();
 
-        if (!world.getChunkProvider().chunkExists(posX >> 4, posY >> 4))
+        if (!world.getChunkProvider().chunkExists(this.chunkXPos >> 4, this.chunkZPos >> 4))
         {
-            world.getChunkProvider().loadChunk(posX >> 4, posY >> 4);
+            world.getChunkProvider().loadChunk(this.chunkXPos >> 4, this.chunkZPos >> 4);
         }
 
-        return world.getBlockMetadata(posX, posY, posZ);
-    }
+        return world.getBlockState()
+    }*/
 
-    public TileEntity getTileEntity()
+    public TileEntity getTileEntity(BlockPos pos)
     {
         WorldServer world = getWorld();
 
@@ -79,12 +75,12 @@ public class DimensionCoordinates extends ChunkCoordinates
             }
         }
 
-        if (!world.getChunkProvider().chunkExists(posX >> 4, posY >> 4))
+        if (!world.getChunkProvider().chunkExists(this.chunkXPos >> 4, this.chunkZPos >> 4))
         {
-            world.getChunkProvider().loadChunk(posX >> 4, posY >> 4);
+            world.getChunkProvider().loadChunk(this.chunkXPos >> 4, this.chunkZPos >> 4);
         }
 
-        return world.getTileEntity(posX, posY, posZ);
+        return world.getTileEntity(pos);
     }
 
     public WorldServer getWorld()
@@ -105,22 +101,21 @@ public class DimensionCoordinates extends ChunkCoordinates
         return world;
     }
 
-    public DimensionCoordinates offset(ForgeDirection orientation)
+    public DimensionCoordinates offset(EnumFacing facing)
     {
-        return new DimensionCoordinates(posX + orientation.offsetX, posY + orientation.offsetY, posZ + orientation.offsetZ, dimension);
+        return new DimensionCoordinates(new BlockPos() + orientation.offsetX, posY + orientation.offsetY, posZ + orientation.offsetZ, dimension);
     }
 
     @Override
     public String toString()
     {
-        return String.format("WorldCoordinates (X %s, Y %s, Z %s, D %s)", posX, posY, posZ, dimension);
+        return String.format("WorldCoordinates (X %s, Y %s, Z %s, D %s)", this.chunkXPos, this.chunkZPos, dimension);
     }
 
     public void writeToNBT(NBTTagCompound t)
     {
-        t.setInteger("X", posX);
-        t.setInteger("Y", posY);
-        t.setInteger("Z", posZ);
+        t.setInteger("X", this.chunkXPos);
+        t.setInteger("Z", this.chunkZPos);
         t.setInteger("D", dimension);
     }
 }

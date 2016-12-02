@@ -1,6 +1,6 @@
 package enhancedportals.portal;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import enhancedportals.tile.TileController;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;

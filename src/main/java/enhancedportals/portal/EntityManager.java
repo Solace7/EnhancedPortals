@@ -1,11 +1,11 @@
 package enhancedportals.portal;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import enhancedportals.block.BlockPortal;
 import enhancedportals.item.ItemPortalModule;
 import enhancedportals.tile.TileController;
 import enhancedportals.tile.TilePortalManipulator;
 import enhancedportals.utility.ConfigurationHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,21 +15,23 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.S06PacketUpdateHealth;
-import net.minecraft.network.play.server.S07PacketRespawn;
-import net.minecraft.network.play.server.S1DPacketEntityEffect;
-import net.minecraft.network.play.server.S1FPacketSetExperience;
-import net.minecraft.potion.Potion;
+import net.minecraft.network.play.server.SPacketEntityEffect;
+import net.minecraft.network.play.server.SPacketRespawn;
+import net.minecraft.network.play.server.SPacketSetExperience;
+import net.minecraft.network.play.server.SPacketUpdateHealth;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.ServerConfigurationManager;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -41,39 +43,39 @@ public class EntityManager
     static final int PLAYER_COOLDOWN_RATE = 10;
 
 
-    static ChunkCoordinates getActualExitLocation(Entity entity, TileController controller)
+    static ChunkPos getActualExitLocation(Entity entity, TileController controller, BlockPos pos)
     {
-        World world = controller.getWorldObj();
+        World world = controller.getWorld();
         int entityHeight = Math.round(entity.height);
         boolean horizontal = controller.portalType == 3;
 
         forloop:
-        for (ChunkCoordinates c : new ArrayList<ChunkCoordinates>(controller.getPortals()))
+        for (ChunkPos c : new ArrayList<ChunkPos>(controller.getPortals()))
         {
             for (int i = 0; i < entityHeight; i++)
             {
-                if (world.getBlock(c.posX, c.posY + i, c.posZ) != BlockPortal.instance && !world.isAirBlock(c.posX, c.posY + i, c.posZ))
+                if (world.getBlockState(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ())) != BlockPortal.instance && !world.isAirBlock(new BlockPos(pos.getX(), pos.getY() + i, pos.getZ())));
                 {
                     continue forloop;
                 }
             }
 
-            if (horizontal && !world.isAirBlock(c.posX, c.posY + 1, c.posZ))
+            if (horizontal && !world.isAirBlock(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ())))
             {
-                return new ChunkCoordinates(c.posX, c.posY - 1, c.posZ);
+                return new ChunkPos(new BlockPos (pos.getX(), pos.getY() - 1, pos.getZ()));
             }
             else
             {
-                return new ChunkCoordinates(c.posX, c.posY, c.posZ);
+                return new ChunkPos(c.chunkXPos, c.chunkZPos);
             }
         }
 
         return null;
     }
 
-    static float getRotation(Entity entity, TileController controller, ChunkCoordinates loc)
+    static float getRotation(Entity entity, TileController controller, ChunkPos loc)
     {
-        World world = controller.getWorldObj();
+        World world = controller.getWorld();
         TilePortalManipulator module = controller.getModuleManipulator();
 
         if (module != null)
@@ -96,7 +98,7 @@ public class EntityManager
 
         if (controller.portalType == 1)
         {
-            if (world.isSideSolid(loc.posX, loc.posY, loc.posZ + 1, ForgeDirection.NORTH))
+            if (world.isSideSolid(loc.chunkXPos, loc.posY, loc.chunkZPos + 1, EnumFacing.NORTH))
             {
                 return 180f;
             }
@@ -105,7 +107,7 @@ public class EntityManager
         }
         else if (controller.portalType == 2)
         {
-            if (world.isSideSolid(loc.posX - 1, loc.posY, loc.posZ, ForgeDirection.EAST))
+            if (world.isSideSolid(loc.posX - 1, loc.posY, loc.posZ, EnumFacing.EAST))
             {
                 return -90f;
             }
@@ -114,7 +116,7 @@ public class EntityManager
         }
         else if (controller.portalType == 4)
         {
-            if (world.isBlockNormalCubeDefault(loc.posX + 1, loc.posY, loc.posZ + 1, true))
+            if (world.isBlockNormalCube(loc.posX + 1, loc.posY, loc.posZ + 1, true))
             {
                 return 135f;
             }
@@ -123,7 +125,8 @@ public class EntityManager
         }
         else if (controller.portalType == 5)
         {
-            if (world.isBlockNormalCubeDefault(loc.posX - 1, loc.posY, loc.posZ + 1, true))
+//           todo if (world.isBlockNormalCubeDefault(loc.posX - 1, loc.posY, loc.posZ + 1, true))
+            if (world.isBlockNormalCube())
             {
                 return -135f;
             }
@@ -230,33 +233,34 @@ public class EntityManager
 
     public static void teleportEntityHighestInstability(Entity par1Entity) // TODO: CRIMSON
     {
-        ChunkCoordinates spawn = par1Entity.worldObj.getSpawnPoint();
-        spawn.posY = par1Entity.worldObj.getTopSolidOrLiquidBlock(spawn.posX, spawn.posY);
+        BlockPos spawn = par1Entity.worldObj.getSpawnPoint();
+//        spawn.posY = par1Entity.worldObj.getTopSolidOrLiquidBlock(spawn.posX, spawn.posY);
+        spawn.getY() = par1Entity.worldObj.getTopSolidOrLiquidBlock(par1Entity.worldObj.getSpawnPoint().getY());
 
         if (par1Entity.worldObj.isAirBlock(spawn.posX, spawn.posY, spawn.posZ) || par1Entity.worldObj.getBlock(spawn.posX, spawn.posY, spawn.posZ) instanceof BlockFluidBase)
         {
             par1Entity.worldObj.setBlock(spawn.posX, spawn.posY, spawn.posZ, Blocks.stone);
         }
 
-        // transferEntityWithinDimension(par1Entity, spawn.posX, spawn.posY + 1, spawn.posZ, 0f, -1, -1, false);
+        transferEntityWithinDimension(par1Entity, spawn.posX, spawn.posY + 1, spawn.posZ, 0f, -1, -1, false);
     }
 
-    static Entity transferEntity(Entity entity, double x, double y, double z, float yaw, WorldServer world, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
+    static Entity transferEntity(Entity entity, BlockPos pos, double x, double y, double z, float yaw, WorldServer world, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
     {
         // If entity is going to the same dimension...
-        if (entity.worldObj.provider.dimensionId == world.provider.dimensionId)
+        if (entity.worldObj.provider.getDimension() == world.provider.getDimension())
         {
             return transferEntityWithinDimension(entity, x, y, z, yaw, touchedPortalType, exitPortalType, keepMomentum, instability);
         }
         else
         {
-            return transferEntityToDimension(entity, x, y, z, yaw, (WorldServer) entity.worldObj, world, touchedPortalType, exitPortalType, keepMomentum, instability);
+            return transferEntityToDimension(entity,pos, x, y, z, yaw, (WorldServer) entity.worldObj, world, touchedPortalType, exitPortalType, keepMomentum, instability);
         }
     }
 
-    public static void transferEntity(Entity entity, TileController entry, TileController exit) throws PortalException
+    public static void transferEntity(Entity entity, BlockPos pos, TileController entry, TileController exit) throws PortalException
     {
-        ChunkCoordinates exitLoc = getActualExitLocation(entity, exit);
+        ChunkPos exitLoc = getActualExitLocation(entity, exit, pos);
 
         if (exitLoc == null)
         {
@@ -272,23 +276,27 @@ public class EntityManager
                 keepMomentum = manip.shouldKeepMomentumOnTeleport();
             }
 
-            while (entity.ridingEntity != null)
+            while (entity.getRidingEntity() != null)
             {
-                entity = entity.ridingEntity;
+                entity = entity.getRidingEntity();
             }
 
             int instability = exit.getDimensionalBridgeStabilizer().instability;
 
-            transferEntityWithRider(entity, exitLoc.posX + 0.5, exitLoc.posY, exitLoc.posZ + 0.5, getRotation(entity, exit, exitLoc), (WorldServer) exit.getWorldObj(), entry.portalType, exit.portalType, keepMomentum, instability);
+            transferEntityWithRider(entity, exitLoc.posX + 0.5, exitLoc.posY, exitLoc.posZ + 0.5, getRotation(entity, exit, exitLoc), (WorldServer) exit.getWorld(), entry.portalType, exit.portalType, keepMomentum, instability);
         }
     }
 
-    static Entity transferEntityToDimension(Entity entity, double x, double y, double z, float yaw, WorldServer exitingWorld, WorldServer enteringWorld, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
+    static Entity transferEntityToDimension(Entity entity, BlockPos pos, double x, double y, double z, float yaw, WorldServer exitingWorld, WorldServer enteringWorld, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
     {
+
+        x = (double) pos.getX();
+        y = (double) pos.getY();
+        z = (double) pos.getZ();
         if (touchedPortalType == -1 && exitPortalType == -1)
         {
             // Look for an open airblock to teleport entity to in other dimension.
-            while (!enteringWorld.isAirBlock((int) x, (int) y, (int) z) || !enteringWorld.isAirBlock((int) x, (int) y + 1, (int) z))
+            while (!enteringWorld.isAirBlock(pos) || !enteringWorld.isAirBlock(pos))
             {
                 y++;
 
@@ -321,7 +329,7 @@ public class EntityManager
 
                 player.closeScreen();
                 player.dimension = enteringWorld.provider.dimensionId;
-                player.playerNetServerHandler.sendPacket(new S07PacketRespawn(player.dimension, player.worldObj.difficultySetting, enteringWorld.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
+                player.connection.sendPacket(new SPacketRespawn(player.dimension, player.worldObj.difficultySetting, enteringWorld.getWorldInfo().getTerrainType(), player.theItemInWorldManager.getGameType()));
 
                 exitingWorld.removeEntity(player);
                 player.isDead = false;
@@ -346,15 +354,15 @@ public class EntityManager
                 // Instate any potion effects the player had when teleported.
                 for (Iterator<PotionEffect> potion = player.getActivePotionEffects().iterator(); potion.hasNext(); )
                 {
-                    player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), potion.next()));
+                    player.connection.sendPacket(new SPacketEntityEffect(player.getEntityId(), potion.next()));
                 }
 
                 // If there is instability, give effects.
                 checkInstabilityEffects(entity, instability);
 
-                player.playerNetServerHandler.sendPacket(new S1FPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
+                player.connection.sendPacket(new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
 
-                FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, exitingWorld.provider.dimensionId, player.dimension);
+                FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, exitingWorld.provider.getDimension(), player.dimension);
 
                 setEntityPortalCooldown(player);
             }
@@ -402,8 +410,12 @@ public class EntityManager
         }
     }
 
-    static Entity transferEntityWithinDimension(Entity entity, double x, double y, double z, float yaw, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
+    static Entity transferEntityWithinDimension(Entity entity, BlockPos pos, double x, double y, double z, float yaw, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
     {
+        x = pos.getX();
+        y = pos.getY();
+        z = pos.getZ();
+
         if (entity == null)
         {
             return null;
@@ -422,7 +434,7 @@ public class EntityManager
             handleMomentum(player, touchedPortalType, exitPortalType, yaw, keepMomentum);
             player.worldObj.updateEntityWithOptionalForce(player, false);
 
-            player.playerNetServerHandler.sendPacket(new S06PacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
+            player.playerNetServerHandler.sendPacket(new SPacketUpdateHealth(player.getHealth(), player.getFoodStats().getFoodLevel(), player.getFoodStats().getSaturationLevel()));
             setEntityPortalCooldown(player);
 
             // If there is instability, give effects.
@@ -469,26 +481,26 @@ public class EntityManager
         }
     }
 
-    static Entity transferEntityWithRider(Entity entity, double x, double y, double z, float yaw, WorldServer world, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
+    static Entity transferEntityWithRider(Entity entity, BlockPos pos, double x, double y, double z, float yaw, WorldServer world, int touchedPortalType, int exitPortalType, boolean keepMomentum, int instability)
     {
-        Entity rider = entity.riddenByEntity;
+        Entity rider = entity.getRidingEntity();
 
         // If Entity has a rider...
         if (rider != null)
         {
             // Unmount rider
-            rider.mountEntity(null);
+            rider.dismountRidingEntity();
             // Send it back through as it's own entity
-            rider = transferEntityWithRider(rider, x, y, z, yaw, world, touchedPortalType, exitPortalType, keepMomentum, instability);
+            rider = transferEntityWithRider(rider, pos, x, y, z, yaw, world, touchedPortalType, exitPortalType, keepMomentum, instability);
         }
 
         // Transfer the entity.
-        entity = transferEntity(entity, x, y, z, yaw, world, touchedPortalType, exitPortalType, keepMomentum, instability);
+        entity = transferEntity(entity, pos, x, y, z, yaw, world, touchedPortalType, exitPortalType, keepMomentum, instability);
 
         // Remount entity with rider.
         if (rider != null)
         {
-            rider.mountEntity(entity);
+            entity.updatePassenger(rider);
         }
 
         return entity;
@@ -518,9 +530,9 @@ public class EntityManager
     {
         if (entity instanceof EntityLivingBase)
         {
-            PotionEffect blindness = new PotionEffect(Potion.blindness.id, 600, 1);
-            PotionEffect hunger = new PotionEffect(Potion.hunger.id, 600, 1);
-            PotionEffect poison = new PotionEffect(Potion.poison.id, 600, 1);
+            PotionEffect blindness = new PotionEffect(MobEffects.BLINDNESS, 600, 1);
+            PotionEffect hunger = new PotionEffect(MobEffects.HUNGER, 600, 1);
+            PotionEffect poison = new PotionEffect(MobEffects.POISON, 600, 1);
 
             blindness.setCurativeItems(new ArrayList<ItemStack>());
             hunger.setCurativeItems(new ArrayList<ItemStack>());
@@ -536,9 +548,9 @@ public class EntityManager
     {
         if (entity instanceof EntityLivingBase)
         {
-            PotionEffect blindness = new PotionEffect(Potion.blindness.id, 200, 1);
-            PotionEffect hunger = new PotionEffect(Potion.hunger.id, 200, 1);
-            PotionEffect poison = new PotionEffect(Potion.poison.id, 200, 1);
+            PotionEffect blindness = new PotionEffect(MobEffects.BLINDNESS, 200, 1);
+            PotionEffect hunger = new PotionEffect(MobEffects.HUNGER, 200, 1);
+            PotionEffect poison = new PotionEffect(MobEffects.POISON, 200, 1);
 
             blindness.setCurativeItems(new ArrayList<ItemStack>());
             hunger.setCurativeItems(new ArrayList<ItemStack>());
@@ -553,9 +565,9 @@ public class EntityManager
     {
         if (entity instanceof EntityLivingBase)
         {
-            PotionEffect blindness = new PotionEffect(Potion.blindness.id, 400, 1);
-            PotionEffect hunger = new PotionEffect(Potion.hunger.id, 400, 1);
-            PotionEffect poison = new PotionEffect(Potion.poison.id, 400, 1);
+            PotionEffect blindness = new PotionEffect(MobEffects.BLINDNESS, 400, 1);
+            PotionEffect hunger = new PotionEffect(MobEffects.HUNGER, 400, 1);
+            PotionEffect poison = new PotionEffect(MobEffects.POISON, 400, 1);
 
             blindness.setCurativeItems(new ArrayList<ItemStack>());
             hunger.setCurativeItems(new ArrayList<ItemStack>());

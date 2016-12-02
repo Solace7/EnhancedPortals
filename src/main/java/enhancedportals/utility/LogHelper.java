@@ -1,6 +1,6 @@
 package enhancedportals.utility;
 
-import cpw.mods.fml.common.FMLLog;
+import net.minecraftforge.fml.common.FMLLog;
 import enhancedportals.Reference;
 import org.apache.logging.log4j.Level;
 
