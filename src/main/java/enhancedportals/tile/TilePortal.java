@@ -1,23 +1,18 @@
 package enhancedportals.tile;
 
 import enhancedportals.EnhancedPortals;
-import enhancedportals.block.BlockPortal;
 import enhancedportals.item.ItemNanobrush;
-import enhancedportals.network.ClientProxy;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.utility.GeneralUtils;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.math.ChunkPos;
+
 
 public class TilePortal extends TilePortalPart
 {
-    @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         TileController controller = getPortalController();
@@ -45,29 +40,6 @@ public class TilePortal extends TilePortalPart
 
     }
 
-    public IIcon getBlockTexture(int side)
-    {
-        TileController controller = getPortalController();
-
-        if (controller != null)
-        {
-            if (controller.activeTextureData.hasCustomPortalTexture() && ClientProxy.customPortalTextures.size() > controller.activeTextureData.getCustomPortalTexture() && ClientProxy.customPortalTextures.get(controller.activeTextureData.getCustomPortalTexture()) != null)
-            {
-                return ClientProxy.customPortalTextures.get(controller.activeTextureData.getCustomPortalTexture());
-            }
-            else if (controller.activeTextureData.getPortalItem() != null && controller.activeTextureData.getPortalItem().getItem() instanceof ItemBlock)
-            {
-                return Block.getBlockFromItem(controller.activeTextureData.getPortalItem().getItem()).getIcon(side, controller.activeTextureData.getPortalItem().getItemDamage());
-            }
-        }
-        else if (portalController != null)
-        {
-            EnhancedPortals.proxy.waitForController(new ChunkCoordinates(portalController.posX, portalController.posY, portalController.posZ), getChunkCoordinates());
-        }
-
-        return BlockPortal.instance.getIcon(side, 0);
-    }
-
     public int getColour()
     {
         TileController controller = getPortalController();
@@ -78,7 +50,7 @@ public class TilePortal extends TilePortalPart
         }
         else if (portalController != null)
         {
-            EnhancedPortals.proxy.waitForController(new ChunkCoordinates(portalController.posX, portalController.posY, portalController.posZ), getChunkCoordinates());
+            EnhancedPortals.proxy.waitForController(new ChunkPos(portalController.chunkXPos, portalController.chunkZPos), getChunkPos());
         }
 
         return 0xFFFFFF;

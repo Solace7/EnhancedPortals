@@ -1,25 +1,27 @@
 package enhancedportals.tile;
 
-import cofh.api.energy.IEnergyHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import cofh.api.energy.IEnergyProvider;
+import cofh.api.energy.IEnergyReceiver;
 import enhancedportals.block.BlockStabilizer;
 import enhancedportals.utility.DimensionCoordinates;
 import enhancedportals.utility.GeneralUtils;
-import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 
-public class TileStabilizer extends TileEP implements IEnergyHandler
+public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyProvider
 {
-    ChunkCoordinates mainBlock;
+    ChunkPos mainBlock;
     int rows;
     boolean is3x3 = false;
 
@@ -30,6 +32,9 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
     {
         mainBlock = null;
     }
+
+
+    //todo renable activate, get offset
 
     public boolean activate(EntityPlayer player)
     {
@@ -48,23 +53,23 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
         {
             DimensionCoordinates topLeft = getDimensionCoordinates();
             // Get the Top-Northwest-most block in the DBS block group.
-            while (topLeft.offset(ForgeDirection.WEST).getBlock() == BlockStabilizer.instance)
+            while (topLeft.offset(EnumFacing.WEST).getBlock(getPos().getX(),getPos().getY(),getPos().getZ()). == BlockStabilizer.instance)
             {
-                topLeft = topLeft.offset(ForgeDirection.WEST);
+                topLeft = topLeft.offset(EnumFacing.WEST);
             }
 
-            while (topLeft.offset(ForgeDirection.NORTH).getBlock() == BlockStabilizer.instance)
+            while (topLeft.offset(EnumFacing.NORTH).getBlock() == BlockStabilizer.instance)
             {
-                topLeft = topLeft.offset(ForgeDirection.NORTH);
+                topLeft = topLeft.offset(EnumFacing.NORTH);
             }
 
-            while (topLeft.offset(ForgeDirection.UP).getBlock() == BlockStabilizer.instance)
+            while (topLeft.offset(EnumFacing.UP).getBlock() == BlockStabilizer.instance)
             {
-                topLeft = topLeft.offset(ForgeDirection.UP);
+                topLeft = topLeft.offset(EnumFacing.UP);
             }
 
             // Check for valid DBS configurations (3x3, 2x3, 3x2):
-            ArrayList<ChunkCoordinates> blocks = checkShapeThreeWide(topLeft); // 3x3
+            ArrayList<ChunkPos> blocks = checkShapeThreeWide(topLeft); // 3x3
             if (blocks.isEmpty())
             {
                 blocks = checkShapeTwoWide(topLeft, true); // Try the 3x2 X axis
@@ -77,9 +82,9 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
             if (!blocks.isEmpty())
             {
                 // Need to check if there's already a DBS here.
-                for (ChunkCoordinates c : blocks)
+                for (ChunkPos c : blocks)
                 {
-                    TileEntity tile = worldObj.getTileEntity(c.posX, c.posY, c.posZ);
+                    TileEntity tile = worldObj.getTileEntity(getPos());
 
                     if (tile instanceof TileStabilizer)
                     {
@@ -96,24 +101,29 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
                 }
 
                 // Otherwise start marking the blocks for the DBS block.
-                for (ChunkCoordinates c : blocks)
+                for (ChunkPos c : blocks)
                 {
-                    worldObj.setBlock(c.posX, c.posY, c.posZ, BlockStabilizer.instance, 0, 2);
+//todo                    worldObj.setBlock(getPos(), BlockStabilizer.instance, 0, 2);
+                    final IBlockState state = getWorld().getBlockState(getPos());
+                    worldObj.setBlockState(getPos(), state, 3);
 
-                    TileEntity tile = worldObj.getTileEntity(c.posX, c.posY, c.posZ);
+                    TileEntity tile = worldObj.getTileEntity(getPos());
 
                     if (tile instanceof TileStabilizer)
                     {
                         TileStabilizer t = (TileStabilizer) tile;
                         t.mainBlock = topLeft;
-                        worldObj.markBlockForUpdate(t.xCoord, t.yCoord, t.zCoord);
+//                        worldObj.markBlockForUpdate(t.xCoord, t.yCoord, t.zCoord);
+                        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
                     }
                 }
 
                 // Create a BlockStabilizer.
-                worldObj.setBlock(topLeft.posX, topLeft.posY, topLeft.posZ, BlockStabilizer.instance, 1, 3);
+//                worldObj.setBlock(topLeft.posX, topLeft.posY, topLeft.posZ, BlockStabilizer.instance, 1, 3);
+                final IBlockState state = getWorld().getBlockState(getPos());
+                worldObj.setBlockState(getPos(), state);
 
-                TileEntity tile = topLeft.getTileEntity();
+                TileEntity tile = topLeft.getTileEntity(getPos());
 
                 // Check if everything went successful and set up.
                 if (tile instanceof TileStabilizerMain)
@@ -126,7 +136,7 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
         return false;
     }
 
-    public void breakBlock(Block b, int oldMetadata)
+    public void breakBlock()
     {
         TileStabilizerMain main = getMainBlock();
 
@@ -139,18 +149,21 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from)
+    public boolean canConnectEnergy(EnumFacing from)
     {
         return true;
     }
 
-    ArrayList<ChunkCoordinates> checkShapeThreeWide(DimensionCoordinates topLeft)
+    //todo multiblock
+
+/*    ArrayList<ChunkPos> checkShapeThreeWide(DimensionCoordinates topLeft)
     {
-        ArrayList<ChunkCoordinates> blocks = new ArrayList<ChunkCoordinates>();
-        ChunkCoordinates heightChecker = new ChunkCoordinates(topLeft);
+        ArrayList<ChunkPos> blocks = new ArrayList<ChunkPos>();
+//        ChunkPos heightChecker = new ChunkPos(topLeft);
         rows = 0;
 
-        while (worldObj.getBlock(heightChecker.posX, heightChecker.posY, heightChecker.posZ) == BlockStabilizer.instance)
+//        while (worldObj.getBlock(heightChecker.posX, heightChecker.posY, heightChecker.posZ) == BlockStabilizer.instance)
+          while (worldObj.getBlockState(getPos()) == BlockStabilizer.instance)
         {
             heightChecker.posY--;
             rows++;
@@ -159,7 +172,7 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
         if (rows < 2)
         {
             rows = 0;
-            return new ArrayList<ChunkCoordinates>();
+            return new ArrayList<ChunkPos>();
         }
 
         for (int i = 0; i < 3; i++)
@@ -170,10 +183,10 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
                 {
                     if (worldObj.getBlock(topLeft.posX + i, topLeft.posY - k, topLeft.posZ + j) != BlockStabilizer.instance)
                     {
-                        return new ArrayList<ChunkCoordinates>();
+                        return new ArrayList<ChunkPos>();
                     }
 
-                    blocks.add(new ChunkCoordinates(topLeft.posX + i, topLeft.posY - k, topLeft.posZ + j));
+                    blocks.add(new ChunkPos(topLeft.posX + i, topLeft.posY - k, topLeft.posZ + j));
                 }
             }
         }
@@ -182,10 +195,10 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
         return blocks;
     }
 
-    ArrayList<ChunkCoordinates> checkShapeTwoWide(DimensionCoordinates topLeft, boolean isX)
+    ArrayList<ChunkPos> checkShapeTwoWide(DimensionCoordinates topLeft, boolean isX)
     {
-        ArrayList<ChunkCoordinates> blocks = new ArrayList<ChunkCoordinates>();
-        ChunkCoordinates heightChecker = new ChunkCoordinates(topLeft);
+        ArrayList<ChunkPos> blocks = new ArrayList<ChunkPos>();
+        ChunkPos heightChecker = new ChunkPos(topLeft);
         rows = 0;
 
         while (worldObj.getBlock(heightChecker.posX, heightChecker.posY, heightChecker.posZ) == BlockStabilizer.instance)
@@ -197,7 +210,7 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
         if (rows < 2)
         {
             rows = 0;
-            return new ArrayList<ChunkCoordinates>();
+            return new ArrayList<ChunkPos>();
         }
 
         for (int i = 0; i < 3; i++)
@@ -208,20 +221,20 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
                 {
                     if (worldObj.getBlock(topLeft.posX + (isX ? i : j), topLeft.posY - k, topLeft.posZ + (!isX ? i : j)) != BlockStabilizer.instance)
                     {
-                        return new ArrayList<ChunkCoordinates>();
+                        return new ArrayList<ChunkPos>();
                     }
 
-                    blocks.add(new ChunkCoordinates(topLeft.posX + (isX ? i : j), topLeft.posY - k, topLeft.posZ + (!isX ? i : j)));
+                    blocks.add(new ChunkPos(topLeft.posX + (isX ? i : j), topLeft.posY - k, topLeft.posZ + (!isX ? i : j)));
                 }
             }
         }
 
         is3x3 = false;
         return blocks;
-    }
+    }*/
 
     @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
+    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate)
     {
         TileStabilizerMain main = getMainBlock();
 
@@ -233,17 +246,17 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
         return main.extractEnergy(from, maxExtract, simulate);
     }
 
-    @Override
     public Packet getDescriptionPacket()
     {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setBoolean("formed", mainBlock != null);
 
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
+//        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
+        return new SPacketUpdateTileEntity();
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from)
+    public int getEnergyStored(EnumFacing from)
     {
         TileStabilizerMain main = getMainBlock();
 
@@ -262,7 +275,7 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
     {
         if (mainBlock != null)
         {
-            TileEntity tile = worldObj.getTileEntity(mainBlock.posX, mainBlock.posY, mainBlock.posZ);
+            TileEntity tile = worldObj.getTileEntity(getPos());
 
             if (tile != null && tile instanceof TileStabilizerMain)
             {
@@ -274,7 +287,7 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from)
+    public int getMaxEnergyStored(EnumFacing from)
     {
         TileStabilizerMain main = getMainBlock();
 
@@ -287,11 +300,13 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
     }
 
     @Override
-    public void onDataPacket(net.minecraft.network.NetworkManager net, S35PacketUpdateTileEntity pkt)
+    public void onDataPacket(net.minecraft.network.NetworkManager net, SPacketUpdateTileEntity pkt)
     {
-        NBTTagCompound tag = pkt.func_148857_g();
+        NBTTagCompound tag = pkt.getNbtCompound();
         isFormed = tag.getBoolean("formed");
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+//   todo     worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     @Override
@@ -302,7 +317,7 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
     }
 
     @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate)
     {
         TileStabilizerMain main = getMainBlock();
 
@@ -315,9 +330,10 @@ public class TileStabilizer extends TileEP implements IEnergyHandler
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         GeneralUtils.saveChunkCoord(tag, mainBlock, "mainBlock");
+        return tag;
     }
 }

@@ -5,20 +5,22 @@ import enhancedportals.item.ItemNanobrush;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.utility.GeneralUtils;
 import enhancedportals.utility.IPortalModule;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.ITextComponent;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class TilePortalManipulator extends TileFrame implements IInventory
 {
     ItemStack[] inventory = new ItemStack[9];
 
-    @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         if (player.isSneaking())
@@ -66,14 +68,14 @@ public class TilePortalManipulator extends TileFrame implements IInventory
         tag.setTag("Modules", items);
     }
 
-    @Override
+  /*  @Override
     public boolean canUpdate()
     {
         return true;
-    }
+    }*/
 
     @Override
-    public void closeInventory()
+    public void closeInventory(EntityPlayer player)
     {
 
     }
@@ -103,6 +105,13 @@ public class TilePortalManipulator extends TileFrame implements IInventory
         return stack;
     }
 
+    @Nullable
+    @Override
+    public ItemStack removeStackFromSlot(int index)
+    {
+        return null;
+    }
+
     public IPortalModule[] getInstalledUpgrades()
     {
         IPortalModule[] modules = new IPortalModule[getSizeInventory()];
@@ -118,12 +127,6 @@ public class TilePortalManipulator extends TileFrame implements IInventory
         }
 
         return modules;
-    }
-
-    @Override
-    public String getInventoryName()
-    {
-        return "tile.ep3.portalFrame.upgrade.name";
     }
 
     @Override
@@ -177,17 +180,12 @@ public class TilePortalManipulator extends TileFrame implements IInventory
         return inventory[i];
     }
 
-    @Override
+  /*  @Override
     public ItemStack getStackInSlotOnClosing(int i)
     {
         return inventory[i];
     }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
-    }
+    */
 
     public boolean hasModule(String ID)
     {
@@ -213,7 +211,9 @@ public class TilePortalManipulator extends TileFrame implements IInventory
                     s.stackSize = 1;
 
                     setInventorySlotContents(i, s);
-                    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+//                  todo   worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+                    final IBlockState state = getWorld().getBlockState(getPos());
+                    worldObj.notifyBlockUpdate(getPos(), state, state, 3);
                     return true;
                 }
             }
@@ -226,6 +226,30 @@ public class TilePortalManipulator extends TileFrame implements IInventory
     public boolean isItemValidForSlot(int i, ItemStack stack)
     {
         return stack != null && stack.getItem() instanceof IPortalModule && !hasModule(((IPortalModule) stack.getItem()).getID(stack));
+    }
+
+    @Override
+    public int getField(int id)
+    {
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value)
+    {
+
+    }
+
+    @Override
+    public int getFieldCount()
+    {
+        return 0;
+    }
+
+    @Override
+    public void clear()
+    {
+
     }
 
     public boolean isPortalInvisible()
@@ -264,7 +288,9 @@ public class TilePortalManipulator extends TileFrame implements IInventory
     public void markDirty()
     {
         super.markDirty();
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+//   todo     worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     @Override
@@ -300,7 +326,7 @@ public class TilePortalManipulator extends TileFrame implements IInventory
     }
 
     @Override
-    public void openInventory()
+    public void openInventory(EntityPlayer player)
     {
 
     }
@@ -351,7 +377,7 @@ public class TilePortalManipulator extends TileFrame implements IInventory
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
 
@@ -372,5 +398,25 @@ public class TilePortalManipulator extends TileFrame implements IInventory
 
         // Saves the inventory under "Modules" in NBT
         compound.setTag("Modules", items);
+
+        return compound;
+    }
+
+    @Override
+    public String getName()
+    {
+        return "tile.ep3.portalFrame.upgrade.name";
+    }
+
+    @Override
+    public boolean hasCustomName()
+    {
+        return false;
+    }
+
+    @Override
+    public ITextComponent getDisplayName()
+    {
+        return null;
     }
 }

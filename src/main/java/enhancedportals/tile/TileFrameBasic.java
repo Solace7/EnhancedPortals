@@ -1,15 +1,12 @@
 package enhancedportals.tile;
 
-import enhancedportals.item.ItemNanobrush;
-import enhancedportals.network.GuiHandler;
-import enhancedportals.utility.GeneralUtils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class TileFrameBasic extends TileFrame
 {
-    @Override
+    //todo Activate
+
+   /* @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         if (player.isSneaking())
@@ -34,7 +31,7 @@ public class TileFrameBasic extends TileFrame
         }
 
         return false;
-    }
+    }*/
 
     @Override
     public void addDataToPacket(NBTTagCompound tag)

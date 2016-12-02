@@ -1,9 +1,5 @@
 package enhancedportals.tile;
 
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.common.Optional.InterfaceList;
-import cpw.mods.fml.common.Optional.Method;
-import cpw.mods.fml.common.network.ByteBufUtils;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
@@ -21,7 +17,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.common.Optional.InterfaceList;
+import net.minecraftforge.fml.common.Optional.Method;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+
+import javax.annotation.Nullable;
 
 @InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_COMPUTERCRAFT), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
 public class TileTransferItem extends TileFrameTransfer implements IInventory, IPeripheral, SimpleComponent
@@ -30,7 +33,6 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
 
     int tickTimer = 20, time = 0;
 
-    @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         if (player.isSneaking())
@@ -49,41 +51,16 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
         return false;
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void attach(IComputerAccess computer)
+//    @Override
+    public String getInventoryName()
     {
-
+        return "tile.frame.item.name";
     }
 
     @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception
+    public int getInventoryStackLimit()
     {
-        if (method == 0)
-        {
-            return new Object[]{stack != null ? Item.getIdFromItem(stack.getItem()) : 0};
-        }
-        else if (method == 1)
-        {
-            return new Object[]{stack != null ? stack.stackSize : 0};
-        }
-        else if (method == 2)
-        {
-            return new Object[]{stack != null};
-        }
-        else if (method == 3)
-        {
-            return new Object[]{isSending};
-        }
-
-        return null;
-    }
-
-    @Override
-    public void closeInventory()
-    {
-
+        return 64;
     }
 
     @Override
@@ -111,103 +88,13 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
         return stack;
     }
 
+    @Nullable
     @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void detach(IComputerAccess computer)
+    public ItemStack removeStackFromSlot(int index)
     {
-
+        return null;
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public boolean equals(IPeripheral other)
-    {
-        return other == this;
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public String getComponentName()
-    {
-        return "ep_transfer_item";
-    }
-
-    @Override
-    public String getInventoryName()
-    {
-        return "tile.frame.item.name";
-    }
-
-    @Override
-    public int getInventoryStackLimit()
-    {
-        return 64;
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String[] getMethodNames()
-    {
-        return new String[]{"getItemStored", "getAmountStored", "hasStack", "isSending"};
-    }
-
-    @Override
-    public int getSizeInventory()
-    {
-        return 1;
-    }
-
-    @Callback(direct = true, doc = "function():table -- Returns a description of the item stored in this module.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getStack(Context context, Arguments args)
-    {
-        return new Object[]{stack.copy()};
-    }
-
-    @Override
-    public ItemStack getStackInSlot(int i)
-    {
-        return stack;
-    }
-
-    @Override
-    public ItemStack getStackInSlotOnClosing(int i)
-    {
-        return stack;
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String getType()
-    {
-        return "ep_transfer_item";
-    }
-
-    @Override
-    public boolean hasCustomInventoryName()
-    {
-        return false;
-    }
-
-    @Callback(direct = true, doc = "function():boolean -- Return whether there is an item stored in this module.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] hasStack(Context context, Arguments args)
-    {
-        return new Object[]{stack != null};
-    }
-
-    @Override
-    public boolean isItemValidForSlot(int i, ItemStack itemstack)
-    {
-        return true;
-    }
-
-    @Callback(direct = true, doc = "function():boolean -- Returns true if the module is set to send items.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] isSending(Context context, Arguments args)
-    {
-        return new Object[]{isSending};
-    }
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer entityplayer)
@@ -216,7 +103,13 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
     }
 
     @Override
-    public void openInventory()
+    public void openInventory(EntityPlayer player)
+    {
+
+    }
+
+    @Override
+    public void closeInventory(EntityPlayer player)
     {
 
     }
@@ -261,10 +154,10 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
         stack = itemstack;
     }
 
-    @Override
-    public void updateEntity()
+//    @Override
+    public void update()
     {
-        super.updateEntity();
+//        super.updateEntity();
 
         if (!worldObj.isRemote)
         {
@@ -278,13 +171,13 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
 
                     if (controller != null && controller.isPortalActive() && stack != null)
                     {
-                        TileController exitController = (TileController) controller.getDestinationLocation().getTileEntity();
+                        TileController exitController = (TileController) controller.getDestinationLocation().getTileEntity(getPos());
 
                         if (exitController != null)
                         {
-                            for (ChunkCoordinates c : exitController.getTransferItems())
+                            for (ChunkPos c : exitController.getTransferItems())
                             {
-                                TileEntity tile = exitController.getWorldObj().getTileEntity(c.posX, c.posY, c.posZ);
+                                TileEntity tile = exitController.getWorld().getTileEntity(getPos());
 
                                 if (tile != null && tile instanceof TileTransferItem)
                                 {
@@ -360,5 +253,166 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
         }
 
         tag.setTag("stack", st);
+    }
+
+    @Override
+    public String getName()
+    {
+        return null;
+    }
+
+    @Override
+    public boolean hasCustomName()
+    {
+        return false;
+    }
+
+    @Override
+    public ITextComponent getDisplayName()
+    {
+        return null;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int i)
+    {
+        return stack;
+    }
+
+//    @Override
+    public ItemStack getStackInSlotOnClosing(int i)
+    {
+        return stack;
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack)
+    {
+        return true;
+    }
+
+    @Override
+    public int getField(int id)
+    {
+        return 0;
+    }
+
+    @Override
+    public void setField(int id, int value)
+    {
+
+    }
+
+    @Override
+    public int getFieldCount()
+    {
+        return 0;
+    }
+
+    @Override
+    public void clear()
+    {
+
+    }
+
+//    @Override
+    public boolean hasCustomInventoryName()
+    {
+        return false;
+    }
+
+    @Override
+    public int getSizeInventory()
+    {
+        return 1;
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public void detach(IComputerAccess computer)
+    {
+
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public boolean equals(IPeripheral other)
+    {
+        return other == this;
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public String getComponentName()
+    {
+        return "ep_transfer_item";
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public String[] getMethodNames()
+    {
+        return new String[]{"getItemStored", "getAmountStored", "hasStack", "isSending"};
+    }
+
+
+    @Callback(direct = true, doc = "function():table -- Returns a description of the item stored in this module.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getStack(Context context, Arguments args)
+    {
+        return new Object[]{stack.copy()};
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public String getType()
+    {
+        return "ep_transfer_item";
+    }
+
+    @Callback(direct = true, doc = "function():boolean -- Return whether there is an item stored in this module.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] hasStack(Context context, Arguments args)
+    {
+        return new Object[]{stack != null};
+    }
+
+
+    @Callback(direct = true, doc = "function():boolean -- Returns true if the module is set to send items.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] isSending(Context context, Arguments args)
+    {
+        return new Object[]{isSending};
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public void attach(IComputerAccess computer)
+    {
+
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception
+    {
+        if (method == 0)
+        {
+            return new Object[]{stack != null ? Item.getIdFromItem(stack.getItem()) : 0};
+        }
+        else if (method == 1)
+        {
+            return new Object[]{stack != null ? stack.stackSize : 0};
+        }
+        else if (method == 2)
+        {
+            return new Object[]{stack != null};
+        }
+        else if (method == 3)
+        {
+            return new Object[]{isSending};
+        }
+
+        return null;
     }
 }

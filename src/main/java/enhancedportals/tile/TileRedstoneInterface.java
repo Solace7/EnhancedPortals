@@ -6,15 +6,15 @@ import enhancedportals.network.GuiHandler;
 import enhancedportals.portal.GlyphElement;
 import enhancedportals.utility.GeneralUtils;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 
 import java.util.Random;
 
@@ -28,14 +28,14 @@ public class TileRedstoneInterface extends TileFrame
     public static byte MAX_INPUT_STATE = 8, MAX_OUTPUT_STATE = 8;
 
     @Override
-    public boolean activate(EntityPlayer player, ItemStack stack)
+    public boolean activate(EntityPlayer player, ItemStack stack, BlockPos blockPos)
     {
         if (player.isSneaking())
         {
             return false;
         }
 
-        TileController controller = getPortalController();
+        TileController controller = getPortalController(blockPos);
 
         if (stack != null && controller != null && controller.isFinalized())
         {
@@ -60,20 +60,20 @@ public class TileRedstoneInterface extends TileFrame
 
     }
 
-    @Override
+    /*@Override
     public boolean canUpdate()
     {
         return true;
-    }
+    }*/
 
-    int getHighestPowerState()
+    int getHighestPowerState(BlockPos pos, EnumFacing side)
     {
         byte highest = 0;
 
         for (int i = 0; i < 6; i++)
         {
-            ChunkCoordinates c = GeneralUtils.offset(getChunkCoordinates(), ForgeDirection.getOrientation(i));
-            byte power = (byte) getWorldObj().getIndirectPowerLevelTo(c.posX, c.posY, c.posZ, i);
+            ChunkPos c = GeneralUtils.offset(getChunkCoordinates(), EnumFacing.getFront(i));
+            byte power = (byte) worldObj.getRedstonePower(pos, side);
 
             if (power > highest)
             {
@@ -96,12 +96,12 @@ public class TileRedstoneInterface extends TileFrame
 
     private void notifyNeighbors()
     {
-        worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, BlockFrame.instance);
+        worldObj.notifyNeighborsOfStateChange(pos, BlockFrame.instance);
 
         for (int i = 0; i < 6; i++)
         {
-            ForgeDirection d = ForgeDirection.getOrientation(i);
-            worldObj.notifyBlocksOfNeighborChange(xCoord + d.offsetX, yCoord + d.offsetY, zCoord + d.offsetZ, BlockFrame.instance);
+            EnumFacing d = EnumFacing.getFront(i);
+            worldObj.notifyNeighborsOfStateChange(pos, BlockFrame.instance);
         }
     }
 
@@ -126,11 +126,11 @@ public class TileRedstoneInterface extends TileFrame
         }
     }
 
-    public void onNeighborBlockChange(Block b)
+    public void onNeighborBlockChange(BlockPos blockPos, EnumFacing side)
     {
         if (!isOutput && !worldObj.isRemote)
         {
-            TileController controller = getPortalController();
+            TileController controller = getPortalController(blockPos);
 
             if (controller == null)
             {
@@ -138,7 +138,7 @@ public class TileRedstoneInterface extends TileFrame
             }
 
             boolean hasDialler = controller.getDiallingDevices().size() > 0;
-            int redstoneInputState = getHighestPowerState();
+            int redstoneInputState = getHighestPowerState(blockPos, side);
 
             // Input: Remove portal on signal
             if (state == 1)
@@ -320,10 +320,11 @@ public class TileRedstoneInterface extends TileFrame
         }
     }
 
+    //todo update entity check Furnace?
+
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
 
         if (isOutput)
         {
@@ -340,12 +341,15 @@ public class TileRedstoneInterface extends TileFrame
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tagCompound)
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
     {
         super.writeToNBT(tagCompound);
         tagCompound.setBoolean("output", isOutput);
         tagCompound.setByte("state", state);
         tagCompound.setByte("previousRedstoneState", previousRedstoneState);
         tagCompound.setByte("timeUntilOff", timeUntilOff);
+
+        return tagCompound;
     }
+
 }

@@ -1,31 +1,25 @@
 package enhancedportals.tile;
 
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.common.Optional.InterfaceList;
-import cpw.mods.fml.common.Optional.Method;
-import cpw.mods.fml.common.network.ByteBufUtils;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import enhancedportals.Reference;
-import enhancedportals.item.ItemAddressBook;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.portal.GlyphElement;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
 import enhancedportals.utility.ComputerUtils;
-import enhancedportals.utility.Localization;
 import io.netty.buffer.ByteBuf;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.common.Optional.InterfaceList;
+import net.minecraftforge.fml.common.Optional.Method;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import java.util.ArrayList;
 
@@ -36,6 +30,8 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
 
     public ArrayList<GlyphElement> glyphList = new ArrayList<GlyphElement>();
 
+    //todo activate on Right click?
+/*
     @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
@@ -50,7 +46,7 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
         {
             if (controller.getIdentifierUnique() == null)
             {
-                player.addChatComponentMessage(new ChatComponentText(Localization.getChatError("noUidSet")));
+                player.addChatComponentMessage(new TextComponentString(Localization.getChatError("noUidSet")));
             }
             else if (!player.isSneaking())
             {
@@ -62,8 +58,7 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
             }
             else if (!player.isSneaking() && stack.getItem() instanceof ItemAddressBook)
             {
-                player.addChatComponentMessage(new ChatComponentText(Localization.getChatNotify("unimplemented")));
-                //todo Implement Feature
+                player.addChatComponentMessage(new TextComponentString(Localization.getChatNotify("unimplemented")));
             }
         }
         else
@@ -71,7 +66,7 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
             GuiHandler.openGui(player, this, GuiHandler.DIALING_DEVICE_B);
         }
         return true;
-    }
+    }*/
 
     @Override
     public void addDataToPacket(NBTTagCompound tag)
@@ -135,7 +130,7 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         NBTTagList list = new NBTTagList();
@@ -156,7 +151,10 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
         }
 
         tag.setTag("glyphList", list);
+
+        return tag;
     }
+
     /////////////////////////////////
     //ComputerCraft & OpenComputers//
     /////////////////////////////////
@@ -280,37 +278,11 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
 
     }
 
-    @Callback(doc = "function(uid:string):boolean -- Attempts to create a connection to the specified portal. UID must be given as a single string in the format of numbers separated by spaces.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] dial(Context context, Arguments args) throws Exception
-    {
-        if (args.count() < 1)
-        {
-            return null;
-        }
-
-        return comp_Dial(ComputerUtils.argsToArray(args));
-    }
-
-    @Callback(doc = "function(entry:number):boolean -- Dials the specified entry in the Dialing Device's list.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] dialStored(Context context, Arguments args) throws Exception
-    {
-        return comp_DialStored(ComputerUtils.argsToArray(args));
-    }
-
     @Override
     @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
     public boolean equals(IPeripheral other)
     {
         return other == this;
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public String getComponentName()
-    {
-        return "ep_dialling_device";
     }
 
     @Override
@@ -351,7 +323,35 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
 
     //OpenComputers Methods
 
-    @Callback(direct = true, doc = "function():number -- Returns the amount of entries in the Dialing Device's list.")
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public String getComponentName()
+    {
+        return "ep_dialling_device";
+    }
+
+
+    @Callback(doc = "function(uid:string):boolean -- Attempts to create a connection to the specified portal. UID must be given as a single string in the format of numbers separated by spaces.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] dial(Context context, Arguments args) throws Exception
+    {
+        if (args.count() < 1)
+        {
+            return null;
+        }
+
+        return comp_Dial(ComputerUtils.argsToArray(args));
+    }
+
+    @Callback(doc = "function(entry:number):boolean -- Dials the specified entry in the Dialing Device's list.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] dialStored(Context context, Arguments args) throws Exception
+    {
+        return comp_DialStored(ComputerUtils.argsToArray(args));
+    }
+
+  @Callback(direct = true, doc = "function():number -- Returns the amount of entries in the Dialing Device's list.")
     @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
     public Object[] getStoredCount(Context context, Arguments args)
     {
@@ -379,4 +379,5 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
         getPortalController().connectionTerminate();
         return new Object[]{true};
     }
+
 }

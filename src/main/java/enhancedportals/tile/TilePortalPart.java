@@ -1,31 +1,31 @@
 package enhancedportals.tile;
 
-import enhancedportals.utility.GeneralUtils;
-import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 
 public abstract class TilePortalPart extends TileEP
 {
-    ChunkCoordinates portalController;
+    ChunkPos portalController;
     TileController cachedController;
 
-    public boolean activate(EntityPlayer player, ItemStack stack)
+    public boolean activate(EntityPlayer player, ItemStack stack, BlockPos blockPos)
     {
         return false;
     }
 
     public abstract void addDataToPacket(NBTTagCompound tag);
 
-    public void breakBlock(Block b, int oldMeta)
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         TileController controller = getPortalController();
 
@@ -35,20 +35,18 @@ public abstract class TilePortalPart extends TileEP
         }
     }
 
-    @Override
     public Packet getDescriptionPacket()
     {
         NBTTagCompound tag = new NBTTagCompound();
 
         if (portalController != null)
         {
-            tag.setInteger("PortalControllerX", portalController.posX);
-            tag.setInteger("PortalControllerY", portalController.posY);
-            tag.setInteger("PortalControllerZ", portalController.posZ);
+            tag.setInteger("PortalControllerX", portalController.chunkXPos);
+            tag.setInteger("PortalControllerZ", portalController.chunkZPos);
         }
 
         addDataToPacket(tag);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
+        return new SPacketUpdateTileEntity(BlockPos.ORIGIN, 0, tag);
     }
 
     public TileController getPortalController()
@@ -58,7 +56,7 @@ public abstract class TilePortalPart extends TileEP
             return cachedController;
         }
 
-        TileEntity tile = portalController == null ? null : worldObj.getTileEntity(portalController.posX, portalController.posY, portalController.posZ);
+        TileEntity tile = portalController == null ? null : worldObj.getTileEntity(this.getPos());
 
         if (tile != null && tile instanceof TileController)
         {
@@ -69,17 +67,18 @@ public abstract class TilePortalPart extends TileEP
         return null;
     }
 
-    /**
+
+    /*
      * Called when this block is placed in the world.
      *
      * @param entity
      * @param stack
-     */
+
     public void onBlockPlaced(EntityLivingBase entity, ItemStack stack, EntityPlayer player)
     {
         for (int i = 0; i < 6; i++)
         {
-            ChunkCoordinates c = GeneralUtils.offset(getChunkCoordinates(), ForgeDirection.getOrientation(i));
+            ChunkPos c = GeneralUtils.offset(getChunkCoordinates(), EnumFacing.getFront(i));
             TileEntity tile = worldObj.getTileEntity(c.posX, c.posY, c.posZ);
 
             if (tile != null && tile instanceof TilePortalPart)
@@ -87,25 +86,26 @@ public abstract class TilePortalPart extends TileEP
                 ((TilePortalPart) tile).onNeighborPlaced(entity, xCoord, yCoord, zCoord);
             }
         }
-    }
+    }*/
 
     public abstract void onDataPacket(NBTTagCompound tag);
 
     @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
     {
-        NBTTagCompound tag = pkt.func_148857_g();
+        NBTTagCompound tag = pkt.getNbtCompound();
 
         portalController = null;
         cachedController = null;
 
         if (tag.hasKey("PortalControllerX"))
         {
-            portalController = new ChunkCoordinates(tag.getInteger("PortalControllerX"), tag.getInteger("PortalControllerY"), tag.getInteger("PortalControllerZ"));
+            portalController = new ChunkPos(tag.getInteger("PortalControllerX"), tag.getInteger("PortalControllerZ"));
         }
 
         onDataPacket(tag);
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        //worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        //todo mark for update
     }
 
     /**
@@ -133,7 +133,7 @@ public abstract class TilePortalPart extends TileEP
         if (compound.hasKey("Controller"))
         {
             NBTTagCompound controller = compound.getCompoundTag("Controller");
-            portalController = new ChunkCoordinates(controller.getInteger("X"), controller.getInteger("Y"), controller.getInteger("Z"));
+            portalController = new ChunkPos(controller.getInteger("X"), controller.getInteger("Z"));
         }
     }
 
@@ -142,26 +142,28 @@ public abstract class TilePortalPart extends TileEP
      *
      * @param c
      */
-    public void setPortalController(ChunkCoordinates c)
+    public void setPortalController(ChunkPos c)
     {
         portalController = c;
         cachedController = null;
         markDirty();
-        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        //worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        //todo mark for update
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound)
+    public NBTTagCompound writeToNBT(NBTTagCompound compound)
     {
         super.writeToNBT(compound);
 
         if (portalController != null)
         {
             NBTTagCompound controller = new NBTTagCompound();
-            controller.setInteger("X", portalController.posX);
-            controller.setInteger("Y", portalController.posY);
-            controller.setInteger("Z", portalController.posZ);
+            controller.setInteger("X", portalController.chunkXPos);
+            controller.setInteger("Z", portalController.chunkZPos);
             compound.setTag("Controller", controller);
         }
+
+        return compound;
     }
 }

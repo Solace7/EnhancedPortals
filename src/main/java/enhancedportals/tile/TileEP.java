@@ -3,24 +3,18 @@ package enhancedportals.tile;
 import enhancedportals.utility.DimensionCoordinates;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.math.ChunkPos;
 
 public class TileEP extends TileEntity
 {
-    @Override
-    public boolean canUpdate()
+    public ChunkPos getChunkPos()
     {
-        return false;
-    }
-
-    public ChunkCoordinates getChunkCoordinates()
-    {
-        return new ChunkCoordinates(xCoord, yCoord, zCoord);
+        return new ChunkPos(getPos());
     }
 
     public DimensionCoordinates getDimensionCoordinates()
     {
-        return new DimensionCoordinates(getChunkCoordinates(), worldObj.provider.dimensionId);
+        return new DimensionCoordinates(getPos(), worldObj.provider.getDimension());
     }
 
     public void packetGuiFill(ByteBuf buffer)

@@ -1,8 +1,5 @@
 package enhancedportals.tile;
 
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.common.Optional.InterfaceList;
-import cpw.mods.fml.common.Optional.Method;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
@@ -19,9 +16,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.common.Optional.InterfaceList;
+import net.minecraftforge.fml.common.Optional.Method;
 
 @InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_COMPUTERCRAFT), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
 public class TileTransferFluid extends TileFrameTransfer implements IFluidHandler, IPeripheral, SimpleComponent
@@ -36,7 +36,7 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
 
     byte outputTracker = 0;
 
-    @Override
+//    @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         if (player.isSneaking())
@@ -99,13 +99,13 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     }
 
     @Override
-    public boolean canDrain(ForgeDirection from, Fluid fluid)
+    public boolean canDrain(EnumFacing from, Fluid fluid)
     {
         return true;
     }
 
     @Override
-    public boolean canFill(ForgeDirection from, Fluid fluid)
+    public boolean canFill(EnumFacing from, Fluid fluid)
     {
         return true;
     }
@@ -118,7 +118,7 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain)
+    public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain)
     {
         if (resource == null || !resource.isFluidEqual(tank.getFluid()))
         {
@@ -129,47 +129,13 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     }
 
     @Override
-    public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain)
+    public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain)
     {
         return tank.drain(maxDrain, doDrain);
     }
 
     @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public boolean equals(IPeripheral other)
-    {
-        return other == this;
-    }
-
-    @Override
-    public int fill(ForgeDirection from, FluidStack resource, boolean doFill)
-    {
-        return tank.fill(resource, doFill);
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public String getComponentName()
-    {
-        return "ep_transfer_fluid";
-    }
-
-    @Callback(direct = true, limit = 1, doc = "function():table -- Get a description of the fluid stored inside the module.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getFluid(Context context, Arguments args)
-    {
-        return new Object[]{tank.getInfo()};
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String[] getMethodNames()
-    {
-        return new String[]{"getFluidStored", "getAmountStored", "isFull", "isEmpty", "isSending"};
-    }
-
-    @Override
-    public FluidTankInfo[] getTankInfo(ForgeDirection from)
+    public FluidTankInfo[] getTankInfo(EnumFacing from)
     {
         return new FluidTankInfo[]{tank.getInfo()};
     }
@@ -200,7 +166,8 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
         if (tank.getFluid() != null)
         {
             buffer.writeBoolean(false);
-            buffer.writeInt(tank.getFluid().getFluidID());
+            //todo write fluid id
+//            buffer.writeInt(tank.getFluid().getFluidID());
             buffer.writeInt(tank.getFluidAmount());
         }
         else
@@ -236,13 +203,12 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
             return;
         }
 
-        tank.drain(handlers[side].fill(ForgeDirection.getOrientation(side).getOpposite(), tank.getFluid(), true), true);
+        tank.drain(handlers[side].fill(EnumFacing.getFront(side).getOpposite(), tank.getFluid(), true), true);
     }
 
-    @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
+//        super.updateEntity();
 
         if (!worldObj.isRemote)
         {
@@ -256,13 +222,13 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
 
                     if (controller != null && controller.isPortalActive() && tank.getFluidAmount() > 0)
                     {
-                        TileController exitController = (TileController) controller.getDestinationLocation().getTileEntity();
+                        TileController exitController = (TileController) controller.getDestinationLocation().getTileEntity(getPos());
 
                         if (exitController != null)
                         {
-                            for (ChunkCoordinates c : exitController.getTransferFluids())
+                            for (ChunkPos c : exitController.getTransferFluids())
                             {
-                                TileEntity tile = exitController.getWorldObj().getTileEntity(c.posX, c.posY, c.posZ);
+                                TileEntity tile = exitController.getWorld().getTileEntity(getPos());
 
                                 if (tile != null && tile instanceof TileTransferFluid)
                                 {
@@ -310,14 +276,14 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     {
         for (int i = 0; i < 6; i++)
         {
-            ChunkCoordinates c = GeneralUtils.offset(getChunkCoordinates(), ForgeDirection.getOrientation(i));
-            TileEntity tile = worldObj.getTileEntity(c.posX, c.posY, c.posZ);
+            ChunkPos c = GeneralUtils.offset(getChunkPos(), EnumFacing.getFront(i));
+            TileEntity tile = worldObj.getTileEntity(getPos());
 
             if (tile != null && tile instanceof IFluidHandler)
             {
                 IFluidHandler fluid = (IFluidHandler) tile;
 
-                if (fluid.getTankInfo(ForgeDirection.getOrientation(i).getOpposite()) != null)
+                if (fluid.getTankInfo(EnumFacing.getFront(i).getOpposite()) != null)
                 {
                     handlers[i] = fluid;
                 }
@@ -340,5 +306,39 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     {
         super.writeToNBT(tag);
         tank.readFromNBT(tag);
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public boolean equals(IPeripheral other)
+    {
+        return other == this;
+    }
+
+    @Override
+    public int fill(EnumFacing from, FluidStack resource, boolean doFill)
+    {
+        return tank.fill(resource, doFill);
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public String getComponentName()
+    {
+        return "ep_transfer_fluid";
+    }
+
+    @Callback(direct = true, limit = 1, doc = "function():table -- Get a description of the fluid stored inside the module.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getFluid(Context context, Arguments args)
+    {
+        return new Object[]{tank.getInfo()};
+    }
+
+    @Override
+    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
+    public String[] getMethodNames()
+    {
+        return new String[]{"getFluidStored", "getAmountStored", "isFull", "isEmpty", "isSending"};
     }
 }

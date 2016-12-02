@@ -2,9 +2,6 @@ package enhancedportals.tile;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
-import cpw.mods.fml.common.Optional.Interface;
-import cpw.mods.fml.common.Optional.InterfaceList;
-import cpw.mods.fml.common.Optional.Method;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
@@ -20,8 +17,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraftforge.fml.common.Optional.Interface;
+import net.minecraftforge.fml.common.Optional.InterfaceList;
+import net.minecraftforge.fml.common.Optional.Method;
 
 @InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_OPENCOMPUTERS), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
 
@@ -39,7 +39,6 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
 
     byte outputTracker = 0;
 
-    @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         if (player.isSneaking())
@@ -113,8 +112,8 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
         storage.readFromNBT(nbt);
     }
 
-    @Override
-    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate)
+    //todo maybe override
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate)
     {
         return storage.receiveEnergy(maxReceive, simulate);
     }
@@ -126,21 +125,21 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
             return;
         }
 
-        storage.extractEnergy(handlers[side].receiveEnergy(ForgeDirection.getOrientation(side).getOpposite(), storage.getEnergyStored(), false), false);
+        storage.extractEnergy(handlers[side].receiveEnergy(EnumFacing.getFront(side).getOpposite(), storage.getEnergyStored(), false), false);
     }
 
     void updateEnergyHandlers()
     {
         for (int i = 0; i < 6; i++)
         {
-            ChunkCoordinates c = GeneralUtils.offset(getChunkCoordinates(), ForgeDirection.getOrientation(i));
-            TileEntity tile = worldObj.getTileEntity(c.posX, c.posY, c.posZ);
+            ChunkPos c = GeneralUtils.offset(getChunkPos(), EnumFacing.getFront(i));
+            TileEntity tile = worldObj.getTileEntity(getPos());
 
             if (tile != null && tile instanceof IEnergyHandler)
             {
                 IEnergyHandler energy = (IEnergyHandler) tile;
 
-                if (energy.canConnectEnergy(ForgeDirection.getOrientation(i).getOpposite()))
+                if (energy.canConnectEnergy(EnumFacing.getFront(i).getOpposite()))
                 {
                     handlers[i] = energy;
                 }
@@ -158,10 +157,9 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
         cached = true;
     }
 
-    @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
+//        super.update();
 
         if (!worldObj.isRemote)
         {
@@ -175,13 +173,13 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
 
                     if (controller != null && controller.isPortalActive() && storage.getEnergyStored() > 0)
                     {
-                        TileController exitController = (TileController) controller.getDestinationLocation().getTileEntity();
+                        TileController exitController = (TileController) controller.getDestinationLocation().getTileEntity(getPos());
 
                         if (exitController != null)
                         {
-                            for (ChunkCoordinates c : exitController.getTransferEnergy())
+                            for (ChunkPos c : exitController.getTransferEnergy())
                             {
-                                TileEntity tile = exitController.getWorldObj().getTileEntity(c.posX, c.posY, c.posZ);
+                                TileEntity tile = exitController.getWorld().getTileEntity(getPos());
 
                                 if (tile != null && tile instanceof TileTransferEnergy)
                                 {
@@ -233,7 +231,7 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
     }
 
     @Override
-    public boolean canConnectEnergy(ForgeDirection from)
+    public boolean canConnectEnergy(EnumFacing from)
     {
         return true;
     }
@@ -252,8 +250,8 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
         return other == this;
     }
 
-    @Override
-    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate)
+    //todo maybe override
+    public int extractEnergy(EnumFacing from, int maxExtract, boolean simulate)
     {
         return storage.extractEnergy(maxExtract, simulate);
     }
@@ -273,7 +271,7 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
     }
 
     @Override
-    public int getEnergyStored(ForgeDirection from)
+    public int getEnergyStored(EnumFacing from)
     {
         return storage.getEnergyStored();
     }
@@ -286,7 +284,7 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
     }
 
     @Override
-    public int getMaxEnergyStored(ForgeDirection from)
+    public int getMaxEnergyStored(EnumFacing from)
     {
         return storage.getMaxEnergyStored();
     }
@@ -311,4 +309,5 @@ public class TileTransferEnergy extends TileFrameTransfer implements IEnergyHand
     {
         return new Object[]{isSending};
     }
+
 }
