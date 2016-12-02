@@ -1,6 +1,7 @@
+/*
 package enhancedportals.client;
 
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import net.minecraftforge.fml.client.registry.ISimpleBlockRenderingHandler;
 import enhancedportals.block.BlockPortal;
 import enhancedportals.tile.TileController;
 import enhancedportals.tile.TilePortal;
@@ -169,3 +170,4 @@ public class PortalRenderer implements ISimpleBlockRenderingHandler
         return true;
     }
 }
+*/

@@ -3,13 +3,14 @@ package enhancedportals.client;
 import enhancedportals.network.ClientProxy;
 import enhancedportals.network.ClientProxy.ParticleSet;
 import enhancedportals.tile.TileController;
-import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import java.awt.*;
 
-public class PortalParticleFX extends EntityFX
+public class PortalParticleFX extends Particle
 {
     private float portalParticleScale;
     private double portalPosX, portalPosY, portalPosZ;
@@ -29,11 +30,11 @@ public class PortalParticleFX extends EntityFX
 
         portalParticleScale = particleScale = rand.nextFloat() * 0.2F + 0.5F;
         particleMaxAge = (int) (Math.random() * 10.0D) + 40;
-        noClip = true;
+        //noClip = true;
 
         if (controller == null || ClientProxy.particleSets.size() <= controller.activeTextureData.getParticleType())
         {
-            setDead();
+            setExpired();
         }
         else
         {
@@ -50,10 +51,9 @@ public class PortalParticleFX extends EntityFX
     /**
      * Gets how bright this entity is.
      */
-    @Override
     public float getBrightness(float par1)
     {
-        float var2 = super.getBrightness(par1);
+        float var2 = super.getBrightnessForRender(par1);
         float var3 = (float) particleAge / (float) particleMaxAge;
         var3 = var3 * var3 * var3 * var3;
         return var2 * (1.0F - var3) + var3;
@@ -86,9 +86,9 @@ public class PortalParticleFX extends EntityFX
     {
         if (particle == null) // Kill it off as soon as possible
         {
-            if (!isDead)
+            if (!isExpired)
             {
-                setDead();
+                setExpired();
             }
 
             return;
@@ -115,7 +115,7 @@ public class PortalParticleFX extends EntityFX
                 }
                 else
                 {
-                    setDead();
+                    setExpired();
                     return;
                 }
             }
@@ -126,18 +126,18 @@ public class PortalParticleFX extends EntityFX
 
         if (particleAge++ >= particleMaxAge)
         {
-            setDead();
+            setExpired();
         }
     }
 
     @Override
-    public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7)
+    public void renderParticle(VertexBuffer worldRender, Entity entity,float particleTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
-        float var8 = (particleAge + par2) / particleMaxAge;
+        float var8 = (particleAge + particleTicks) / particleMaxAge;
         var8 = 1.0F - var8;
         var8 *= var8;
         var8 = 1.0F - var8;
         particleScale = portalParticleScale * var8;
-        super.renderParticle(par1Tessellator, par2, par3, par4, par5, par6, par7);
+        super.renderParticle(worldRender, entity, particleTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
     }
 }

@@ -1,6 +1,7 @@
-package enhancedportals.registration;
+package enhancedportals.client.render.items;
 
 import enhancedportals.Reference;
+import enhancedportals.registration.registerItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
