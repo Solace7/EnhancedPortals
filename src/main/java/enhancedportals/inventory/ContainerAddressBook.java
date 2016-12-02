@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.ArrayList;
@@ -85,10 +85,10 @@ public class ContainerAddressBook extends BaseContainer
 
     void updateAll()
     {
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
-            EnhancedPortals.packetPipeline.sendTo(new PacketGui(addressBook), (EntityPlayerMP) icrafting);
+            IContainerListener iContainerListener = (IContainerListener) listeners.get(i);
+            EnhancedPortals.packetPipeline.sendTo(new PacketGui(addressBook), (EntityPlayerMP) iContainerListener);
         }
     }
 

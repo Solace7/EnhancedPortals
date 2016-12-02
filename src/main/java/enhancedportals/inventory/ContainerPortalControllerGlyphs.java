@@ -1,6 +1,6 @@
 package enhancedportals.inventory;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.client.gui.BaseGui;
 import enhancedportals.client.gui.GuiPortalControllerGlyphs;
@@ -34,7 +34,7 @@ public class ContainerPortalControllerGlyphs extends BaseContainer
             try
             {
                 controller.setIdentifierUnique(new GlyphIdentifier(tag.getString("uid")));
-                player.openGui(EnhancedPortals.instance, GuiHandler.PORTAL_CONTROLLER_A, controller.getWorldObj(), controller.xCoord, controller.yCoord, controller.zCoord);
+                player.openGui(EnhancedPortals.instance, GuiHandler.PORTAL_CONTROLLER_A, controller.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
             }
             catch (PortalException e)
             {

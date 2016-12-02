@@ -5,7 +5,7 @@ import enhancedportals.client.gui.GuiTransferEnergy;
 import enhancedportals.tile.TileTransferEnergy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ContainerTransferEnergy extends BaseContainer
@@ -27,18 +27,18 @@ public class ContainerTransferEnergy extends BaseContainer
         byte isSending = (byte) (energy.isSending ? 1 : 0);
         int en = energy.storage.getEnergyStored();
 
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
+            IContainerListener iContainerListener = (IContainerListener)this.listeners.get(i);
 
             if (wasSending != isSending)
             {
-                icrafting.sendProgressBarUpdate(this, 0, isSending);
+                iContainerListener.sendProgressBarUpdate(this, 0, isSending);
             }
 
             if (lastEnergy != en)
             {
-                icrafting.sendProgressBarUpdate(this, 1, en);
+                iContainerListener.sendProgressBarUpdate(this, 1, en);
             }
 
             wasSending = isSending;

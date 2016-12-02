@@ -8,7 +8,7 @@ import enhancedportals.tile.TileRedstoneInterface;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ContainerRedstoneInterface extends BaseContainer
@@ -29,13 +29,13 @@ public class ContainerRedstoneInterface extends BaseContainer
         super.detectAndSendChanges();
         int fs = ri.isOutput ? 1 : 0, ss = ri.state;
 
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
+            IContainerListener iContainerListener = (IContainerListener) this.listeners.get(i);
 
             if (firstState != fs || secondState != ss)
             {
-                EnhancedPortals.packetPipeline.sendTo(new PacketGui(ri), (EntityPlayerMP) icrafting);
+                EnhancedPortals.packetPipeline.sendTo(new PacketGui(ri), (EntityPlayerMP) iContainerListener);
             }
         }
 

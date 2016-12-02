@@ -9,7 +9,7 @@ import enhancedportals.tile.TileController;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ContainerNetworkInterface extends BaseContainer
@@ -33,20 +33,19 @@ public class ContainerNetworkInterface extends BaseContainer
         int cPortals = controller.getHasIdentifierNetwork() ? EnhancedPortals.proxy.networkManager.getNetworkSize(controller.getIdentifierNetwork()) : -1;
         String glyphs = controller.getIdentifierNetwork() == null ? "" : controller.getIdentifierNetwork().getGlyphString();
 
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
-
+            IContainerListener iContainerListener = (IContainerListener)this.listeners.get(i);
             if (cPortals != connectedPortals)
             {
-                icrafting.sendProgressBarUpdate(this, 0, cPortals);
+                iContainerListener.sendProgressBarUpdate(this, 0, cPortals);
             }
 
             if (!glyphs.equals(oldGlyphs))
             {
                 NBTTagCompound t = new NBTTagCompound();
                 t.setString("nid", glyphs);
-                EnhancedPortals.packetPipeline.sendTo(new PacketGuiData(t), (EntityPlayerMP) icrafting);
+                EnhancedPortals.packetPipeline.sendTo(new PacketGuiData(t), (EntityPlayerMP) iContainerListener);
             }
         }
 

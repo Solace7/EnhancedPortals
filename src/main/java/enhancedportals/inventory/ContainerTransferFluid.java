@@ -5,8 +5,9 @@ import enhancedportals.client.gui.GuiTransferFluid;
 import enhancedportals.tile.TileTransferFluid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class ContainerTransferFluid extends BaseContainer
@@ -26,25 +27,27 @@ public class ContainerTransferFluid extends BaseContainer
     {
         super.detectAndSendChanges();
         byte isSending = (byte) (fluid.isSending ? 1 : 0);
+        //todo getFluid
+
         int fID = fluid.tank.getFluid() != null ? fluid.tank.getFluid().getFluidID() : -1, fAmt = fluid.tank.getFluidAmount();
 
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
+            IContainerListener iContainerListener = (IContainerListener)this.listeners.get(i);
 
             if (wasSending != isSending)
             {
-                icrafting.sendProgressBarUpdate(this, 0, isSending);
+                iContainerListener.sendProgressBarUpdate(this, 0, isSending);
             }
 
             if (fluidID != fID)
             {
-                icrafting.sendProgressBarUpdate(this, 1, fID);
+                iContainerListener.sendProgressBarUpdate(this, 1, fID);
             }
 
             if (fluidAmt != fAmt)
             {
-                icrafting.sendProgressBarUpdate(this, 2, fAmt);
+                iContainerListener.sendProgressBarUpdate(this, 2, fAmt);
             }
 
             wasSending = isSending;
@@ -74,7 +77,7 @@ public class ContainerTransferFluid extends BaseContainer
             }
             else
             {
-                fluid.tank.setFluid(new FluidStack(val, 0));
+                fluid.tank.setFluid(new FluidStack(id, val));
             }
         }
         else if (id == 2)

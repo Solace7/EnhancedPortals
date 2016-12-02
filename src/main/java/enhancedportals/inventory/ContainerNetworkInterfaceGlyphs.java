@@ -27,7 +27,7 @@ public class ContainerNetworkInterfaceGlyphs extends BaseContainer
         if (tag.hasKey("nid"))
         {
             controller.setIdentifierNetwork(new GlyphIdentifier(tag.getString("nid")));
-            player.openGui(EnhancedPortals.instance, GuiHandler.NETWORK_INTERFACE_A, controller.getWorldObj(), controller.xCoord, controller.yCoord, controller.zCoord);
+            player.openGui(EnhancedPortals.instance, GuiHandler.NETWORK_INTERFACE_A, controller.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }
 }

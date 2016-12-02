@@ -10,7 +10,7 @@ import enhancedportals.utility.GeneralUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class ContainerDimensionalBridgeStabilizer extends BaseContainer
@@ -37,31 +37,31 @@ public class ContainerDimensionalBridgeStabilizer extends BaseContainer
         int currentInstability = stabilizer.instability;
         int currentPowerState = stabilizer.powerState;
 
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
+            IContainerListener iContainerListener = (IContainerListener)this.listeners.get(i);
 
             if (lastPower != currentPower || lastMaxPower != currentMaxPower)
             {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setInteger("energy", currentPower);
                 tag.setInteger("max", currentMaxPower);
-                EnhancedPortals.packetPipeline.sendTo(new PacketGuiData(tag), (EntityPlayerMP) icrafting);
+                EnhancedPortals.packetPipeline.sendTo(new PacketGuiData(tag), (EntityPlayerMP) iContainerListener);
             }
 
             if (lastPortals != currentPortals)
             {
-                icrafting.sendProgressBarUpdate(this, 2, currentPortals);
+                iContainerListener.sendProgressBarUpdate(this, 2, currentPortals);
             }
 
             if (lastInstability != currentInstability)
             {
-                icrafting.sendProgressBarUpdate(this, 3, currentInstability);
+                iContainerListener.sendProgressBarUpdate(this, 3, currentInstability);
             }
 
             if (lastPowerState != currentPowerState)
             {
-                icrafting.sendProgressBarUpdate(this, 4, currentPowerState);
+                iContainerListener.sendProgressBarUpdate(this, 4, currentPowerState);
             }
         }
 

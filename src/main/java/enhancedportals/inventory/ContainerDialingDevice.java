@@ -9,7 +9,7 @@ import enhancedportals.tile.TileDialingDevice;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class ContainerDialingDevice extends BaseContainer
             if (dial.glyphList.size() > id)
             {
                 GlyphElement e = dial.glyphList.get(id);
-                player.openGui(EnhancedPortals.instance, GuiHandler.DIALING_DEVICE_D, dial.getWorldObj(), dial.xCoord, dial.yCoord, dial.zCoord);
+                player.openGui(EnhancedPortals.instance, GuiHandler.DIALING_DEVICE_D, dial.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
                 EnhancedPortals.packetPipeline.sendTo(new PacketTextureData(e.name, e.identifier.getGlyphString(), e.texture), (EntityPlayerMP) player);
             }
         }
@@ -98,10 +98,10 @@ public class ContainerDialingDevice extends BaseContainer
 
     void updateAll()
     {
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
-            EnhancedPortals.packetPipeline.sendTo(new PacketGui(dial), (EntityPlayerMP) icrafting);
+            IContainerListener iContainerListener = (IContainerListener) listeners.get(i);
+            EnhancedPortals.packetPipeline.sendTo(new PacketGui(dial), (EntityPlayerMP) iContainerListener);
         }
     }
 }

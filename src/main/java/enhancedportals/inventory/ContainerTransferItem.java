@@ -5,7 +5,7 @@ import enhancedportals.client.gui.GuiTransferItem;
 import enhancedportals.tile.TileTransferItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -27,13 +27,13 @@ public class ContainerTransferItem extends BaseContainer
         super.detectAndSendChanges();
         byte isSending = (byte) (item.isSending ? 1 : 0);
 
-        for (int i = 0; i < crafters.size(); i++)
+        for (int i = 0; i < this.listeners.size(); i++)
         {
-            ICrafting icrafting = (ICrafting) crafters.get(i);
+            IContainerListener iContainerListener = (IContainerListener)this.listeners.get(i);
 
             if (wasSending != isSending)
             {
-                icrafting.sendProgressBarUpdate(this, 0, isSending);
+                iContainerListener.sendProgressBarUpdate(this, 0, isSending);
             }
 
             wasSending = isSending;
