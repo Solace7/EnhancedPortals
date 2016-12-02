@@ -2,7 +2,6 @@ package enhancedportals.client.gui.tabs;
 
 import enhancedportals.client.gui.BaseGui;
 import enhancedportals.client.gui.button.GuiRGBSlider;
-import enhancedportals.item.ItemNanobrush;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 
@@ -18,7 +17,7 @@ public class TabColour extends BaseTab
         maxHeight += 89;
         maxWidth = 116;
         name = "gui.colour";
-        icon = ItemNanobrush.texture;
+        //icon = ItemNanobrush.texture;
         sliderR = r;
         sliderG = g;
         sliderB = b;
@@ -26,10 +25,10 @@ public class TabColour extends BaseTab
         buttonReset = rs;
     }
 
-    @Override
+//    @Override
     public void draw()
     {
-        super.draw();
+//        super.draw();
         sliderR.visible = sliderG.visible = sliderB.visible = buttonSave.visible = buttonReset.visible = isFullyOpened();
     }
 

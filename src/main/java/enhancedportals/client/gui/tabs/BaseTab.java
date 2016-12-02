@@ -2,14 +2,9 @@ package enhancedportals.client.gui.tabs;
 
 import enhancedportals.client.gui.BaseGui;
 import enhancedportals.utility.Localization;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +30,7 @@ public abstract class BaseTab
     public static final ResourceLocation DEFAULT_TEXTURE_LEFT = new ResourceLocation("enhancedportals", "textures/gui/tab_left.png");
     public static final ResourceLocation DEFAULT_TEXTURE_RIGHT = new ResourceLocation("enhancedportals", "textures/gui/tab_right.png");
     public int titleColour = 0xFFFFFF;
-    public IIcon icon;
+//    public IIcon icon;
     public ItemStack stack;
     public String name;
     public int currentShiftX = 0;
@@ -68,7 +63,9 @@ public abstract class BaseTab
         }
     }
 
-    void drawIcon(IIcon icon, int x, int y, int spriteSheet)
+    //todo DrawIcon & ItemStack
+
+  /*  void drawIcon(IIcon icon, int x, int y, int spriteSheet)
     {
         if (spriteSheet == 0)
         {
@@ -93,9 +90,9 @@ public abstract class BaseTab
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.disableStandardItemLighting();
         }
-    }
+    }*/
 
-    public void draw()
+   /* public void draw()
     {
         drawBackground();
 
@@ -167,7 +164,7 @@ public abstract class BaseTab
             setFullyOpen();
         }
     }
-
+*/
     public abstract void drawFullyOpened();
 
     public abstract void drawFullyClosed();
@@ -176,7 +173,7 @@ public abstract class BaseTab
     {
         posX = x;
         posY = y;
-        draw();
+        //draw();
     }
 
     protected void drawBackground()
@@ -188,7 +185,7 @@ public abstract class BaseTab
         GL11.glColor4f(colorR, colorG, colorB, 1.0F);
         parent.getTextureManager().bindTexture(texture);
 
-        if (side == 0)
+/*        if (side == 0)
         {
             drawTexturedModalRect(posX - currentWidth, posY + 4, 0, 256 - currentHeight + 4, 4, currentHeight - 4);
             drawTexturedModalRect(posX - currentWidth + 4, posY, 256 - currentWidth + 4, 0, currentWidth - 4, 4);
@@ -201,7 +198,7 @@ public abstract class BaseTab
             drawTexturedModalRect(posX + 4, posY, 256 - currentWidth + 4, 0, currentWidth - 4, 4);
             drawTexturedModalRect(posX, posY, 0, 0, 4, 4);
             drawTexturedModalRect(posX + 4, posY + 4, 256 - currentWidth + 4, 256 - currentHeight + 4, currentWidth - 4, currentHeight - 4);
-        }
+        }*/
 
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0F);
     }
@@ -343,7 +340,7 @@ public abstract class BaseTab
 
     }
 
-    void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
+    /*void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
     {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
@@ -354,7 +351,7 @@ public abstract class BaseTab
         tessellator.addVertexWithUV(par1 + par5, par2 + 0, 0, (par3 + par5) * f, (par4 + 0) * f1);
         tessellator.addVertexWithUV(par1 + 0, par2 + 0, 0, (par3 + 0) * f, (par4 + 0) * f1);
         tessellator.draw();
-    }
+    }*/
 
     public void addTooltip(List<String> list)
     {

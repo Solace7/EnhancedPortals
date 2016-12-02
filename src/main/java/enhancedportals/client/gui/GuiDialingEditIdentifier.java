@@ -1,5 +1,6 @@
 package enhancedportals.client.gui;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
@@ -13,7 +14,6 @@ import enhancedportals.tile.TileDialingDevice;
 import enhancedportals.utility.Localization;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumChatFormatting;
 
 import java.util.Random;
 
@@ -95,8 +95,8 @@ public class GuiDialingEditIdentifier extends BaseGui
 
         if (isShiftKeyDown())
         {
-            buttonCancel.displayString = EnumChatFormatting.AQUA + Localization.get("gui.clear");
-            buttonSave.displayString = (isCtrlKeyDown() ? EnumChatFormatting.GOLD : EnumChatFormatting.AQUA) + Localization.get("gui.random");
+            buttonCancel.displayString = ChatFormatting.AQUA + Localization.get("gui.clear");
+            buttonSave.displayString = (isCtrlKeyDown() ? ChatFormatting.GOLD : ChatFormatting.AQUA) + Localization.get("gui.random");
         }
         else
         {

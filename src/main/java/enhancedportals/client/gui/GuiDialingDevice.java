@@ -30,7 +30,7 @@ public class GuiDialingDevice extends BaseGui
         texture = new ResourceLocation("enhancedportals", "textures/gui/dialling_device.png");
         xSize = CONTAINER_WIDTH;
         dial = d;
-        controller = dial.getPortalController();
+        controller = dial.getPortalController(p.getPosition());
         name = "gui.dialDevice";
         setHidePlayerInventory();
     }

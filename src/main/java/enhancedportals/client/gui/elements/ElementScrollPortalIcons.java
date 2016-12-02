@@ -145,7 +145,9 @@ public class ElementScrollPortalIcons extends BaseElement
         int l = posY + 1, k = l + sizeY - 1, selectedIcon = ((GuiTexturePortal) parent).getPTM().getCustomPortalTexture();
         GL11.glColor3f(1f, 1f, 1f);
         parent.getMinecraft().getTextureManager().bindTexture(texture);
-        drawTexturedModalRect(posX + sizeX - 13, posY + 1 + (int) ((k - l - 16) * currentScroll), 244, 226 + (canScroll ? 0 : 15), 12, 15);
+//        drawTexturedModalRect(posX + sizeX - 13, posY + 1 + (int) ((k - l - 16) * currentScroll), 244, 226 + (canScroll ? 0 : 15), 12, 15);
+
+        //todo drawTexturedModalRect
 
         for (int i = 0; i < 27; i++)
         {
@@ -164,7 +166,8 @@ public class ElementScrollPortalIcons extends BaseElement
                 Gui.drawRect(x + 16, y - 1, x + 17, y + 17, 0xFF00FF00);
             }
 
-            parent.drawIcon(ClientProxy.customPortalTextures.get(scrollAmount + i), x, y, 0);
+//            parent.drawIcon(ClientProxy.customPortalTextures.get(scrollAmount + i), x, y, 0);
+            //todo drawIcon
         }
     }
 

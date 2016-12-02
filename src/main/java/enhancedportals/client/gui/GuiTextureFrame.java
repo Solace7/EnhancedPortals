@@ -2,7 +2,6 @@ package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
 import enhancedportals.block.BlockPortal;
-import enhancedportals.client.gui.button.GuiBetterSlider;
 import enhancedportals.client.gui.button.GuiRGBSlider;
 import enhancedportals.client.gui.elements.ElementFakeItemSlot;
 import enhancedportals.client.gui.elements.ElementScrollFrameIcons;
@@ -55,7 +54,7 @@ public class GuiTextureFrame extends BaseGui implements IFakeSlotHandler
         String s = Localization.get("gui.facade");
         getFontRenderer().drawString(s, xSize - 30 - getFontRenderer().getStringWidth(s), containerSize - 12, 0x404040);
 
-        itemRenderer.renderWithColor = false;
+        //itemRenderer.renderWithColor = false;
         ItemStack portal = new ItemStack(BlockPortal.instance, 0, 0);
         Color portalColour = new Color(getPTM().getPortalColour()), particleColour = new Color(0x0077D8);
         int particleType = 0;
@@ -82,14 +81,16 @@ public class GuiTextureFrame extends BaseGui implements IFakeSlotHandler
 
         GL11.glColor3f(portalColour.getRed() / 255F, portalColour.getGreen() / 255F, portalColour.getBlue() / 255F);
 
-        if (getPTM().hasCustomPortalTexture())
+        //todo drawIconNoReset
+
+        /*if (getPTM().hasCustomPortalTexture())
         {
             drawIconNoReset(ClientProxy.customPortalTextures.get(getPTM().getCustomPortalTexture()), 9, containerSize - 16, 0);
         }
         else
         {
             drawItemStack(portal, 9, containerSize - 16);
-        }
+        }*/
 
         GL11.glColor3f(particleColour.getRed() / 255F, particleColour.getGreen() / 255F, particleColour.getBlue() / 255F);
         getTextureManager().bindTexture(new ResourceLocation("textures/particle/particles.png"));
@@ -164,7 +165,9 @@ public class GuiTextureFrame extends BaseGui implements IFakeSlotHandler
         addElement(new ElementFakeItemSlot(this, xSize - 24, containerSize - 16, getPTM().getFrameItem()));
     }
 
-    @Override
+
+    //todo Mouse moved
+/*    @Override
     protected void mouseMovedOrUp(int par1, int par2, int par3)
     {
         super.mouseMovedOrUp(par1, par2, par3);
@@ -180,7 +183,7 @@ public class GuiTextureFrame extends BaseGui implements IFakeSlotHandler
                 }
             }
         }
-    }
+    }*/
 
     public void iconSelected(int icon)
     {
@@ -216,7 +219,7 @@ public class GuiTextureFrame extends BaseGui implements IFakeSlotHandler
 
         Block b = Block.getBlockFromItem(s.getItem());
 
-        if (b == Blocks.air || !b.isBlockNormalCube())
+        if (b == Blocks.AIR )
         {
             return false;
         }

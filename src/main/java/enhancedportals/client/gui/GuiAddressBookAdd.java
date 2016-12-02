@@ -23,6 +23,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class GuiAddressBookAdd extends BaseGui
 {
@@ -57,7 +58,7 @@ public class GuiAddressBookAdd extends BaseGui
     }
 
     @Override
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(char par1, int par2) throws IOException
     {
         if (!text.textboxKeyTyped(par1, par2))
         {
@@ -107,7 +108,7 @@ public class GuiAddressBookAdd extends BaseGui
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         text.mouseClicked(mouseX, mouseY, mouseButton);
@@ -216,7 +217,7 @@ public class GuiAddressBookAdd extends BaseGui
         }
         else if (button.id == 1)
         {
-            ItemStack stack = player.getCurrentEquippedItem();
+            ItemStack stack = player.getHeldItemMainhand();
 
             NBTTagCompound tag = new NBTTagCompound();
             tag.setString("name", text.getText());

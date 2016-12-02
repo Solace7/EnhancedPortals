@@ -92,12 +92,13 @@ public class GuiBetterSlider extends GuiButton
     @Override
     public void drawButton(Minecraft par1Minecraft, int par2, int par3)
     {
+        //todo drawButton field_146123?
         if (visible)
         {
-            FontRenderer fontrenderer = par1Minecraft.fontRenderer;
-            par1Minecraft.getTextureManager().bindTexture(buttonTextures);
+            FontRenderer fontrenderer = par1Minecraft.fontRendererObj;
+//            par1Minecraft.getTextureManager().bindTexture(buttonTextures);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            field_146123_n = par2 >= xPosition && par3 >= yPosition && par2 < xPosition + width && par3 < yPosition + height;
+//            field_146123_n = par2 >= xPosition && par3 >= yPosition && par2 < xPosition + width && par3 < yPosition + height;
             drawTexturedModalRect(xPosition, yPosition, 0, 46, width / 2, height);
             drawTexturedModalRect(xPosition + width / 2, yPosition, 199 - width / 2, 46, 1 + width / 2, height);
             mouseDragged(par1Minecraft, par2, par3);
@@ -107,10 +108,10 @@ public class GuiBetterSlider extends GuiButton
             {
                 l = -6250336;
             }
-            else if (field_146123_n)
+         /*   else if (field_146123_n)
             {
                 l = 16777120;
-            }
+            }*/
 
             drawCenteredString(fontrenderer, displayString, xPosition + width / 2, yPosition + (height - 8) / 2, l);
         }

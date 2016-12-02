@@ -9,6 +9,7 @@ import enhancedportals.tile.TileController;
 import enhancedportals.utility.Localization;
 import net.minecraft.entity.player.EntityPlayer;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class GuiNetworkInterface extends BaseGui
@@ -26,7 +27,7 @@ public class GuiNetworkInterface extends BaseGui
     }
 
     @Override
-    protected void mouseClicked(int x, int y, int button)
+    protected void mouseClicked(int x, int y, int button) throws IOException
     {
         super.mouseClicked(x, y, button);
 

@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.input.Keyboard;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class GuiAddressEdit extends GuiAddressBookAdd
@@ -55,7 +56,7 @@ public class GuiAddressEdit extends GuiAddressBookAdd
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         if (receivedData)
         {
@@ -70,7 +71,7 @@ public class GuiAddressEdit extends GuiAddressBookAdd
     }
 
     @Override
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(char par1, int par2) throws IOException
     {
         if (receivedData)
         {

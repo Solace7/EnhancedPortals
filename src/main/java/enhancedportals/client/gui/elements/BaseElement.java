@@ -1,7 +1,6 @@
 package enhancedportals.client.gui.elements;
 
 import enhancedportals.client.gui.BaseGui;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -129,7 +128,8 @@ public abstract class BaseElement
 
     public abstract void update();
 
-    void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
+    //todo tesr for drawing
+   /* void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
     {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
@@ -140,5 +140,5 @@ public abstract class BaseElement
         tessellator.addVertexWithUV(par1 + par5, par2 + 0, 0, (par3 + par5) * f, (par4 + 0) * f1);
         tessellator.addVertexWithUV(par1 + 0, par2 + 0, 0, (par3 + 0) * f, (par4 + 0) * f1);
         tessellator.draw();
-    }
+    }*/
 }

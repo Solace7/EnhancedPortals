@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class EPGuiConfig extends GuiConfig
+public class GuiEPConfig extends GuiConfig
 {
 
-    public EPGuiConfig(GuiScreen guiScreen)
+    public GuiEPConfig(GuiScreen guiScreen)
     {
         super(guiScreen,
                 getConfigElements(),

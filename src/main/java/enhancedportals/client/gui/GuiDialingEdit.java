@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import org.lwjgl.input.Keyboard;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class GuiDialingEdit extends GuiDialingAdd
@@ -69,7 +70,7 @@ public class GuiDialingEdit extends GuiDialingAdd
     }
 
     @Override
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(char par1, int par2) throws IOException
     {
         if (receivedData)
         {

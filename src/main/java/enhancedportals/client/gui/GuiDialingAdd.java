@@ -23,6 +23,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class GuiDialingAdd extends BaseGui
 {
@@ -55,7 +56,7 @@ public class GuiDialingAdd extends BaseGui
     }
 
     @Override
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(char par1, int par2) throws IOException
     {
         if (!text.textboxKeyTyped(par1, par2))
         {

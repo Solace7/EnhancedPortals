@@ -8,22 +8,17 @@ import enhancedportals.utility.Localization;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseGui extends GuiContainer
 {
-    RenderItem itemRenderer = new RenderItem();
+    //RenderItem itemRenderer = new RenderItem();
     protected static final ResourceLocation playerInventoryTexture = new ResourceLocation("enhancedportals", "textures/gui/player_inventory.png"), resizableInterfaceTexture = new ResourceLocation("enhancedportals", "textures/gui/resizable_interace.png");
     protected int mouseX = 0, mouseY = 0;
     protected ResourceLocation texture;
@@ -54,8 +49,10 @@ public abstract class BaseGui extends GuiContainer
         return ySize;
     }
 
+    //todo Icon Fixing
+
     @Override
-    protected void keyTyped(char par1, int par2)
+    protected void keyTyped(char par1, int par2) throws IOException
     {
         for (BaseElement e : elements)
         {
@@ -94,7 +91,7 @@ public abstract class BaseGui extends GuiContainer
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
@@ -322,7 +319,7 @@ public abstract class BaseGui extends GuiContainer
     {
         if (name != null)
         {
-            getFontRenderer().drawString(Localization.get(name), (xSize - mc.fontRenderer.getStringWidth(Localization.get(name))) / 2, 6, 0x404040);
+            getFontRenderer().drawString(Localization.get(name), (xSize - mc.fontRendererObj.getStringWidth(Localization.get(name))) / 2, 6, 0x404040);
         }
 
         BaseElement element = getElementAtPosition(mouseX, mouseY);
@@ -394,12 +391,12 @@ public abstract class BaseGui extends GuiContainer
         return getMinecraft().renderEngine;
     }
 
-    public RenderItem getItemRenderer()
+    /*public RenderItem getItemRenderer()
     {
         return itemRenderer;
-    }
+    }*/
 
-    public void drawIconNoReset(IIcon icon, int x, int y, int spriteSheet)
+/*    public void drawIconNoReset(IIcon icon, int x, int y, int spriteSheet)
     {
         if (spriteSheet == 0)
         {
@@ -411,15 +408,11 @@ public abstract class BaseGui extends GuiContainer
         }
 
         drawTexturedModelRectFromIcon(x, y, icon, 16, 16);
-    }
+    }*/
 
-    public void drawIcon(IIcon icon, int x, int y, int spriteSheet)
-    {
-        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0F);
-        drawIconNoReset(icon, x, y, spriteSheet);
-    }
+    //todo drawItemStack
 
-    public void drawItemStack(ItemStack stack, int x, int y)
+   /* public void drawItemStack(ItemStack stack, int x, int y)
     {
         if (stack != null)
         {
@@ -429,15 +422,17 @@ public abstract class BaseGui extends GuiContainer
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.disableStandardItemLighting();
         }
-    }
+    }*/
 
-    public void drawItemStackOverlay(ItemStack stack, int x, int y)
+    //todo drawItemStackOverlay
+
+ /*   public void drawItemStackOverlay(ItemStack stack, int x, int y)
     {
         if (stack != null)
         {
             getItemRenderer().renderItemOverlayIntoGUI(getFontRenderer(), getTextureManager(), stack, x, y);
         }
-    }
+    }*/
 
     int drawSplitString(int x, int y, int w, String s, int colour)
     {
