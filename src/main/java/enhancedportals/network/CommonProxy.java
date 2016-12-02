@@ -1,15 +1,7 @@
 package enhancedportals.network;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.relauncher.Side;
+import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.EnhancedPortals;
-import enhancedportals.Reference;
-import enhancedportals.crafting.ThermalExpansion;
-import enhancedportals.item.ItemPortalModule;
 import enhancedportals.portal.NetworkManager;
 import enhancedportals.registration.registerRecipes;
 import enhancedportals.utility.ConfigurationHandler;
@@ -17,13 +9,14 @@ import enhancedportals.utility.CreativeTabEP3;
 import enhancedportals.utility.LogHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraftforge.common.ChestGenHooks;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,12 +25,11 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import static enhancedportals.EnhancedPortals.MOD_NAME;
-import static enhancedportals.utility.ConfigurationHandler.*;
+import static enhancedportals.utility.ConfigurationHandler.CONFIG_RECIPES_VANILLA;
+import static enhancedportals.utility.ConfigurationHandler.CONFIG_UPDATE_NOTIFIER;
 
 public class CommonProxy
 {
-
-
     public int gogglesRenderIndex = 0;
     public NetworkManager networkManager;
 
@@ -59,17 +51,17 @@ public class CommonProxy
 
     }
 
-    public void waitForController(ChunkCoordinates controller, ChunkCoordinates frame)
+    public void waitForController(ChunkPos controller, ChunkPos frame)
     {
 
     }
 
-    public ArrayList<ChunkCoordinates> getControllerList(ChunkCoordinates controller)
+    public ArrayList<ChunkPos> getControllerList(ChunkPos controller)
     {
         return null;
     }
 
-    public void clearControllerList(ChunkCoordinates controller)
+    public void clearControllerList(ChunkPos controller)
     {
 
     }
@@ -86,21 +78,22 @@ public class CommonProxy
 
     public File getWorldDir()
     {
-        return new File(getBaseDir(), DimensionManager.getWorld(0).getSaveHandler().getWorldDirectoryName());
+        return new File(getBaseDir(), DimensionManager.getWorld(0).getSaveHandler().getWorldDirectory().getAbsolutePath());
     }
 
     public void miscSetup()
     {
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(new ItemStack(ItemPortalModule.instance, 1, 4), 1, 1, 2));
+        //todo Add dungeon loot
+        //ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(new ItemStack(ItemPortalModule.instance, 1, 4), 1, 1, 2));
     }
 
     public static boolean Notify(EntityPlayer player, String lateVers)
     {
         if (CONFIG_UPDATE_NOTIFIER)
         {
-            //player.addChatMessage(new ChatComponentText(EnumChatFormatting.GREEN + "Your framework for tampering with subatomic particles has been rendered obsolete"));
+            //player.addChatMessage(new ChatComponentText(ChatFormatting.GREEN + "Your framework for tampering with subatomic particles has been rendered obsolete"));
 
-            player.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "[EnhancedPortals] " + EnumChatFormatting.WHITE + "has been updated to v" + lateVers + " :: You are running v" + EnhancedPortals.MOD_VERSION));
+            player.addChatMessage(new TextComponentString(ChatFormatting.GOLD + "[EnhancedPortals] " + ChatFormatting.WHITE + "has been updated to v" + lateVers + " :: You are running v" + EnhancedPortals.MOD_VERSION));
             return true;
         }
         else
@@ -117,10 +110,10 @@ public class CommonProxy
             registerRecipes.initShaped();
             registerRecipes.initShapeless();
         }
-        if (CONFIG_RECIPES_TE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
+        /*if (CONFIG_RECIPES_TE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
         {
             ThermalExpansion.registerRecipes();
-        }
+        }*/
 
 
         try

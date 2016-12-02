@@ -1,15 +1,17 @@
 package enhancedportals.network;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import enhancedportals.client.PortalRenderer;
+import enhancedportals.client.render.blocks.BlockRenderRegister;
+import enhancedportals.client.render.items.ItemRenderRegister;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
 import net.minecraft.client.resources.IReloadableResourceManager;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,6 +20,24 @@ import java.util.Random;
 
 public class ClientProxy extends CommonProxy
 {
+
+    public void preInit(FMLPreInitializationEvent e)
+    {
+        super.preInit(e);
+    }
+
+
+    public void init(FMLInitializationEvent e){
+        super.init(e);
+        ItemRenderRegister.init();
+        BlockRenderRegister.init();
+    }
+
+    public void postInit(FMLPostInitializationEvent e) {
+
+    }
+
+
     public class ParticleSet
     {
         public int[] frames;
@@ -37,16 +57,16 @@ public class ClientProxy extends CommonProxy
     public static String saveName;
     public static int editingID = -1;
 
-    public static ArrayList<IIcon> customFrameTextures = new ArrayList<IIcon>();
-    public static ArrayList<IIcon> customPortalTextures = new ArrayList<IIcon>();
+//    public static ArrayList<IIcon> customFrameTextures = new ArrayList<IIcon>();
+//    public static ArrayList<IIcon> customPortalTextures = new ArrayList<IIcon>();
     public static ArrayList<ParticleSet> particleSets = new ArrayList<ParticleSet>();
     public static Random random = new Random();
 
-    public static HashMap<ChunkCoordinates, ArrayList<ChunkCoordinates>> waitingForController = new HashMap<ChunkCoordinates, ArrayList<ChunkCoordinates>>();
+    public static HashMap<ChunkPos, ArrayList<ChunkPos>> waitingForController = new HashMap<ChunkPos, ArrayList<ChunkPos>>();
 
 
     @Override
-    public void waitForController(ChunkCoordinates controller, ChunkCoordinates frame)
+    public void waitForController(ChunkPos controller, ChunkPos frame)
     {
         if (waitingForController.containsKey(controller))
         {
@@ -54,19 +74,19 @@ public class ClientProxy extends CommonProxy
         }
         else
         {
-            waitingForController.put(controller, new ArrayList<ChunkCoordinates>());
+            waitingForController.put(controller, new ArrayList<ChunkPos>());
             waitingForController.get(controller).add(frame);
         }
     }
 
     @Override
-    public ArrayList<ChunkCoordinates> getControllerList(ChunkCoordinates controller)
+    public ArrayList<ChunkPos> getControllerList(ChunkPos controller)
     {
         return waitingForController.get(controller);
     }
 
     @Override
-    public void clearControllerList(ChunkCoordinates controller)
+    public void clearControllerList(ChunkPos controller)
     {
         waitingForController.remove(controller);
     }
@@ -89,7 +109,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public File getWorldDir()
     {
-        return new File(getBaseDir(), "saves/" + DimensionManager.getWorld(0).getSaveHandler().getWorldDirectoryName());
+        return new File(getBaseDir(), "saves/" + DimensionManager.getWorld(0).getSaveHandler().getWorldDirectory().getAbsoluteFile());
     }
 
     @Override
@@ -125,9 +145,9 @@ public class ClientProxy extends CommonProxy
         particleSets.add(new ParticleSet(2, new int[]{82}));
         particleSets.add(new ParticleSet(2, new int[]{83}));
 
-        // Rendering
-        PortalRenderer.ID = RenderingRegistry.getNextAvailableRenderId();
-        RenderingRegistry.registerBlockHandler(PortalRenderer.ID, new PortalRenderer());
+        // Todo Rendering
+//        PortalRenderer.ID = RenderingRegistry.getNextAvailableRenderId();
+//        RenderingRegistry.registerBlockHandler(PortalRenderer.ID, new PortalRenderer());
     }
 
     /*public void registergoggles() {

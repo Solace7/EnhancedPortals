@@ -1,6 +1,6 @@
 package enhancedportals.network.packet;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import enhancedportals.inventory.BaseContainer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

@@ -3,6 +3,7 @@ package enhancedportals.network.packet;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 
 public class PacketRerender extends PacketEP
 {
@@ -13,11 +14,11 @@ public class PacketRerender extends PacketEP
 
     }
 
-    public PacketRerender(int x, int y, int z)
+    public PacketRerender(BlockPos pos)
     {
-        posX = x;
-        posY = y;
-        posZ = z;
+        posX = pos.getX();
+        posY = pos.getY();
+        posZ = pos.getZ();
     }
 
     @Override
@@ -39,6 +40,7 @@ public class PacketRerender extends PacketEP
     @Override
     public void handleClientSide(EntityPlayer player)
     {
+        //todo markBlockForUpdate
         player.worldObj.markBlockForUpdate(posX, posY, posZ);
     }
 

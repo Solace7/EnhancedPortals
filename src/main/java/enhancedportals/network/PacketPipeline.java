@@ -1,13 +1,5 @@
 package enhancedportals.network;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.FMLEmbeddedChannel;
-import cpw.mods.fml.common.network.FMLOutboundHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
-import cpw.mods.fml.common.network.internal.FMLProxyPacket;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import enhancedportals.network.packet.PacketEP;
 import enhancedportals.tile.TileEP;
 import io.netty.buffer.ByteBuf;
@@ -20,6 +12,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.FMLEmbeddedChannel;
+import net.minecraftforge.fml.common.network.FMLOutboundHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.*;
 
@@ -71,7 +72,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
     @Override
     protected void encode(ChannelHandlerContext ctx, PacketEP msg, List<Object> out) throws Exception
     {
-        ByteBuf buffer = Unpooled.buffer();
+        PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
         Class<? extends PacketEP> clazz = msg.getClass();
 
         if (!packets.contains(msg.getClass()))
@@ -82,7 +83,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
         byte discriminator = (byte) packets.indexOf(clazz);
         buffer.writeByte(discriminator);
         msg.encodeInto(ctx, buffer);
-        FMLProxyPacket proxyPacket = new FMLProxyPacket(buffer.copy(), ctx.channel().attr(NetworkRegistry.FML_CHANNEL).get());
+        FMLProxyPacket proxyPacket = new FMLProxyPacket(buffer, ctx.channel().attr(NetworkRegistry.FML_CHANNEL).get());
         out.add(proxyPacket);
     }
 
@@ -145,7 +146,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
     /**
      * Send this message to the specified player.
      * <p/>
-     * Adapted from CPW's code in cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
+     * Adapted from CPW's code in net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
      *
      * @param message The message to send
      * @param player  The player to send it to
@@ -160,7 +161,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
     /**
      * Send this message to everyone.
      * <p/>
-     * Adapted from CPW's code in cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
+     * Adapted from CPW's code in net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
      *
      * @param message The message to send
      */
@@ -173,10 +174,10 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
     /**
      * Send this message to everyone within a certain range of a point.
      * <p/>
-     * Adapted from CPW's code in cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
+     * Adapted from CPW's code in net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
      *
      * @param message The message to send
-     * @param point   The {@link cpw.mods.fml.common.network.NetworkRegistry.TargetPoint} around which to send
+     * @param point   The {@link net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint} around which to send
      */
     public void sendToAllAround(PacketEP message, NetworkRegistry.TargetPoint point)
     {
@@ -187,13 +188,13 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
 
     public void sendToAllAround(PacketEP message, TileEP tile)
     {
-        sendToAllAround(message, new TargetPoint(tile.getWorldObj().provider.dimensionId, tile.xCoord + 0.5, tile.yCoord + 0.5, tile.zCoord + 0.5, 128.0));
+        sendToAllAround(message, new TargetPoint(tile.getWorld().provider.getDimension(), tile.getPos().getX() + 0.5, tile.getPos().getY() + 0.5, tile.getPos().getZ() + 0.5, 128.0));
     }
 
     /**
      * Send this message to everyone within the supplied dimension.
      * <p/>
-     * Adapted from CPW's code in cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
+     * Adapted from CPW's code in net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
      *
      * @param message     The message to send
      * @param dimensionId The dimension id to target
@@ -208,7 +209,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
     /**
      * Send this message to the server.
      * <p/>
-     * Adapted from CPW's code in cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper
+     * Adapted from CPW's code in net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper
      *
      * @param message The message to send
      */

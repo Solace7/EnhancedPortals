@@ -1,7 +1,7 @@
 package enhancedportals.network.packet;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import enhancedportals.client.gui.GuiAddressEdit;
 import enhancedportals.client.gui.GuiDialingEdit;
 import enhancedportals.network.ClientProxy;
