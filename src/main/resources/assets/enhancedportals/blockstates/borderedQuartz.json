@@ -1,5 +1,5 @@
 {
-  "parent": "builtin/generated",
-  "textures": {
+  "variants": {
+    "normal": {"model": "enhancedportals:borderedQuartz"}
   }
 }
