@@ -1,6 +1,5 @@
 package enhancedportals.network;
 
-import cpw.mods.fml.common.network.IGuiHandler;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.client.gui.*;
 import enhancedportals.inventory.*;
@@ -10,44 +9,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
+
+import static enhancedportals.Reference.GuiEnums.GUI_ADDRESS_BOOK.*;
+import static enhancedportals.Reference.GuiEnums.GUI_CONTROLLER.*;
+import static enhancedportals.Reference.GuiEnums.GUI_DIAL.*;
+import static enhancedportals.Reference.GuiEnums.GUI_MISC.*;
+import static enhancedportals.Reference.GuiEnums.GUI_TEXTURE.*;
+import static enhancedportals.Reference.GuiEnums.GUI_TRANFER.*;
 
 public class GuiHandler implements IGuiHandler
 {
-    public static final int PORTAL_CONTROLLER_A = 0;
-    public static final int PORTAL_CONTROLLER_B = 1;
-    public static final int NETWORK_INTERFACE_A = 2;
-    public static final int NETWORK_INTERFACE_B = 3;
-    public static final int DIALING_DEVICE_A = 4;
-    public static final int DIALING_DEVICE_B = 5;
-    public static final int DIALING_DEVICE_C = 6;
-    public static final int DIALING_DEVICE_D = 7;
-    public static final int DIALING_DEVICE_E = 26;
-    public static final int TEXTURE_A = 8;
-    public static final int TEXTURE_B = 9;
-    public static final int TEXTURE_C = 10;
-    public static final int TEXTURE_DIALING_EDIT_A = 11;
-    public static final int TEXTURE_DIALING_EDIT_B = 12;
-    public static final int TEXTURE_DIALING_EDIT_C = 13;
-    public static final int TEXTURE_DIALING_SAVE_A = 14;
-    public static final int TEXTURE_DIALING_SAVE_B = 15;
-    public static final int TEXTURE_DIALING_SAVE_C = 16;
-    public static final int REDSTONE_INTERFACE = 17;
-    public static final int MODULE_MANIPULATOR = 20;
-    public static final int TRANSFER_FLUID = 21;
-    public static final int TRANSFER_ENERGY = 22;
-    public static final int TRANSFER_ITEM = 23;
-    public static final int DIMENSIONAL_BRIDGE_STABILIZER = 24;
-    public static final int ADDRESS_BOOK_A = 27;
-    public static final int ADDRESS_BOOK_B = 29;
-    public static final int ADDRESS_BOOK_C = 30;
-    public static final int ADDRESS_BOOK_D = 31;
-    public static final int ADDRESS_BOOK_E = 32;
-    public static final int ADDRESS_DIALING = 28;
 
     public static void openGui(EntityPlayer player, TileEntity tile, int gui)
     {
-        player.openGui(EnhancedPortals.instance, gui, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
+        player.openGui(EnhancedPortals.instance, gui, tile.getWorld(), tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ());
     }
 
     public static void openGui(EntityPlayer player, int gui)
@@ -58,7 +36,7 @@ public class GuiHandler implements IGuiHandler
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        ItemStack stack = player.getCurrentEquippedItem();
+        ItemStack stack = player.getHeldItemMainhand();
 
         if (stack != null && stack.getItem() instanceof ItemAddressBook)
         {
@@ -66,29 +44,29 @@ public class GuiHandler implements IGuiHandler
 
             ItemAddressBook addressBook = (ItemAddressBook) i;
 
-            if (ID == ADDRESS_BOOK_A)
+            if (ID == AB_A.ordinal())
             {
                 return new GuiAddressBook(addressBook, player);
             }
-            else if (ID == ADDRESS_BOOK_B)
+            else if (ID == AB_B.ordinal())
             {
                 return new GuiAddressManual(addressBook, player);
             }
-            else if (ID == ADDRESS_BOOK_C)
+            else if (ID == AB_C.ordinal())
             {
                 return new GuiAddressBookAdd(addressBook, player);
             }
-            else if (ID == ADDRESS_BOOK_D)
+            else if (ID == AB_D.ordinal())
             {
                 return new GuiAddressEdit(addressBook, player);
             }
-            else if (ID == ADDRESS_BOOK_E)
+            else if (ID == AB_E.ordinal())
             {
                 return new GuiAddressEditIdentifier(addressBook, player);
             }
         }
 
-        TileEntity t = world.getTileEntity(x, y, z);
+        TileEntity t = world.getTileEntity(new BlockPos(x, y, z));
 
         if (!(t instanceof TileEP))
         {
@@ -97,103 +75,103 @@ public class GuiHandler implements IGuiHandler
 
         TileEP tile = (TileEP) t;
 
-        if (ID == PORTAL_CONTROLLER_A)
+        if (ID == CONTROLLER_A.ordinal())
         {
             return new GuiPortalController((TileController) tile, player);
         }
-        else if (ID == PORTAL_CONTROLLER_B)
+        else if (ID == CONTROLLER_B.ordinal())
         {
             return new GuiPortalControllerGlyphs((TileController) tile, player);
         }
-        else if (ID == REDSTONE_INTERFACE)
+        else if (ID == REDSTONE_INTERFACE.ordinal())
         {
             return new GuiRedstoneInterface((TileRedstoneInterface) tile, player);
         }
-        else if (ID == NETWORK_INTERFACE_A)
+        else if (ID == NETWORK_INTERFACE_A.ordinal())
         {
             return new GuiNetworkInterface((TileController) tile, player);
         }
-        else if (ID == NETWORK_INTERFACE_B)
+        else if (ID == NETWORK_INTERFACE_B.ordinal())
         {
             return new GuiNetworkInterfaceGlyphs((TileController) tile, player);
         }
-        else if (ID == MODULE_MANIPULATOR)
+        else if (ID == MODULE_MANIPULATOR.ordinal())
         {
             return new GuiModuleManipulator((TilePortalManipulator) tile, player);
         }
-        else if (ID == DIMENSIONAL_BRIDGE_STABILIZER)
+        else if (ID == DIM_BRIDGE_STABILIZER.ordinal())
         {
             return new GuiDimensionalBridgeStabilizer((TileStabilizerMain) tile, player);
         }
-        else if (ID == DIALING_DEVICE_A)
+        else if (ID == DIAL_A.ordinal())
         {
             return new GuiDialingDevice((TileDialingDevice) tile, player);
         }
-        else if (ID == DIALING_DEVICE_B)
+        else if (ID == DIAL_B.ordinal())
         {
             return new GuiDialingManual((TileDialingDevice) tile, player);
         }
-        else if (ID == DIALING_DEVICE_C)
+        else if (ID == DIAL_C.ordinal())
         {
             return new GuiDialingAdd((TileDialingDevice) tile, player);
         }
-        else if (ID == DIALING_DEVICE_D)
+        else if (ID == DIAL_D.ordinal())
         {
             return new GuiDialingEdit((TileDialingDevice) tile, player);
         }
-        else if (ID == DIALING_DEVICE_E)
+        else if (ID == DIAL_E.ordinal())
         {
             return new GuiDialingEditIdentifier((TileDialingDevice) tile, player);
         }
-        else if (ID == TEXTURE_A)
+        else if (ID == TEXTURE_A.ordinal())
         {
             return new GuiTextureFrame((TileController) tile, player);
         }
-        else if (ID == TEXTURE_B)
+        else if (ID == TEXTURE_B.ordinal())
         {
             return new GuiTexturePortal((TileController) tile, player);
         }
-        else if (ID == TEXTURE_C)
+        else if (ID == TEXTURE_C.ordinal())
         {
             return new GuiTextureParticle((TileController) tile, player);
         }
-        else if (ID == TEXTURE_DIALING_SAVE_A)
+        else if (ID == TEXTURE_DIAL_SAVE_A.ordinal())
         {
             return new GuiDialingEditFrame((TileDialingDevice) tile, player, false);
         }
-        else if (ID == TEXTURE_DIALING_SAVE_B)
+        else if (ID == TEXTURE_DIAL_SAVE_B.ordinal())
         {
             return new GuiDialingEditPortal((TileDialingDevice) tile, player, false);
         }
-        else if (ID == TEXTURE_DIALING_SAVE_C)
+        else if (ID == TEXTURE_DIAL_SAVE_C.ordinal())
         {
             return new GuiDialingEditParticle((TileDialingDevice) tile, player, false);
         }
-        else if (ID == TEXTURE_DIALING_EDIT_A)
+        else if (ID == TEXTURE_DIAL_EDIT_A.ordinal())
         {
             return new GuiDialingEditFrame((TileDialingDevice) tile, player, true);
         }
-        else if (ID == TEXTURE_DIALING_EDIT_B)
+        else if (ID == TEXTURE_DIAL_EDIT_B.ordinal())
         {
             return new GuiDialingEditPortal((TileDialingDevice) tile, player, true);
         }
-        else if (ID == TEXTURE_DIALING_EDIT_C)
+        else if (ID == TEXTURE_DIAL_EDIT_C.ordinal())
         {
             return new GuiDialingEditParticle((TileDialingDevice) tile, player, true);
         }
-        else if (ID == TRANSFER_FLUID)
+        else if (ID == TRANSFER_FLUID.ordinal())
         {
             return new GuiTransferFluid((TileTransferFluid) tile, player);
         }
-        else if (ID == TRANSFER_ENERGY)
+        else if (ID == TRANSFER_ENERGY.ordinal())
         {
             return new GuiTransferEnergy((TileTransferEnergy) tile, player);
         }
-        else if (ID == TRANSFER_ITEM)
+        else if (ID == TRANSFER_ITEM.ordinal())
         {
             return new GuiTransferItem((TileTransferItem) tile, player);
         }
-        else if (ID == ADDRESS_DIALING)
+        else if (ID == ADDRESS_DIAL.ordinal())
         {
             if (stack != null && stack.getItem() instanceof ItemAddressBook)
             {
@@ -210,37 +188,37 @@ public class GuiHandler implements IGuiHandler
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
 
-        ItemStack stack = player.getCurrentEquippedItem();
+        ItemStack stack = player.getHeldItemMainhand();
 
         if (stack != null && stack.getItem() instanceof ItemAddressBook)
         {
             Item i = stack.getItem();
             ItemAddressBook addressBook = (ItemAddressBook) i;
 
-            if (ID == ADDRESS_BOOK_A)
+            if (ID == AB_A.ordinal())
             {
                 addressBook.readFromNBT(stack);
                 return new ContainerAddressBook(addressBook, player.inventory);
             }
-            else if (ID == ADDRESS_BOOK_B)
+            else if (ID == AB_B.ordinal())
             {
                 return new ContainerAddressManual(addressBook, player.inventory);
             }
-            else if (ID == ADDRESS_BOOK_C)
+            else if (ID == AB_C.ordinal())
             {
                 return new ContainerAddressBookAdd(addressBook, player.inventory);
             }
-            else if (ID == ADDRESS_BOOK_D)
+            else if (ID == AB_D.ordinal())
             {
                 return new ContainerAddressEdit(addressBook, player.inventory);
             }
-            else if (ID == ADDRESS_BOOK_E)
+            else if (ID == AB_E.ordinal())
             {
                 return new ContainerAddressEditIdentifier(addressBook, player.inventory);
             }
         }
 
-        TileEntity t = world.getTileEntity(x, y, z);
+        TileEntity t = world.getTileEntity(new BlockPos(x, y, z));
 
         if (!(t instanceof TileEP))
         {
@@ -249,91 +227,91 @@ public class GuiHandler implements IGuiHandler
 
         TileEP tile = (TileEP) t;
 
-        if (ID == PORTAL_CONTROLLER_A)
+        if (ID == CONTROLLER_A.ordinal())
         {
             return new ContainerPortalController((TileController) tile, player.inventory);
         }
-        else if (ID == PORTAL_CONTROLLER_B)
+        else if (ID == CONTROLLER_B.ordinal())
         {
             return new ContainerPortalControllerGlyphs((TileController) tile, player.inventory);
         }
-        else if (ID == REDSTONE_INTERFACE)
+        else if (ID == REDSTONE_INTERFACE.ordinal())
         {
             return new ContainerRedstoneInterface((TileRedstoneInterface) tile, player.inventory);
         }
-        else if (ID == NETWORK_INTERFACE_A)
+        else if (ID == NETWORK_INTERFACE_A.ordinal())
         {
             return new ContainerNetworkInterface((TileController) tile, player.inventory);
         }
-        else if (ID == NETWORK_INTERFACE_B)
+        else if (ID == NETWORK_INTERFACE_B.ordinal())
         {
             return new ContainerNetworkInterfaceGlyphs((TileController) tile, player.inventory);
         }
-        else if (ID == MODULE_MANIPULATOR)
+        else if (ID == MODULE_MANIPULATOR.ordinal())
         {
             return new ContainerModuleManipulator((TilePortalManipulator) tile, player.inventory);
         }
-        else if (ID == DIMENSIONAL_BRIDGE_STABILIZER)
+        else if (ID == DIM_BRIDGE_STABILIZER.ordinal())
         {
             return new ContainerDimensionalBridgeStabilizer((TileStabilizerMain) tile, player.inventory);
         }
-        else if (ID == DIALING_DEVICE_A)
+        else if (ID == DIAL_A.ordinal())
         {
             return new ContainerDialingDevice((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == DIALING_DEVICE_B)
+        else if (ID == DIAL_B.ordinal())
         {
             return new ContainerDialingManual((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == DIALING_DEVICE_C)
+        else if (ID == DIAL_C.ordinal())
         {
             return new ContainerDialingAdd((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == DIALING_DEVICE_D)
+        else if (ID == DIAL_D.ordinal())
         {
             return new ContainerDialingEdit((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == DIALING_DEVICE_E)
+        else if (ID == DIAL_E.ordinal())
         {
             return new ContainerDialingEditIdentifier((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == TEXTURE_A)
+        else if (ID == TEXTURE_A.ordinal())
         {
             return new ContainerTextureFrame((TileController) tile, player.inventory);
         }
-        else if (ID == TEXTURE_B)
+        else if (ID == TEXTURE_B.ordinal())
         {
             return new ContainerTexturePortal((TileController) tile, player.inventory);
         }
-        else if (ID == TEXTURE_C)
+        else if (ID == TEXTURE_C.ordinal())
         {
             return new ContainerTextureParticle((TileController) tile, player.inventory);
         }
-        else if (ID == TEXTURE_DIALING_EDIT_A || ID == TEXTURE_DIALING_SAVE_A)
+        else if (ID == TEXTURE_DIAL_EDIT_A.ordinal() || ID == TEXTURE_DIAL_SAVE_A.ordinal())
         {
             return new ContainerDialingEditTexture((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == TEXTURE_DIALING_EDIT_B || ID == TEXTURE_DIALING_SAVE_B)
+        else if (ID == TEXTURE_DIAL_EDIT_B.ordinal() || ID == TEXTURE_DIAL_SAVE_B.ordinal())
         {
             return new ContainerDialingEditPortal((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == TEXTURE_DIALING_EDIT_C || ID == TEXTURE_DIALING_SAVE_C)
+        else if (ID == TEXTURE_DIAL_EDIT_C.ordinal() || ID == TEXTURE_DIAL_SAVE_C.ordinal())
         {
             return new ContainerDialingEditParticle((TileDialingDevice) tile, player.inventory);
         }
-        else if (ID == TRANSFER_FLUID)
+        else if (ID == TRANSFER_FLUID.ordinal())
         {
             return new ContainerTransferFluid((TileTransferFluid) tile, player.inventory);
         }
-        else if (ID == TRANSFER_ENERGY)
+        else if (ID == TRANSFER_ENERGY.ordinal())
         {
             return new ContainerTransferEnergy((TileTransferEnergy) tile, player.inventory);
         }
-        else if (ID == TRANSFER_ITEM)
+        else if (ID == TRANSFER_ITEM.ordinal())
         {
             return new ContainerTransferItem((TileTransferItem) tile, player.inventory);
         }
-        else if (ID == ADDRESS_DIALING)
+        else if (ID == ADDRESS_DIAL.ordinal())
         {
             if (stack != null && stack.getItem() instanceof ItemAddressBook)
             {
