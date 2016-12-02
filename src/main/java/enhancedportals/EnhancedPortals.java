@@ -1,18 +1,10 @@
 package enhancedportals;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
+import amerifrance.guideapi.api.GuideAPI;
 import enhancedportals.block.BlockFrame;
+import enhancedportals.client.render.blocks.BlockRenderRegister;
+import enhancedportals.client.render.items.ItemRenderRegister;
 import enhancedportals.guidebook.WormholeTunnelManual;
-import enhancedportals.lookingglass.LookingGlassPanelRenderer;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.network.PacketPipeline;
@@ -23,6 +15,19 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
@@ -40,13 +45,10 @@ public class EnhancedPortals
 
     public static final PacketPipeline packetPipeline = new PacketPipeline();
 
-    public static LookingGlassPanelRenderer lookingGlassRenderer;
-
     @Instance(MOD_ID)
     public static EnhancedPortals instance;
 
-    @SidedProxy(clientSide = Reference.EPMod.proxyClient, serverSide = Reference.EPMod.proxyCommon)
-
+    @SidedProxy(clientSide = Reference.EPMod.proxyClient, serverSide = Reference.EPMod.proxyServer)
     public static CommonProxy proxy;
 
     public EnhancedPortals()
@@ -60,11 +62,16 @@ public class EnhancedPortals
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+        FMLCommonHandler.instance().bus().register(new enhancedportals.network.LogOnHandler());
+        MinecraftForge.EVENT_BUS.register(new enhancedportals.network.LogOnHandler());
         registerBlocks.init();
         registerItems.init();
         registerPackets.init();
         registerPotions.init();
         registerTiles.init();
+        WormholeTunnelManual.registerManual();
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+            GuideAPI.setModel(WormholeTunnelManual.epManual);
 
         proxy.preInit(event);
         packetPipeline.initalise();
@@ -75,12 +82,15 @@ public class EnhancedPortals
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        FMLInterModComms.sendMessage("LookingGlass", "API", "enhancedportals.lookingglass.LookingGlassIntegration" +
-                ".register");
-        proxy.miscSetup();
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         LogHelper.info("I am tampering with subatomic particles...what could go wrong?");
+        proxy.miscSetup();
+        proxy.setupCrafting();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
+        if(event.getSide() == Side.CLIENT) {
+            ItemRenderRegister.init();
+            BlockRenderRegister.init();
+        }
     }
 
     /**
@@ -110,18 +120,10 @@ public class EnhancedPortals
     {
         packetPipeline.postInitialise();
         initializeComputerCraft();
-        proxy.setupCrafting();
-        WormholeTunnelManual.registerGuide();
+        WormholeTunnelManual.registerManual();
 
-        if (event.getSide() == Side.CLIENT)
-        {
-            FMLCommonHandler.instance().bus().register(new enhancedportals.network.LogOnHandler());
-        }
-    }
-
-    public LookingGlassPanelRenderer getLookingGlassRenderer()
-    {
-        return this.instance.lookingGlassRenderer;
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
+            WormholeTunnelManual.registerCategories();
     }
 
     @EventHandler
@@ -133,15 +135,15 @@ public class EnhancedPortals
     @SubscribeEvent
     public void onEntityUpdate(LivingUpdateEvent event)
     {
-        PotionEffect effect = event.entityLiving.getActivePotionEffect(registerPotions.featherfallPotion);
+        PotionEffect effect = event.getEntityLiving().getActivePotionEffect(registerPotions.featherfallPotion);
 
         if (effect != null)
         {
-            event.entityLiving.fallDistance = 0f;
+            event.getEntityLiving().fallDistance = 0f;
 
-            if (event.entityLiving.getActivePotionEffect(registerPotions.featherfallPotion).getDuration() <= 0)
+            if (event.getEntityLiving().getActivePotionEffect(registerPotions.featherfallPotion).getDuration() <= 0)
             {
-                event.entityLiving.removePotionEffect(registerPotions.featherfallPotion.id);
+                event.getEntityLiving().removePotionEffect(registerPotions.featherfallPotion);
             }
         }
     }
@@ -149,7 +151,7 @@ public class EnhancedPortals
     @SubscribeEvent
     public void worldSave(WorldEvent.Save event)
     {
-        if (!event.world.isRemote)
+        if (!event.getWorld().isRemote)
         {
             proxy.networkManager.saveAllData();
         }
