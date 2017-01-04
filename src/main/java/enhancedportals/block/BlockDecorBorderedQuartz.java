@@ -11,8 +11,8 @@ public class BlockDecorBorderedQuartz extends BlockDecoration
     {
         super(n);
         instance = this;
-        setRegistryName("borderedQuartz");
-        connectedTextures = new ConnectedTexturesDetailed(BlockFrame.connectedTextures.toString(), this, -1);
+        setRegistryName("decor_frame");
+//        connectedTextures = new ConnectedTexturesDetailed(BlockFrame.connectedTextures.toString(), this, -1);
     }
 
 }

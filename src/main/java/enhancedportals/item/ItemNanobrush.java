@@ -16,7 +16,7 @@ public class ItemNanobrush extends ItemEP
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("enhancedportals:nanobrush");
+        setUnlocalizedName("nanobrush");
         setMaxStackSize(1);
         setRegistryName("nanobrush");
     }

@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 public class ConnectedTexturesDetailed extends ConnectedTextures
 {
     private static final short[] connectionToIndex = {0, 36, 12, 24, 1, 37, 13, 25, 3, 39, 15, 27, 2, 38, 14, 26}, transformIndex26 = {26, 45, 44, 22, 33, 23, 35, 9, 32, 34, 10, 21, 11, 8, 20, 46};
+    //todo connectedTextures
 
     protected ConnectedTexturesDetailed()
     {

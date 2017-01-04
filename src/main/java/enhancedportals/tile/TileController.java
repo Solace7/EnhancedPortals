@@ -1,11 +1,10 @@
 package enhancedportals.tile;
 
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.Reference;
 import enhancedportals.item.ItemLocationCard;
+import enhancedportals.item.ItemNanobrush;
+import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketRerender;
 import enhancedportals.portal.*;
 import enhancedportals.utility.*;
@@ -32,8 +31,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.ArrayList;
 import java.util.Random;
 
-@InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_COMPUTERCRAFT), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
-public class TileController extends TileFrame implements IPeripheral, SimpleComponent
+@InterfaceList(value = {@Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
+public class TileController extends TileFrame implements SimpleComponent
 {
     enum ControlState
     {
@@ -70,7 +69,7 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
 
 //todo Activate
 
-    /*@Override
+//    @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         if (player.isSneaking())
@@ -108,12 +107,12 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
                 {
                     if (GeneralUtils.isWrench(stack))
                     {
-                        GuiHandler.openGui(player, this, GuiHandler.PORTAL_CONTROLLER_A);
+                        GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_CONTROLLER.CONTROLLER_A.ordinal());
                         return true;
                     }
                     else if (stack.getItem() == ItemNanobrush.instance)
                     {
-                        GuiHandler.openGui(player, this, GuiHandler.TEXTURE_A);
+                        GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_A.ordinal());
                         return true;
                     }
                 }
@@ -126,7 +125,7 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
 
         return false;
     }
-*/
+
     @Override
     public void addDataToPacket(NBTTagCompound tag)
     {
@@ -520,19 +519,6 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         return tagCompound;
     }
 
-    /////////////////////////////////
-    //ComputerCraft & OpenComputers//
-    /////////////////////////////////
-
-    //ComputerCraft
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void attach(IComputerAccess computer)
-    {
-
-    }
-
     /**
      * Updates the data of the destination portal.
      *
@@ -547,49 +533,38 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         //todo worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception
+    public void setPortalColour(int colour)
     {
-        if (method == 0)
-        {
-            return new Object[]{isPortalActive()};
-        }
-        else if (method == 1)
-        {
-            return comp_GetUniqueIdentifier();
-        }
-        else if (method == 2)
-        {
-            return comp_SetUniqueIdentifier(arguments);
-        }
-        else if (method == 3)
-        {
-            return new Object[]{activeTextureData.getFrameColour()};
-        }
-        else if (method == 4)
-        {
-            return comp_SetFrameColour(arguments);
-        }
-        else if (method == 5)
-        {
-            return new Object[]{activeTextureData.getPortalColour()};
-        }
-        else if (method == 6)
-        {
-            return comp_SetPortalColour(arguments);
-        }
-        else if (method == 7)
-        {
-            return new Object[]{activeTextureData.getParticleColour()};
-        }
-        else if (method == 8)
-        {
-            return comp_SetParticleColour(arguments);
-        }
-
-        return null;
+        activeTextureData.setPortalColour(colour);
+        markDirty();
+        sendUpdatePacket(true);
     }
+
+    public void setPortalItem(ItemStack s)
+    {
+        activeTextureData.setPortalItem(s);
+        markDirty();
+        sendUpdatePacket(true);
+    }
+
+    public void setUID(GlyphIdentifier i)
+    {
+        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
+        {
+            if (i != null && i.size() == 0)
+            {
+                i = null;
+            }
+
+            uID = i;
+        }
+    }
+
+    //////////////////
+    //OpenComputers//
+    /////////////////
+
+
 
 
     Object[] comp_GetUniqueIdentifier()
@@ -691,20 +666,6 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         }
 
         return comp_GetUniqueIdentifier();
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void detach(IComputerAccess computer)
-    {
-
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public boolean equals(IPeripheral other)
-    {
-        return other == this;
     }
 
     @Override
@@ -871,13 +832,6 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         return EnhancedPortals.proxy.networkManager.getPortalIdentifier(getDimensionCoordinates());
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String[] getMethodNames()
-    {
-        return new String[]{"isPortalActive", "getUniqueIdentifier", "setUniqueIdentifier", "getFrameColour", "setFrameColour", "getPortalColour", "setPortalColour", "getParticleColour", "setParticleColour"};
-    }
-
     public TilePortalManipulator getModuleManipulator()
     {
         if (moduleManipulator != null)
@@ -897,20 +851,6 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
     public ArrayList<ChunkPos> getNetworkInterfaces()
     {
         return networkInterfaces;
-    }
-
-    @Callback(direct = true, doc = "function():number -- Returns the hexadecimal colour of the particles.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getParticleColour(Context context, Arguments args) throws Exception
-    {
-        return new Object[]{activeTextureData.getParticleColour()};
-    }
-
-    @Callback(direct = true, doc = "function():number -- Returns the hexadecimal colour of the portal.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getPortalColour(Context context, Arguments args) throws Exception
-    {
-        return new Object[]{activeTextureData.getPortalColour()};
     }
 
     @Override
@@ -944,19 +884,6 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         return transferItems;
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String getType()
-    {
-        return "ep_controller";
-    }
-
-    @Callback(direct = true, doc = "function():string -- Returns a string containing the numeric glyph IDs of each glyph in the unique identifier.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getUniqueIdentifier(Context context, Arguments args) throws Exception
-    {
-        return comp_GetUniqueIdentifier();
-    }
 
     public boolean isFinalized()
     {
@@ -969,13 +896,6 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
     public boolean isPortalActive()
     {
         return cachedDestinationUID != null;
-    }
-
-    @Callback(direct = true, doc = "function():boolean -- Returns true if the portal has an active connection.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] isPortalActive(Context context, Arguments args)
-    {
-        return new Object[]{isPortalActive()};
     }
 
     @Override
@@ -1268,12 +1188,7 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         markDirty();
     }
 
-    @Callback(doc = "function(color:number):boolean -- Sets the portal frame colour to the specified hexadecimal string.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] setFrameColour(Context context, Arguments args) throws Exception
-    {
-        return comp_SetFrameColour(ComputerUtils.argsToArray(args));
-    }
+
 
     public void setFrameColour(int colour)
     {
@@ -1397,14 +1312,6 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
             nID = i;
         }
     }
-
-    @Callback(doc = "function(color:number):boolean -- Sets the particle colour to the specified hexadecimal string.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] setParticleColour(Context context, Arguments args) throws Exception
-    {
-        return comp_SetParticleColour(ComputerUtils.argsToArray(args));
-    }
-
     public void setParticleColour(int colour)
     {
         activeTextureData.setParticleColour(colour);
@@ -1419,6 +1326,14 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         sendUpdatePacket(false); // Particles are generated by querying this
     }
 
+    @Callback(doc = "function(color:number):boolean -- Sets the particle colour to the specified hexadecimal string.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] setParticleColour(Context context, Arguments args) throws Exception
+    {
+        return comp_SetParticleColour(ComputerUtils.argsToArray(args));
+    }
+
+
     @Callback(doc = "function(color:number):boolean -- Sets the portal colour to the specified hexadecimal string.")
     @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
     public Object[] setPortalColour(Context context, Arguments args) throws Exception
@@ -1426,37 +1341,39 @@ public class TileController extends TileFrame implements IPeripheral, SimpleComp
         return comp_SetPortalColour(ComputerUtils.argsToArray(args));
     }
 
-    public void setPortalColour(int colour)
-    {
-        activeTextureData.setPortalColour(colour);
-        markDirty();
-        sendUpdatePacket(true);
-    }
-
-    public void setPortalItem(ItemStack s)
-    {
-        activeTextureData.setPortalItem(s);
-        markDirty();
-        sendUpdatePacket(true);
-    }
-
-    public void setUID(GlyphIdentifier i)
-    {
-        if (FMLCommonHandler.instance().getEffectiveSide().isClient())
-        {
-            if (i != null && i.size() == 0)
-            {
-                i = null;
-            }
-
-            uID = i;
-        }
-    }
-
     @Callback(doc = "function(uuid:string):string -- Sets the UID to the specified string. If no string is given it will reset the UID. Must be given as numbers separated by spaces.")
     @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
     public Object[] setUniqueIdentifier(Context context, Arguments args) throws Exception
     {
         return comp_SetUniqueIdentifier(ComputerUtils.argsToArray(args));
+    }
+
+    @Callback(direct = true, doc = "function():number -- Returns the hexadecimal colour of the particles.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getParticleColour(Context context, Arguments args) throws Exception
+    {
+        return new Object[]{activeTextureData.getParticleColour()};
+    }
+
+    @Callback(direct = true, doc = "function():number -- Returns the hexadecimal colour of the portal.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getPortalColour(Context context, Arguments args) throws Exception
+    {
+        return new Object[]{activeTextureData.getPortalColour()};
+    }
+
+    @Callback(direct = true, doc = "function():boolean -- Returns true if the portal has an active connection.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] isPortalActive(Context context, Arguments args)
+    {
+        return new Object[]{isPortalActive()};
+    }
+
+
+    @Callback(direct = true, doc = "function():string -- Returns a string containing the numeric glyph IDs of each glyph in the unique identifier.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getUniqueIdentifier(Context context, Arguments args) throws Exception
+    {
+        return comp_GetUniqueIdentifier();
     }
 }

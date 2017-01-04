@@ -1,11 +1,11 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
 import enhancedportals.inventory.ContainerDialingManual;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.tile.TileController;
@@ -101,7 +101,7 @@ public class GuiDialingManual extends BaseGui
             {
                 ClientProxy.saveGlyph = selector.getGlyphIdentifier();
                 ClientProxy.saveName = "Unnamed Portal";
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_C));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_C));
             }
             else
             {
@@ -110,7 +110,7 @@ public class GuiDialingManual extends BaseGui
         }
         else if (button.id == 2) // cancel
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_A));
         }
         else if (button.id == 3) // dial
         {

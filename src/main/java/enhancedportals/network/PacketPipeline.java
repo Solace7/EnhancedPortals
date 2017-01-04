@@ -129,7 +129,7 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Packet
     /**
      * Register your packet with the pipeline. Discriminators are automatically set.
      *
-     * @param clazz the class to register
+     * @param clazz the class to registerRender
      * @return whether registration was successful. Failure may occur if 256 packets have been registered or if the registry already contains this packet
      */
     public boolean registerPacket(Class<? extends PacketEP> clazz)

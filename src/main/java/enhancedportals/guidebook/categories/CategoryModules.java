@@ -4,19 +4,14 @@ import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
-import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.item.ItemBlankPortalModule;
 import enhancedportals.registration.registerRecipes;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static enhancedportals.guidebook.WormholeTunnelManual.categories;
 
 public class CategoryModules
 {
@@ -65,6 +60,7 @@ public class CategoryModules
         lookingGlass.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal.module.8.desc")));
         //todo add looking glass module crafting recipe
 
+/*
 
         entries.add(new EntryUniText(blankModule, "enhancedportals.manual.blank_module.title"));
         entries.add(new EntryUniText(particleDestroy, "item.portal_module.0.name"));
@@ -76,6 +72,7 @@ public class CategoryModules
         entries.add(new EntryUniText(facing, "item.portal_module.6.name"));
         entries.add(new EntryUniText(featherfall, "item.portal_module.7.name"));
         entries.add(new EntryUniText(lookingGlass, "item.portal_module.8.name"));
+*/
 
 
         return entries;

@@ -2,20 +2,20 @@ package enhancedportals.item;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.utility.Localization;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class ItemStabilizer extends ItemBlock
+public class ItemStabilizer extends Item
 {
-    public ItemStabilizer(Block b)
+    public ItemStabilizer()
     {
-        super(b);
+        super();
         setMaxDamage(0);
         setHasSubtypes(true);
+        setRegistryName("bridge_stabilizer");
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

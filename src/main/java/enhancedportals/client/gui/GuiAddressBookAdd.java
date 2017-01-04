@@ -1,6 +1,7 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.block.BlockPortal;
 import enhancedportals.client.gui.elements.ElementGlyphDisplay;
@@ -8,7 +9,6 @@ import enhancedportals.inventory.BaseContainer;
 import enhancedportals.inventory.ContainerAddressBookAdd;
 import enhancedportals.item.ItemAddressBook;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.PortalTextureManager;
@@ -91,7 +91,7 @@ public class GuiAddressBookAdd extends BaseGui
     {
         super.initGui();
 
-        text = new GuiTextField(getFontRenderer(), guiLeft + 7, guiTop + 18, 162, 20);
+        text = new GuiTextField(0,getFontRenderer(), guiLeft + 7, guiTop + 18, 162, 20);
         text.setText(ClientProxy.saveName);
         text.setCursorPosition(0);
 
@@ -130,7 +130,7 @@ public class GuiAddressBookAdd extends BaseGui
 
         GL11.glColor3f(1f, 1f, 1f);
 
-        itemRenderer.renderWithColor = false;
+//        itemRenderer.renderWithColor = false;
         ItemStack frame = new ItemStack(BlockFrame.instance, 0, 0), portal = new ItemStack(BlockPortal.instance, 0, 0);
         Color frameColour = new Color(0xFFFFFF), portalColour = new Color(0xFFFFFF), particleColour = new Color(0x0077D8);
         int particleType = 0;
@@ -165,22 +165,22 @@ public class GuiAddressBookAdd extends BaseGui
 
         if (ClientProxy.saveTexture.hasCustomFrameTexture())
         {
-            drawIconNoReset(ClientProxy.customFrameTextures.get(ClientProxy.saveTexture.getCustomFrameTexture()), 59, 85, 0);
+//            todo drawIconNoReset(ClientProxy.customFrameTextures.get(ClientProxy.saveTexture.getCustomFrameTexture()), 59, 85, 0);
         }
         else
         {
-            drawItemStack(frame, 59, 85);
+//       todo     drawItemStack(frame, 59, 85);
         }
 
         GL11.glColor3f(portalColour.getRed() / 255F, portalColour.getGreen() / 255F, portalColour.getBlue() / 255F);
 
         if (ClientProxy.saveTexture.hasCustomPortalTexture())
         {
-            drawIconNoReset(ClientProxy.customPortalTextures.get(ClientProxy.saveTexture.getCustomPortalTexture()), 80, 85, 0);
+//       todo     drawIconNoReset(ClientProxy.customPortalTextures.get(ClientProxy.saveTexture.getCustomPortalTexture()), 80, 85, 0);
         }
         else
         {
-            drawItemStack(portal, 80, 85);
+//       todo     drawItemStack(portal, 80, 85);
         }
 
         GL11.glColor3f(particleColour.getRed() / 255F, particleColour.getGreen() / 255F, particleColour.getBlue() / 255F);
@@ -213,7 +213,7 @@ public class GuiAddressBookAdd extends BaseGui
     {
         if (button.id == 0)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_B));
         }
         else if (button.id == 1)
         {

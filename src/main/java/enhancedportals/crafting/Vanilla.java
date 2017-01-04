@@ -24,7 +24,8 @@ public class Vanilla {
                 "IQI",
                 "SIS",
             'S', Blocks.STONE, 'Q', Blocks.QUARTZ_BLOCK, 'I', Items.IRON_INGOT));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.REDSTONE_INTERFACE),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType
+                .REDSTONE_INTERFACE.ordinal()),
                 " R ",
                 "RFR",
                 " R ",
@@ -90,13 +91,13 @@ public class Vanilla {
         /////////////////////
 
 
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.NETWORK_INTERFACE), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.PORTAL_CONTROLLER), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.DIALLING_DEVICE), new ItemStack(BlockFrame.instance, 1, BlockFrame.NETWORK_INTERFACE), Items.DIAMOND));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.MODULE_MANIPULATOR), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND, Items.EMERALD, new ItemStack(ItemBlankPortalModule.instance)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.TRANSFER_ENERGY), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.REDSTONE_BLOCK));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.TRANSFER_FLUID), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Items.BUCKET));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.TRANSFER_ITEM), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.CHEST));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.NETWORK_INTERFACE.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.PORTAL_CONTROLLER.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.DIALLING_DEVICE.ordinal()), new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.NETWORK_INTERFACE.ordinal()), Items.DIAMOND));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.MODULE_MANIPULATOR.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND, Items.EMERALD, new ItemStack(ItemBlankPortalModule.instance)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.TRANSFER_ENERGY.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.REDSTONE_BLOCK));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.TRANSFER_FLUID.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Items.BUCKET));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.TRANSFER_ITEM.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.CHEST));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemUpgrade.instance, 1, 2), new ItemStack(ItemUpgrade.instance, 1, 1), Items.DIAMOND));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemUpgrade.instance, 1, 4), new ItemStack(ItemBlankUpgrade.instance), Items.DIAMOND, Items.EMERALD, new ItemStack(ItemBlankPortalModule.instance)));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ItemUpgrade.instance, 1, 7), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL, Items.DIAMOND, Blocks.REDSTONE_BLOCK));

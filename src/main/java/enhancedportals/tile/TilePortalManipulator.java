@@ -1,5 +1,6 @@
 package enhancedportals.tile;
 
+import enhancedportals.Reference;
 import enhancedportals.client.PortalParticleFX;
 import enhancedportals.item.ItemNanobrush;
 import enhancedportals.network.GuiHandler;
@@ -34,12 +35,12 @@ public class TilePortalManipulator extends TileFrame implements IInventory
         {
             if (GeneralUtils.isWrench(stack) && !player.isSneaking())
             {
-                GuiHandler.openGui(player, this, GuiHandler.MODULE_MANIPULATOR);
+                GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_MISC.MODULE_MANIPULATOR.ordinal());
                 return true;
             }
             else if (stack.getItem() == ItemNanobrush.instance)
             {
-                GuiHandler.openGui(player, controller, GuiHandler.TEXTURE_A);
+                GuiHandler.openGui(player, controller, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_A.ordinal());
                 return true;
             }
         }
@@ -264,19 +265,6 @@ public class TilePortalManipulator extends TileFrame implements IInventory
 
         return false;
     }
-
-    public boolean isLookingGlass()
-    {
-        for (ItemStack i : getModules())
-        {
-            if (((IPortalModule) i.getItem()).enableLookingGlass(this, i))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer entityplayer)

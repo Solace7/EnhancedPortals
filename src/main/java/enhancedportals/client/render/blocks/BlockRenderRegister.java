@@ -1,6 +1,5 @@
 package enhancedportals.client.render.blocks;
 
-import enhancedportals.Reference;
 import enhancedportals.registration.registerBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -10,12 +9,10 @@ import net.minecraft.item.Item;
 public final class BlockRenderRegister
 {
 
-    public static String modid = Reference.EPMod.mod_id;
-
     public static void register(Block block)
     {
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new
-                ModelResourceLocation(modid + ":" + block.getUnlocalizedName(), "inventory"));
+                ModelResourceLocation(block.getRegistryName(), "inventory"));
     }
 
     public static void init()

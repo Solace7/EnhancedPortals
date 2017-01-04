@@ -1,8 +1,8 @@
 package enhancedportals.inventory;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.item.ItemAddressBook;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.portal.GlyphElement;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
@@ -29,7 +29,7 @@ public class ContainerAddressEdit extends BaseContainer
             PortalTextureManager ptm = new PortalTextureManager();
             ptm.readFromNBT(tag, "texture");
             addressBook.glyphList.set(tag.getInteger("id"), new GlyphElement(tag.getString("name"), new GlyphIdentifier(tag.getString("uid")), ptm));
-            player.openGui(EnhancedPortals.instance, GuiHandler.ADDRESS_BOOK_A, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+            player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_A.ordinal(), player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }
 }

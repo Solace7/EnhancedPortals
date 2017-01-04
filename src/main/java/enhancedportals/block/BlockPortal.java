@@ -34,13 +34,14 @@ public class BlockPortal extends BlockContainer
 {
     public static BlockPortal instance;
 
-    public BlockPortal(String n)
+    public BlockPortal()
     {
         super(Material.PORTAL);
         instance = this;
         setBlockUnbreakable();
         setResistance(2000);
-        setUnlocalizedName(n);
+        setUnlocalizedName("portal");
+        setRegistryName("portal");
         setLightOpacity(0);
         setSoundType(SoundType.GLASS);
     }

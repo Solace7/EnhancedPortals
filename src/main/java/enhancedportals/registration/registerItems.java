@@ -1,6 +1,6 @@
 package enhancedportals.registration;
 
-import enhancedportals.guidebook.WormholeTunnelManual;
+import enhancedportals.block.BlockFrame;
 import enhancedportals.item.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -14,32 +14,28 @@ public class registerItems
     public static Item itemLocationCard;
     public static Item itemPortalModule;
     public static Item itemUpgrade;
-    public static Item itemBlankPortalMod;
+    public static Item itemBlankPortalModule;
     public static Item itemBlankUpgrade;
     public static Item itemAddressBook;
     public static Item itemDiamondNugget;
+    public static Item itemFrame;
+    public static Item itemStabilizer;
 
-    public static final void init()
+    public static final void preinit()
     {
-        //todo Remove String n parameter from all items
         GameRegistry.register(itemWrench = new ItemWrench());
         GameRegistry.register(itemNanobrush = new ItemNanobrush());
         GameRegistry.register(itemGlasses = new ItemGlasses());
-        GameRegistry.register(itemLocationCard = new ItemLocationCard("location_card"));
-        GameRegistry.register(itemPortalModule = new ItemPortalModule("portal_module"));
-        GameRegistry.register(itemUpgrade = new ItemUpgrade("upgrade"));
-        GameRegistry.register(itemBlankPortalMod = new ItemBlankPortalModule("blank_portal_module"));
+        GameRegistry.register(itemLocationCard = new ItemLocationCard());
+        GameRegistry.register(itemPortalModule = new ItemPortalModule());
+        GameRegistry.register(itemUpgrade = new ItemUpgrade());
+        GameRegistry.register(itemBlankPortalModule = new ItemBlankPortalModule());
         GameRegistry.register(itemBlankUpgrade = new ItemBlankUpgrade());
         GameRegistry.register(itemAddressBook = new ItemAddressBook());
-        GameRegistry.register(itemDiamondNugget = new ItemDiamondNugget());
+        GameRegistry.register(itemDiamondNugget  = new ItemDiamondNugget());
+        GameRegistry.register(itemFrame = new ItemPortalFrame(new BlockFrame()));
+        GameRegistry.register(itemStabilizer = new ItemStabilizer());
 
-        GameRegistry.register(WormholeTunnelManual.epManual);
-
-        /*if (CONFIG_RECIPES_TE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
-        {
-            ThermalExpansion.registerItems();
-            ThermalExpansion.registerMachineRecipes();
-        }*/
     }
 
 

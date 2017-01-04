@@ -1,7 +1,7 @@
 package enhancedportals.inventory;
 
 import enhancedportals.EnhancedPortals;
-import enhancedportals.network.GuiHandler;
+import enhancedportals.Reference;
 import enhancedportals.network.packet.PacketGui;
 import enhancedportals.network.packet.PacketTextureData;
 import enhancedportals.portal.GlyphElement;
@@ -79,7 +79,7 @@ public class ContainerDialingDevice extends BaseContainer
             if (dial.glyphList.size() > id)
             {
                 GlyphElement e = dial.glyphList.get(id);
-                player.openGui(EnhancedPortals.instance, GuiHandler.DIALING_DEVICE_D, dial.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
+                player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_DIAL.DIAL_D.ordinal(), dial.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
                 EnhancedPortals.packetPipeline.sendTo(new PacketTextureData(e.name, e.identifier.getGlyphString(), e.texture), (EntityPlayerMP) player);
             }
         }

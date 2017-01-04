@@ -1,22 +1,29 @@
 package enhancedportals.tile;
 
+import enhancedportals.EnhancedPortals;
 import enhancedportals.utility.ConfigurationHandler;
 import enhancedportals.utility.GeneralUtils;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
-public abstract class TileFrame extends TilePortalPart
+public abstract class TileFrame extends TilePortalPart implements ITickable
 {
     protected boolean wearingGoggles = GeneralUtils.isWearingGoggles();
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
-        /*if (b == worldObj.getBlock(xCoord, yCoord, zCoord))
+//        if (b == worldObj.getBlock(xCoord, yCoord, zCoord))
+        if (world.getBlockState(getPos()).getBlock() == worldObj.getBlockState(getPos()).getBlock())
         {
             return;
-        }*/
+        }
 
 
         TileController controller = getPortalController();
@@ -30,7 +37,7 @@ public abstract class TileFrame extends TilePortalPart
 
     //todo Get texture and colour
 
-/*    public int getColour()
+    public int getColour()
     {
         TileController controller = getPortalController();
 
@@ -40,12 +47,12 @@ public abstract class TileFrame extends TilePortalPart
         }
         else if (portalController != null)
         {
-            EnhancedPortals.proxy.waitForController(new ChunkPos(portalController.chunkXPos, portalController.chunkZPos), getChunkCoordinates());
+            EnhancedPortals.proxy.waitForController(new ChunkPos(portalController.chunkXPos, portalController.chunkZPos), getChunkPos());
         }
 
         return 0xFFFFFF;
     }
-*/
+
     public void onBlockDismantled(BlockPos pos)
     {
         TileController controller = getPortalController();
@@ -62,8 +69,7 @@ public abstract class TileFrame extends TilePortalPart
     }
 
 
-    //todo Update to check if glasses are being worn
-  /*  @Override
+    @Override
     public void update()
     {
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT && Minecraft.getSystemTime() % 10 == 0)
@@ -73,8 +79,10 @@ public abstract class TileFrame extends TilePortalPart
             if (wGoggles != wearingGoggles)
             {
                 //todo worldObj.notifyBlockUpdate(pos);
+                final IBlockState state = getWorld().getBlockState(getPos());
+                worldObj.notifyBlockUpdate(getPos(), state, state, 3);
                 wearingGoggles = wGoggles;
             }
         }
-    }*/
+    }
 }

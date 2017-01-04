@@ -1,10 +1,10 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementGlyphDisplay;
 import enhancedportals.client.gui.tabs.TabTip;
 import enhancedportals.inventory.ContainerPortalController;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.tile.TileController;
@@ -49,7 +49,8 @@ public class GuiPortalController extends BaseGui
 
         if (x >= guiLeft + 7 && x <= guiLeft + 168 && y >= guiTop + 32 && y < guiTop + 47)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.PORTAL_CONTROLLER_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums
+                    .GUI_CONTROLLER.CONTROLLER_B));
         }
     }
 

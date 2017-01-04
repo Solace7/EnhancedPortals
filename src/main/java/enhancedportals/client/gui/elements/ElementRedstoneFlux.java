@@ -29,7 +29,7 @@ public class ElementRedstoneFlux extends BaseElement
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         parent.getTextureManager().bindTexture(texture);
-        drawTexturedModalRect(posX, posY, 228, 0, sizeX, sizeY);
+        parent.drawTexturedModalRect(posX, posY, 228, 0, sizeX, sizeY);
 
         if (!isDisabled())
         {
@@ -40,7 +40,7 @@ public class ElementRedstoneFlux extends BaseElement
                 height = Math.round((float) currentProgress * sizeY / maxProgress);
             }
 
-            drawTexturedModalRect(posX, posY + sizeY - height, 228 + sizeX, sizeY - height, sizeX, height);
+            parent.drawTexturedModalRect(posX, posY + sizeY - height, 228 + sizeX, sizeY - height, sizeX, height);
         }
     }
 

@@ -1,7 +1,7 @@
 package enhancedportals.inventory;
 
 import enhancedportals.EnhancedPortals;
-import enhancedportals.network.GuiHandler;
+import enhancedportals.Reference;
 import enhancedportals.portal.GlyphElement;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
@@ -29,7 +29,7 @@ public class ContainerDialingAdd extends BaseContainer
             PortalTextureManager ptm = new PortalTextureManager();
             ptm.readFromNBT(tag, "texture");
             dial.glyphList.add(new GlyphElement(tag.getString("name"), new GlyphIdentifier(tag.getString("uid")), ptm));
-            player.openGui(EnhancedPortals.instance, GuiHandler.DIALING_DEVICE_A, dial.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
+            player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_DIAL.DIAL_A.ordinal(), dial.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }
 }

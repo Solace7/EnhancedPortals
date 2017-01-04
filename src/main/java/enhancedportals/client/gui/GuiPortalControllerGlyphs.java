@@ -2,11 +2,11 @@ package enhancedportals.client.gui;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
 import enhancedportals.client.gui.tabs.TabTip;
 import enhancedportals.inventory.ContainerPortalControllerGlyphs;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.GlyphIdentifier;
@@ -82,7 +82,8 @@ public class GuiPortalControllerGlyphs extends BaseGui
         }
         else if (button.id == buttonCancel.id)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.PORTAL_CONTROLLER_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums
+                    .GUI_CONTROLLER.CONTROLLER_A));
         }
         else if (button.id == buttonSave.id) // Save Changes
         {

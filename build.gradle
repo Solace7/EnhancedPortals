@@ -1,4 +1,3 @@
-
 buildscript {
     repositories {
         mavenCentral()
@@ -59,6 +58,11 @@ processResources {
 }
 
 repositories {
+
+    maven {
+        url "http://maven.epoxide.xyz"
+    }
+
     maven {
         name = "Sangar OC"
         url = "http://maven.cil.li/"
@@ -68,12 +72,18 @@ repositories {
         name = "TechNut GuideAPI"
         url = 'http://tehnut.info/maven/'
     }
+
+    maven {
+        // location of the maven that hosts JEI files
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
 }
 
 dependencies {
-    compile "li.cil.oc:OpenComputers:MC1.9.4-${project.config.oc_version}.+:api"
-    compile "info.amerifrance.guideapi:Guide-API:${project.config.mc_version}-${project.config.guideapi_version}"
-    compile "net.darkhax.tesla:Tesla:1.9.4-${project.config.tesla_version}"
+    compile "li.cil.oc:OpenComputers:MC${project.config.mc_version}-${project.config.oc_version}.+:api"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:${project.config.mc_version}-${project.config.guideapi_version}"
+    deobfCompile "mezz.jei:jei_${project.config.mc_version}:${project.config.jei_version}"
+    compile "net.darkhax.tesla:Tesla:${project.config.mc_version}-${project.config.tesla_version}"
 }
 
 jar {

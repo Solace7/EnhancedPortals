@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "enhancedportals:items/glasses",
+    "layer1": "enhancedportals:items/glasses_overlay"
+  }
+}

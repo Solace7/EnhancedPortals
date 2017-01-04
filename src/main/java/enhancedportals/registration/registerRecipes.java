@@ -1,6 +1,6 @@
 package enhancedportals.registration;
 
-import amerifrance.guideapi.api.GuideRegistry;
+import amerifrance.guideapi.api.GuideAPI;
 import enhancedportals.block.BlockDecorBorderedQuartz;
 import enhancedportals.block.BlockDecorEnderInfusedMetal;
 import enhancedportals.block.BlockFrame;
@@ -20,7 +20,7 @@ import static net.minecraftforge.fml.common.registry.GameRegistry.addShapedRecip
 
 public class registerRecipes
 {
-    public static IRecipe blockStabilizer, itemAddressBook, itemWrench, blockFrame, blockRedstoneInterface, redstoneInterfaceUpgrade, itemBlankUpgrade, lookingGlassModule, itemBlankPortalModule, particleRemoveModule, rainbowParticlesModule, keepMomentumUpgrade, tintUpgrade, facingUpgrade, featherfallUpgrade, boarderedQuartzDecor, itemNanobrush, itemLocationCard, itemGlasses, itemGuideBook, enderInfusedMetalDecor, blockPortalController, blockDiallingDevice, blockModuleManipulator, blockEnergyTransfer, blockFluidTransfer, blockItemTranfer, blockNetworkInterface, silencerUpgrade, networkInterfaceUpgrade, diallingDeviceUpgrade, portalManipulatorUpgrade, transferFluidUpgrade, transferItemsUpgrade, transferEnergyUpgrade;
+    public static IRecipe blockStabilizer, itemAddressBook, itemWrench, blockFrame, blockRedstoneInterface, redstoneInterfaceUpgrade, itemBlankUpgrade, lookingGlassModule, itemBlankPortalModule, particleRemoveModule, rainbowParticlesModule, keepMomentumUpgrade, tintUpgrade, facingUpgrade, featherfallUpgrade, boarderedQuartzDecor, itemNanobrush, itemLocationCard, itemGlasses, ItemEPManual, enderInfusedMetalDecor, blockPortalController, blockDiallingDevice, blockModuleManipulator, blockEnergyTransfer, blockFluidTransfer, blockItemTranfer, blockNetworkInterface, silencerUpgrade, networkInterfaceUpgrade, diallingDeviceUpgrade, portalManipulatorUpgrade, transferFluidUpgrade, transferItemsUpgrade, transferEnergyUpgrade;
 
     public static void initShaped()
     {
@@ -33,7 +33,7 @@ public class registerRecipes
                 "IQI",
                 "SIS",
                 'S', Blocks.STONE, 'Q', Blocks.QUARTZ_BLOCK, 'I', Items.IRON_INGOT);
-        blockRedstoneInterface = GameRegistry.addShapedRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.REDSTONE_INTERFACE),
+        blockRedstoneInterface = GameRegistry.addShapedRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.REDSTONE_INTERFACE.ordinal()),
                 " R ",
                 "RFR",
                 " R ",
@@ -114,25 +114,25 @@ public class registerRecipes
         //Shapeless Recipes//
         /////////////////////
 
-        GameRegistry.addShapelessRecipe(GuideRegistry.getItemStackForBook(epManual), new ItemStack(Items.BOOK), new ItemStack(ItemLocationCard.instance));
-        itemGuideBook = RecipeRegistry.getLatestCraftingRecipe();
+        GameRegistry.addShapelessRecipe(GuideAPI.getStackFromBook(epManual), new ItemStack(Items.BOOK), new ItemStack(ItemLocationCard.instance));
+        ItemEPManual = RecipeRegistry.getLatestCraftingRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(BlockDecorEnderInfusedMetal.instance, 9), Blocks.IRON_BLOCK, Items.IRON_INGOT, Items.IRON_INGOT, Items.ENDER_PEARL, Items.ENDER_PEARL);
         enderInfusedMetalDecor = RecipeRegistry.getLatestCraftingRecipe();
-        //GameRegistry.addShapelessRecipe(new ItemStack(ItemAddressBook.instance), new ItemStack(Items.book), new ItemStack(BlockFrame.instance, 1, BlockFrame.DIALLING_DEVICE));
-        //itemAddressBook = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.PORTAL_CONTROLLER), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND);
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemAddressBook.instance), new ItemStack(Items.BOOK), new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.DIALLING_DEVICE.ordinal()));
+        itemAddressBook = RecipeRegistry.getLatestCraftingRecipe();
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.PORTAL_CONTROLLER.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND);
         blockPortalController = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.DIALLING_DEVICE), new ItemStack(BlockFrame.instance, 1, BlockFrame.NETWORK_INTERFACE), Items.DIAMOND);
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.DIALLING_DEVICE.ordinal()), new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.NETWORK_INTERFACE.ordinal()), Items.DIAMOND);
         blockDiallingDevice = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.MODULE_MANIPULATOR), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND, Items.EMERALD, new ItemStack(ItemBlankPortalModule.instance));
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.MODULE_MANIPULATOR.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.DIAMOND, Items.EMERALD, new ItemStack(ItemBlankPortalModule.instance));
         blockModuleManipulator = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.TRANSFER_ENERGY), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.REDSTONE_BLOCK);
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.TRANSFER_ENERGY.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.REDSTONE_BLOCK);
         blockEnergyTransfer = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.TRANSFER_FLUID), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Items.BUCKET);
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.TRANSFER_FLUID.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Items.BUCKET);
         blockFluidTransfer = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.TRANSFER_ITEM), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.CHEST);
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.TRANSFER_ITEM.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL, Items.DIAMOND, Blocks.CHEST);
         blockItemTranfer = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.NETWORK_INTERFACE), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL);
+        GameRegistry.addShapelessRecipe(new ItemStack(BlockFrame.instance, 1, BlockFrame.FrameType.NETWORK_INTERFACE.ordinal()), new ItemStack(BlockFrame.instance, 1, 0), Items.ENDER_PEARL);
         blockNetworkInterface = RecipeRegistry.getLatestCraftingRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(ItemPortalModule.instance, 1, 0), new ItemStack(ItemBlankPortalModule.instance), new ItemStack(Items.REDSTONE), new ItemStack(Items.GUNPOWDER));
         particleRemoveModule = RecipeRegistry.getLatestCraftingRecipe();

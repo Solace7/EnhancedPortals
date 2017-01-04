@@ -1,4 +1,4 @@
-/*
+/* todo render portals
 package enhancedportals.client;
 
 import net.minecraftforge.fml.client.registry.ISimpleBlockRenderingHandler;

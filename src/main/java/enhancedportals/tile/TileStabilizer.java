@@ -2,8 +2,6 @@ package enhancedportals.tile;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
-import enhancedportals.block.BlockStabilizer;
-import enhancedportals.utility.DimensionCoordinates;
 import enhancedportals.utility.GeneralUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,12 +10,9 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
 
 public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyProvider
 {
@@ -37,7 +32,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
     //todo renable activate, get offset
 
     public boolean activate(EntityPlayer player)
-    {
+    {/*
         if (worldObj.isRemote)
         {
             return true;
@@ -52,8 +47,10 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
         else if (GeneralUtils.isWrench(player.inventory.getCurrentItem()))
         {
             DimensionCoordinates topLeft = getDimensionCoordinates();
-            // Get the Top-Northwest-most block in the DBS block group.
-            while (topLeft.offset(EnumFacing.WEST).getBlock(getPos().getX(),getPos().getY(),getPos().getZ()). == BlockStabilizer.instance)
+            IBlockState state = this.worldObj.getBlockState(getPos());
+
+            // todo Get the Top-Northwest-most block in the DBS block group.
+            while (topLeft.offset(EnumFacing.WEST) instanceof BlockStabilizer)
             {
                 topLeft = topLeft.offset(EnumFacing.WEST);
             }
@@ -68,7 +65,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                 topLeft = topLeft.offset(EnumFacing.UP);
             }
 
-            // Check for valid DBS configurations (3x3, 2x3, 3x2):
+            // todo Check for valid DBS configurations (3x3, 2x3, 3x2):
             ArrayList<ChunkPos> blocks = checkShapeThreeWide(topLeft); // 3x3
             if (blocks.isEmpty())
             {
@@ -81,7 +78,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
             // blocks wont be empty if we gathered information about the array in the last functions.
             if (!blocks.isEmpty())
             {
-                // Need to check if there's already a DBS here.
+                // todo Need to check if there's already a DBS here.
                 for (ChunkPos c : blocks)
                 {
                     TileEntity tile = worldObj.getTileEntity(getPos());
@@ -100,7 +97,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                     }
                 }
 
-                // Otherwise start marking the blocks for the DBS block.
+                // todo Otherwise start marking the blocks for the DBS block.
                 for (ChunkPos c : blocks)
                 {
 //todo                    worldObj.setBlock(getPos(), BlockStabilizer.instance, 0, 2);
@@ -118,7 +115,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                     }
                 }
 
-                // Create a BlockStabilizer.
+                // todo Create a BlockStabilizer.
 //                worldObj.setBlock(topLeft.posX, topLeft.posY, topLeft.posZ, BlockStabilizer.instance, 1, 3);
                 final IBlockState state = getWorld().getBlockState(getPos());
                 worldObj.setBlockState(getPos(), state);
@@ -132,7 +129,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                     return true;
                 }
             }
-        }
+        }*/
         return false;
     }
 

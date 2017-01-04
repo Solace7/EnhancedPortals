@@ -411,8 +411,8 @@ public class TileStabilizerMain extends TileEP implements IInventory, IEnergyRec
 
         for (Entry<String, String> pair : activeConnections.entrySet())
         {
-            TileController controllerA = EnhancedPortals.proxy.networkManager.getPortalController(new GlyphIdentifier(pair.getKey()));
-            TileController controllerB = EnhancedPortals.proxy.networkManager.getPortalController(new GlyphIdentifier(pair.getValue()));
+            TileController controllerA = EnhancedPortals.proxy.networkManager.getPortalController(new GlyphIdentifier(pair.getKey()), getPos());
+            TileController controllerB = EnhancedPortals.proxy.networkManager.getPortalController(new GlyphIdentifier(pair.getValue()), getPos());
 
             if (controllerA != null)
             {
@@ -468,7 +468,7 @@ public class TileStabilizerMain extends TileEP implements IInventory, IEnergyRec
             throw new PortalException("noPortalWithThatIdentifierReceiving");
         }
 
-        TileController cA = EnhancedPortals.proxy.networkManager.getPortalController(portalA), cB = EnhancedPortals.proxy.networkManager.getPortalController(portalB);
+        TileController cA = EnhancedPortals.proxy.networkManager.getPortalController(portalA, getPos()), cB = EnhancedPortals.proxy.networkManager.getPortalController(portalB, getPos());
 
         if (cA == null)
         {
@@ -594,7 +594,7 @@ public class TileStabilizerMain extends TileEP implements IInventory, IEnergyRec
             throw new PortalException("No identifier found for second portal");
         }
 
-        TileController cA = EnhancedPortals.proxy.networkManager.getPortalController(portalA), cB = EnhancedPortals.proxy.networkManager.getPortalController(portalB);
+        TileController cA = EnhancedPortals.proxy.networkManager.getPortalController(portalA, getPos()), cB = EnhancedPortals.proxy.networkManager.getPortalController(portalB, getPos());
 
         if (cA == null || cB == null)
         {

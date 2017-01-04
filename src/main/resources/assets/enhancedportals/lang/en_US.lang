@@ -60,6 +60,7 @@ item.portal_module.7.name=Featherfall
 item.portal_module.7.desc=Negates fall damage
 item.portal_module.8.name=Looking Glass [WIP]
 item.portal_module.8.desc=Enables looking glass
+
 enhancedportals.gui.facing.0=North
 enhancedportals.gui.facing.1=East
 enhancedportals.gui.facing.2=South
@@ -266,18 +267,18 @@ enhancedportals.notify.unimplemented=%s Sorry, this feature hasn't been implemen
 ## Guide-API ##
 ###############
 
-guide.EnhancedPortals.book.name=Teletransportation Manual
-guide.EnhancedPortals.book.title=Teletransportation Manual
-guide.EnhancedPortals.book.welcomeMessage=§4 Subatomic Travel Awaits
-guide.EnhancedPortals.book.author=by Temporal Distorter
+guide.enhancedportals.book.name=Teletransportation Manual
+guide.enhancedportals.book.title=Teletransportation Manual
+guide.enhancedportals.book.welcomeMessage=§4 Subatomic Travel Awaits
+guide.enhancedportals.book.author=by Temporal Distorter
 
 ## Categories
-guide.EnhancedPortals.category.basics=The Basics
-guide.EnhancedPortals.category.travel=Subatomic Travel
-guide.EnhancedPortals.category.advanced=Advanced Teleportation
-guide.EnhancedPortals.category.blocks=Blocks
-guide.EnhancedPortals.category.modules=Teleportation Modules
-guide.EnhancedPortals.category.items=Items
+guide.enhancedportals.category.basics=The Basics
+guide.enhancedportals.category.travel=Subatomic Travel
+guide.enhancedportals.category.advanced=Advanced Teleportation
+guide.enhancedportals.category.blocks=Blocks
+guide.enhancedportals.category.modules=Teleportation Modules
+guide.enhancedportals.category.items=Items
 
 ############
 ## Manual ##

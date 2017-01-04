@@ -31,15 +31,6 @@ public interface IPortalModule
 
 
     /***
-     *
-     * @param moduleManipulator
-     * @param upgrade
-     * @return True to enable looking glass
-     */
-    public boolean enableLookingGlass(TilePortalManipulator moduleManipulator, ItemStack upgrade);
-
-
-    /***
      * Return true to disable particles from being created.
      *
      * @param moduleManipulator

@@ -1,6 +1,7 @@
 package enhancedportals.tile;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.item.ItemNanobrush;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.utility.GeneralUtils;
@@ -21,12 +22,12 @@ public class TilePortal extends TilePortalPart
         {
             if (GeneralUtils.isWrench(stack))
             {
-                GuiHandler.openGui(player, controller, GuiHandler.PORTAL_CONTROLLER_A);
+                GuiHandler.openGui(player, controller, Reference.GuiEnums.GUI_CONTROLLER.CONTROLLER_A.ordinal());
                 return true;
             }
             else if (stack.getItem() == ItemNanobrush.instance)
             {
-                GuiHandler.openGui(player, controller, player.isSneaking() ? GuiHandler.TEXTURE_C : GuiHandler.TEXTURE_B);
+                GuiHandler.openGui(player, controller, player.isSneaking() ? Reference.GuiEnums.GUI_TEXTURE.TEXTURE_C.ordinal() : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_B.ordinal());
                 return true;
             }
         }

@@ -143,7 +143,7 @@ public class ElementGlyphSelector extends BaseElement
                 GL11.glColor3f(1f, 1f, 1f);
             }
 
-            drawTexturedModalRect(posX + X, posY + Y, X, Y, 18, 18);
+            parent.drawTexturedModalRect(posX + X, posY + Y, X, Y, 18, 18);
         }
 
         for (int i = 0; i < glyphCount.length; i++)

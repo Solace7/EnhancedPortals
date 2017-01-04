@@ -7,10 +7,12 @@ import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 
 public class PacketRequestGui extends PacketEP
 {
-    int x, y, z, g;
+    int x, y, z;
+    Enum g;
     TileEntity t;
 
     public PacketRequestGui()
@@ -18,19 +20,19 @@ public class PacketRequestGui extends PacketEP
 
     }
 
-    public PacketRequestGui(TileEP tile, int gui)
+    public PacketRequestGui(TileEP tile, Enum gui)
     {
-        x = tile.xCoord;
-        y = tile.yCoord;
-        z = tile.zCoord;
+        x = tile.getPos().getX();
+        y = tile.getPos().getY();
+        z = tile.getPos().getZ();
         g = gui;
     }
 
-    public PacketRequestGui(EntityPlayer player, int gui)
+    public PacketRequestGui(EntityPlayer player, Enum gui)
     {
-        //x = (int) player.posX;
-        //y = (int) player.posY;
-        //z = (int) player.posZ;
+        x = (int) player.posX;
+        y = (int) player.posY;
+        z = (int) player.posZ;
         g = gui;
     }
 
@@ -40,7 +42,8 @@ public class PacketRequestGui extends PacketEP
         x = buffer.readInt();
         y = buffer.readInt();
         z = buffer.readInt();
-        g = buffer.readInt();
+//        g = buffer.readInt();
+        buffer.writeInt(g.ordinal());
     }
 
     @Override
@@ -49,7 +52,9 @@ public class PacketRequestGui extends PacketEP
         buffer.writeInt(x);
         buffer.writeInt(y);
         buffer.writeInt(z);
-        buffer.writeInt(g);
+//        buffer.writeInt(g);
+//        buffer.writeBytes(g.name().getBytes());
+        buffer.writeInt(g.ordinal());
     }
 
     @Override
@@ -61,16 +66,16 @@ public class PacketRequestGui extends PacketEP
     @Override
     public void handleServerSide(EntityPlayer player)
     {
-        t = player.worldObj.getTileEntity(x, y, z);
+        t = player.worldObj.getTileEntity(new BlockPos(x, y, z));
 
         if (t != null)
         {
-            player.openGui(EnhancedPortals.instance, g, t.getWorldObj(), x, y, z);
+            player.openGui(EnhancedPortals.instance, g.ordinal(), t.getWorld(), x, y, z);
         }
         else
         {
 
-            player.openGui(EnhancedPortals.instance, g, Minecraft.getMinecraft().theWorld, (int) player.posX, (int) player.posY, (int) player.posZ);
+            player.openGui(EnhancedPortals.instance, g.ordinal(), Minecraft.getMinecraft().theWorld, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }
 }

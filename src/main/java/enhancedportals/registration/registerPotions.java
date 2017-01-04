@@ -11,7 +11,7 @@ public class registerPotions
 
     public static Potion featherfallPotion;
 
-    public static final void init()
+    public static final void preinit()
     {
         Potion[] potionTypes = null;
 

@@ -29,7 +29,7 @@ public class ItemPortalModule extends Item implements IPortalModule
 {
     public static enum PortalModules
     {
-        REMOVE_PARTICLES, RAINBOW_PARTICLES, REMOVE_SOUNDS, KEEP_MOMENTUM, INVISIBLE_PORTAL, TINTSHADE_PARTICLES, FACING, FEATHERFALL, LOOKING_GLASS;
+        REMOVE_PARTICLES, RAINBOW_PARTICLES, REMOVE_SOUNDS, KEEP_MOMENTUM, INVISIBLE_PORTAL, TINTSHADE_PARTICLES, FACING, FEATHERFALL;
 
         public String getUniqueID()
         {
@@ -48,6 +48,7 @@ public class ItemPortalModule extends Item implements IPortalModule
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setUnlocalizedName("portal_module");
+        setRegistryName("portal_module");
         setMaxDamage(0);
         setMaxStackSize(64);
         setHasSubtypes(true);
@@ -85,12 +86,6 @@ public class ItemPortalModule extends Item implements IPortalModule
     public boolean canRemoveUpgrade(TilePortalManipulator moduleManipulator, IPortalModule[] installedUpgrades, ItemStack upgrade)
     {
         return true;
-    }
-
-    @Override
-    public boolean enableLookingGlass(TilePortalManipulator moduleManipulator, ItemStack upgrade)
-    {
-        return upgrade.getItemDamage() == PortalModules.LOOKING_GLASS.ordinal();
     }
 
     @Override
@@ -135,6 +130,11 @@ public class ItemPortalModule extends Item implements IPortalModule
         {
             list.add(new ItemStack(item, 1, i));
         }
+    }
+
+    @Override
+    public int getMetadata(int damage) {
+        return damage;
     }
 
     @Override

@@ -3,7 +3,7 @@ package enhancedportals.network;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.EnhancedPortals;
 import enhancedportals.portal.NetworkManager;
-import enhancedportals.registration.registerRecipes;
+import enhancedportals.registration.*;
 import enhancedportals.utility.ConfigurationHandler;
 import enhancedportals.utility.CreativeTabEP3;
 import enhancedportals.utility.LogHelper;
@@ -38,6 +38,11 @@ public class CommonProxy
 
     public void preInit(FMLPreInitializationEvent event)
     {
+        registerItems.preinit();
+        registerBlocks.preinit();
+        registerPackets.preinit();
+        registerPotions.preinit();
+        registerTiles.preinit();
         ConfigurationHandler.setupConfiguration(new File(event.getSuggestedConfigurationFile().getParentFile(), MOD_NAME + File.separator + "config.cfg"));
     }
 

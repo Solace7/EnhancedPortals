@@ -1,13 +1,13 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.block.BlockPortal;
 import enhancedportals.client.gui.elements.ElementGlyphDisplay;
 import enhancedportals.inventory.BaseContainer;
 import enhancedportals.inventory.ContainerDialingAdd;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.PortalTextureManager;
@@ -88,8 +88,8 @@ public class GuiDialingAdd extends BaseGui
     public void initGui()
     {
         super.initGui();
-
-        text = new GuiTextField(getFontRenderer(), guiLeft + 7, guiTop + 18, 162, 20);
+        //todo GuiTextField is probably wrong
+        text = new GuiTextField(0,getFontRenderer(), guiLeft + 7, guiTop + 18, 162, 20);
         text.setText(ClientProxy.saveName);
         text.setCursorPosition(0);
 
@@ -105,7 +105,7 @@ public class GuiDialingAdd extends BaseGui
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         text.mouseClicked(mouseX, mouseY, mouseButton);
@@ -127,7 +127,7 @@ public class GuiDialingAdd extends BaseGui
 
         GL11.glColor3f(1f, 1f, 1f);
 
-        itemRenderer.renderWithColor = false;
+//        todo itemRender.renderWithColor = false;
         ItemStack frame = new ItemStack(BlockFrame.instance, 0, 0), portal = new ItemStack(BlockPortal.instance, 0, 0);
         Color frameColour = new Color(0xFFFFFF), portalColour = new Color(0xFFFFFF), particleColour = new Color(0x0077D8);
         int particleType = 0;
@@ -162,22 +162,22 @@ public class GuiDialingAdd extends BaseGui
 
         if (ClientProxy.saveTexture.hasCustomFrameTexture())
         {
-            drawIconNoReset(ClientProxy.customFrameTextures.get(ClientProxy.saveTexture.getCustomFrameTexture()), 59, 85, 0);
+//       todo     drawIconNoReset(ClientProxy.customFrameTextures.get(ClientProxy.saveTexture.getCustomFrameTexture()), 59, 85, 0);
         }
         else
         {
-            drawItemStack(frame, 59, 85);
+//       todo     drawItemStack(frame, 59, 85);
         }
 
         GL11.glColor3f(portalColour.getRed() / 255F, portalColour.getGreen() / 255F, portalColour.getBlue() / 255F);
 
         if (ClientProxy.saveTexture.hasCustomPortalTexture())
         {
-            drawIconNoReset(ClientProxy.customPortalTextures.get(ClientProxy.saveTexture.getCustomPortalTexture()), 80, 85, 0);
+//       todo     drawIconNoReset(ClientProxy.customPortalTextures.get(ClientProxy.saveTexture.getCustomPortalTexture()), 80, 85, 0);
         }
         else
         {
-            drawItemStack(portal, 80, 85);
+//       todo     drawItemStack(portal, 80, 85);
         }
 
         GL11.glColor3f(particleColour.getRed() / 255F, particleColour.getGreen() / 255F, particleColour.getBlue() / 255F);
@@ -210,7 +210,7 @@ public class GuiDialingAdd extends BaseGui
     {
         if (button.id == 0)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_B));
         }
         else if (button.id == 1) // save
         {
@@ -223,17 +223,17 @@ public class GuiDialingAdd extends BaseGui
         else if (button.id == 100)
         {
             isEditing = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.TEXTURE_DIALING_SAVE_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_A));
         }
         else if (button.id == 101)
         {
             isEditing = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.TEXTURE_DIALING_SAVE_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_B));
         }
         else if (button.id == 102)
         {
             isEditing = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.TEXTURE_DIALING_SAVE_C));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_C));
         }
     }
 }

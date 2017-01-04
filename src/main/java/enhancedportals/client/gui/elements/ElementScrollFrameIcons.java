@@ -1,7 +1,6 @@
 package enhancedportals.client.gui.elements;
 
 import enhancedportals.client.gui.GuiTextureFrame;
-import enhancedportals.network.ClientProxy;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
@@ -41,10 +40,10 @@ public class ElementScrollFrameIcons extends BaseElement
 
         for (int i = 0; i < 27; i++)
         {
-            if (scrollAmount + i >= ClientProxy.customFrameTextures.size())
+          /* todo if (scrollAmount + i >= ClientProxy.customFrameTextures.size())
             {
                 break;
-            }
+            }*/
 
             int x2 = posX + (i % 9 * 18) + 1, y2 = posY + (i / 9 * 18) + 1;
 
@@ -114,20 +113,20 @@ public class ElementScrollFrameIcons extends BaseElement
                 currentScroll = 1f;
             }
 
-            int items = ClientProxy.customFrameTextures.size() - 27 + 1;
-            scrollAmount = (int) ((currentScroll * items) + 0.5D);
+          /*  todo int item = ClientProxy.customFrameTextures.size() - 27 + 1;
+            scrollAmount = (int) ((currentScroll * item) + 0.5D);
 
             if (scrollAmount < 0)
             {
                 scrollAmount = 0;
             }
 
-            int max = ClientProxy.customFrameTextures.size() - 27;
+            todo int max = ClientProxy.customFrameTextures.size() - 27;
 
             if (scrollAmount > max)
             {
                 scrollAmount = max;
-            }
+            }*/
         }
     }
 
@@ -136,11 +135,11 @@ public class ElementScrollFrameIcons extends BaseElement
     {
         boolean canScroll = false;
 
-        if (ClientProxy.customFrameTextures.size() > 27)
+        /* todo if (ClientProxy.customFrameTextures.size() > 27)
         {
             canScroll = true;
             handleMouse();
-        }
+        }*/
 
         int l = posY + 1, k = l + sizeY - 1, selectedIcon = ((GuiTextureFrame) parent).getPTM().getCustomFrameTexture();
         GL11.glColor3f(1f, 1f, 1f);
@@ -149,10 +148,11 @@ public class ElementScrollFrameIcons extends BaseElement
 
         for (int i = 0; i < 27; i++)
         {
-            if (scrollAmount + i >= ClientProxy.customFrameTextures.size())
+
+           /* todo if (scrollAmount + i >= ClientProxy.customFrameTextures.size())
             {
                 break;
-            }
+            }*/
 
             int x = posX + (i % 9 * 18) + 1, y = posY + (i / 9 * 18) + 1;
 
@@ -164,7 +164,7 @@ public class ElementScrollFrameIcons extends BaseElement
                 Gui.drawRect(x + 16, y - 1, x + 17, y + 17, 0xFF00FF00);
             }
 
-            parent.drawIcon(ClientProxy.customFrameTextures.get(scrollAmount + i), x, y, 0);
+//            todo parent.drawIcon(ClientProxy.customFrameTextures.get(scrollAmount + i), x, y, 0);
         }
     }
 

@@ -1,6 +1,7 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.block.BlockPortal;
 import enhancedportals.client.gui.button.GuiBetterSlider;
@@ -9,8 +10,6 @@ import enhancedportals.client.gui.elements.ElementScrollParticles;
 import enhancedportals.client.gui.tabs.TabColour;
 import enhancedportals.client.gui.tabs.TabTip;
 import enhancedportals.inventory.ContainerTextureParticle;
-import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.PortalTextureManager;
@@ -70,11 +69,11 @@ public class GuiTextureParticle extends BaseGui
         }
         else if (button.id == 500)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.TEXTURE_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_A));
         }
         else if (button.id == 501)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.TEXTURE_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_B));
         }
     }
 
@@ -106,10 +105,10 @@ public class GuiTextureParticle extends BaseGui
         addElement(new ElementScrollParticles(this, 7, 17, texture));
     }
 
-    @Override
+    //@Override
     protected void mouseMovedOrUp(int par1, int par2, int par3)
     {
-        super.mouseMovedOrUp(par1, par2, par3);
+//        super.mouseMovedOrUp(par1, par2, par3);
 
         if (par3 == 0)
         {
@@ -134,7 +133,7 @@ public class GuiTextureParticle extends BaseGui
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
-        itemRenderer.renderWithColor = false;
+//        todo itemRenderer.renderWithColor = false;
         ItemStack frame = new ItemStack(BlockFrame.instance, 0, 0), portal = new ItemStack(BlockPortal.instance, 0, 0);
         Color frameColour = new Color(getPTM().getFrameColour()), portalColour = new Color(getPTM().getPortalColour());
         int particleType = 0;
@@ -159,27 +158,28 @@ public class GuiTextureParticle extends BaseGui
 
         if (getPTM().hasCustomFrameTexture())
         {
-            drawIconNoReset(ClientProxy.customFrameTextures.get(getPTM().getCustomFrameTexture()), 9, containerSize - 16, 0);
+//           todo drawIconNoReset(ClientProxy.customFrameTextures.get(getPTM().getCustomFrameTexture()), 9, containerSize - 16, 0);
         }
         else
         {
-            drawItemStack(frame, 9, containerSize - 16);
+//          todo  drawItemStack(frame, 9, containerSize - 16);
         }
 
         GL11.glColor3f(portalColour.getRed() / 255F, portalColour.getGreen() / 255F, portalColour.getBlue() / 255F);
 
         if (getPTM().hasCustomPortalTexture())
         {
-            drawIconNoReset(ClientProxy.customPortalTextures.get(getPTM().getCustomPortalTexture()), 30, containerSize - 16, 0);
+//       todo drawIconNoReset(ClientProxy.customPortalTextures.get(getPTM().getCustomPortalTexture()), 30, containerSize - 16, 0);
         }
         else
         {
-            drawItemStack(portal, 30, containerSize - 16);
+//           todo drawItemStack(portal, 30, containerSize - 16);
         }
 
         GL11.glColor3f(1f, 1f, 1f);
         super.drawGuiContainerForegroundLayer(par1, par2);
     }
+
 
     public PortalTextureManager getPTM()
     {

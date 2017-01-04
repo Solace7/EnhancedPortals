@@ -6,12 +6,12 @@ public class ItemBlankPortalModule extends ItemEP
 {
     public static ItemBlankPortalModule instance;
 
-    public ItemBlankPortalModule(String n)
+    public ItemBlankPortalModule()
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
+        setUnlocalizedName("blank_portal_module");
         setRegistryName("blank_portal_module");
     }
     

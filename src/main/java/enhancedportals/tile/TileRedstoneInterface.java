@@ -1,5 +1,6 @@
 package enhancedportals.tile;
 
+import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.item.ItemNanobrush;
 import enhancedportals.network.GuiHandler;
@@ -35,18 +36,18 @@ public class TileRedstoneInterface extends TileFrame
             return false;
         }
 
-        TileController controller = getPortalController(blockPos);
+        TileController controller = getPortalController();
 
         if (stack != null && controller != null && controller.isFinalized())
         {
             if (GeneralUtils.isWrench(stack) && !player.isSneaking())
             {
-                GuiHandler.openGui(player, this, GuiHandler.REDSTONE_INTERFACE);
+                GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_MISC.REDSTONE_INTERFACE.ordinal());
                 return true;
             }
             else if (stack.getItem() == ItemNanobrush.instance)
             {
-                GuiHandler.openGui(player, controller, GuiHandler.TEXTURE_A);
+                GuiHandler.openGui(player, controller, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_A.ordinal());
                 return true;
             }
         }
@@ -72,7 +73,7 @@ public class TileRedstoneInterface extends TileFrame
 
         for (int i = 0; i < 6; i++)
         {
-            ChunkPos c = GeneralUtils.offset(getChunkCoordinates(), EnumFacing.getFront(i));
+            ChunkPos c = GeneralUtils.offset(getChunkPos(), EnumFacing.getFront(i));
             byte power = (byte) worldObj.getRedstonePower(pos, side);
 
             if (power > highest)
@@ -130,7 +131,7 @@ public class TileRedstoneInterface extends TileFrame
     {
         if (!isOutput && !worldObj.isRemote)
         {
-            TileController controller = getPortalController(blockPos);
+            TileController controller = getPortalController();
 
             if (controller == null)
             {

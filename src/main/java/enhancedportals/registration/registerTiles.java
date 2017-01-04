@@ -5,7 +5,7 @@ import enhancedportals.tile.*;
 
 public class registerTiles
 {
-    public static final void init()
+    public static final void preinit()
     {
         GameRegistry.registerTileEntity(TilePortal.class, "epP");
         GameRegistry.registerTileEntity(TileFrameBasic.class, "epF");

@@ -1,11 +1,11 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementScrollDiallingDevice;
 import enhancedportals.client.gui.tabs.TabTip;
 import enhancedportals.inventory.ContainerDialingDevice;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.tile.TileController;
@@ -30,7 +30,7 @@ public class GuiDialingDevice extends BaseGui
         texture = new ResourceLocation("enhancedportals", "textures/gui/dialling_device.png");
         xSize = CONTAINER_WIDTH;
         dial = d;
-        controller = dial.getPortalController(p.getPosition());
+        controller = dial.getPortalController();
         name = "gui.dialDevice";
         setHidePlayerInventory();
     }
@@ -68,7 +68,7 @@ public class GuiDialingDevice extends BaseGui
     {
         if (button.id == 0) // Manual Entry
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_B)); // Open DialingManual
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_B)); // Open DialingManual
 
         }
         else if (button.id == 1) // Terminate

@@ -1,9 +1,9 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.inventory.ContainerDialingEdit;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.GlyphIdentifier;
@@ -55,7 +55,7 @@ public class GuiDialingEdit extends GuiDialingAdd
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         if (receivedData)
         {
@@ -64,7 +64,7 @@ public class GuiDialingEdit extends GuiDialingAdd
             if (mouseX >= guiLeft + 7 && mouseX <= guiLeft + 168 && mouseY >= guiTop + 52 && mouseY < guiTop + 70)
             {
                 isEditing = true;
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_E));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_E));
             }
         }
     }
@@ -105,7 +105,7 @@ public class GuiDialingEdit extends GuiDialingAdd
     {
         if (button.id == 0)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_A));
         }
         else if (button.id == 1) // save
         {
@@ -119,17 +119,17 @@ public class GuiDialingEdit extends GuiDialingAdd
         else if (button.id == 100)
         {
             isEditing = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.TEXTURE_DIALING_EDIT_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_A));
         }
         else if (button.id == 101)
         {
             isEditing = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.TEXTURE_DIALING_EDIT_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_B));
         }
         else if (button.id == 102)
         {
             isEditing = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.TEXTURE_DIALING_EDIT_C));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_C));
         }
     }
 

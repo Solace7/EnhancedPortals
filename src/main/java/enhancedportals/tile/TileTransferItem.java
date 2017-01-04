@@ -1,8 +1,5 @@
 package enhancedportals.tile;
 
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import enhancedportals.Reference;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.utility.GeneralUtils;
@@ -13,7 +10,6 @@ import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -27,7 +23,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import javax.annotation.Nullable;
 
 @InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_COMPUTERCRAFT), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
-public class TileTransferItem extends TileFrameTransfer implements IInventory, IPeripheral, SimpleComponent
+public class TileTransferItem extends TileFrameTransfer implements IInventory, SimpleComponent
 {
     ItemStack stack;
 
@@ -44,7 +40,7 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
 
         if (GeneralUtils.isWrench(stack) && controller != null && controller.isFinalized())
         {
-            GuiHandler.openGui(player, this, GuiHandler.TRANSFER_ITEM);
+            GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_TRANFER.TRANSFER_ITEM.ordinal());
             return true;
         }
 
@@ -154,7 +150,7 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
         stack = itemstack;
     }
 
-//    @Override
+   @Override
     public void update()
     {
 //        super.updateEntity();
@@ -242,7 +238,7 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         NBTTagCompound st = new NBTTagCompound();
@@ -253,6 +249,8 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
         }
 
         tag.setTag("stack", st);
+
+        return tag;
     }
 
     @Override
@@ -328,46 +326,17 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
     }
 
     @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void detach(IComputerAccess computer)
-    {
-
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public boolean equals(IPeripheral other)
-    {
-        return other == this;
-    }
-
-    @Override
     @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
     public String getComponentName()
     {
         return "ep_transfer_item";
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String[] getMethodNames()
-    {
-        return new String[]{"getItemStored", "getAmountStored", "hasStack", "isSending"};
-    }
-
-
     @Callback(direct = true, doc = "function():table -- Returns a description of the item stored in this module.")
     @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
     public Object[] getStack(Context context, Arguments args)
     {
         return new Object[]{stack.copy()};
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String getType()
-    {
-        return "ep_transfer_item";
     }
 
     @Callback(direct = true, doc = "function():boolean -- Return whether there is an item stored in this module.")
@@ -378,41 +347,11 @@ public class TileTransferItem extends TileFrameTransfer implements IInventory, I
     }
 
 
-    @Callback(direct = true, doc = "function():boolean -- Returns true if the module is set to send items.")
+    @Callback(direct = true, doc = "function():boolean -- Returns true if the module is set to send item.")
     @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
     public Object[] isSending(Context context, Arguments args)
     {
         return new Object[]{isSending};
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void attach(IComputerAccess computer)
-    {
-
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception
-    {
-        if (method == 0)
-        {
-            return new Object[]{stack != null ? Item.getIdFromItem(stack.getItem()) : 0};
-        }
-        else if (method == 1)
-        {
-            return new Object[]{stack != null ? stack.stackSize : 0};
-        }
-        else if (method == 2)
-        {
-            return new Object[]{stack != null};
-        }
-        else if (method == 3)
-        {
-            return new Object[]{isSending};
-        }
-
-        return null;
-    }
 }

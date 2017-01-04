@@ -185,7 +185,7 @@ public class ElementScrollDiallingDevice extends BaseElement
         int l = posY + 1, k = l + sizeY - 1;
         GL11.glColor3f(1f, 1f, 1f);
         parent.getMinecraft().getTextureManager().bindTexture(texture);
-        drawTexturedModalRect(posX + sizeX - 13, posY + 1 + (int) ((k - l - 16) * currentScroll), 244, 226 + (canScroll ? 0 : 15), 12, 15);
+//        todo drawTexturedModalRect(posX + sizeX - 13, posY + 1 + (int) ((k - l - 16) * currentScroll), 244, 226 + (canScroll ? 0 : 15), 12, 15);
 
         for (int i = 0; i < 5; i++)
         {

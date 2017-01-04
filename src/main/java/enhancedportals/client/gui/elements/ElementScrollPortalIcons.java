@@ -1,7 +1,6 @@
 package enhancedportals.client.gui.elements;
 
 import enhancedportals.client.gui.GuiTexturePortal;
-import enhancedportals.network.ClientProxy;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
@@ -39,7 +38,7 @@ public class ElementScrollPortalIcons extends BaseElement
         x += parent.getGuiLeft();
         y += parent.getGuiTop();
 
-        for (int i = 0; i < 27; i++)
+       /* for (int i = 0; i < 27; i++)
         {
             if (scrollAmount + i >= ClientProxy.customPortalTextures.size())
             {
@@ -53,7 +52,7 @@ public class ElementScrollPortalIcons extends BaseElement
                 ((GuiTexturePortal) parent).iconSelected(scrollAmount + i);
                 break;
             }
-        }
+        }*/
 
         return true;
     }
@@ -113,9 +112,9 @@ public class ElementScrollPortalIcons extends BaseElement
             {
                 currentScroll = 1f;
             }
-
-            int items = ClientProxy.customPortalTextures.size() - 27 + 1;
-            scrollAmount = (int) ((currentScroll * items) + 0.5D);
+//todo ?
+        /*    int item = ClientProxy.customPortalTextures.size() - 27 + 1;
+            scrollAmount = (int) ((currentScroll * item) + 0.5D);
 
             if (scrollAmount < 0)
             {
@@ -127,7 +126,7 @@ public class ElementScrollPortalIcons extends BaseElement
             if (scrollAmount > max)
             {
                 scrollAmount = max;
-            }
+            }*/
         }
     }
 
@@ -136,25 +135,23 @@ public class ElementScrollPortalIcons extends BaseElement
     {
         boolean canScroll = false;
 
-        if (ClientProxy.customPortalTextures.size() > 27)
+      /*  if (ClientProxy.customPortalTextures.size() > 27)
         {
             canScroll = true;
             handleMouse();
-        }
+        }*/
 
         int l = posY + 1, k = l + sizeY - 1, selectedIcon = ((GuiTexturePortal) parent).getPTM().getCustomPortalTexture();
         GL11.glColor3f(1f, 1f, 1f);
         parent.getMinecraft().getTextureManager().bindTexture(texture);
-//        drawTexturedModalRect(posX + sizeX - 13, posY + 1 + (int) ((k - l - 16) * currentScroll), 244, 226 + (canScroll ? 0 : 15), 12, 15);
-
-        //todo drawTexturedModalRect
+        drawTexturedModalRect(posX + sizeX - 13, posY + 1 + (int) ((k - l - 16) * currentScroll), 244, 226 + (canScroll ? 0 : 15), 12, 15);
 
         for (int i = 0; i < 27; i++)
         {
-            if (scrollAmount + i >= ClientProxy.customPortalTextures.size())
+            /*if (scrollAmount + i >= ClientProxy.customPortalTextures.size())
             {
                 break;
-            }
+            }*/
 
             int x = posX + (i % 9 * 18) + 1, y = posY + (i / 9 * 18) + 1;
 

@@ -7,6 +7,7 @@ import net.minecraft.world.IBlockAccess;
 public class ConnectedTextures
 {
     //    protected IIcon[] textures;
+    //todo connectedTextures
     protected Block block;
     protected int blockMeta, subMeta = -1;
     protected String textureLoc;

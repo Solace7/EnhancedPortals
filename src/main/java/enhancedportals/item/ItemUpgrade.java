@@ -13,14 +13,13 @@ public class ItemUpgrade extends Item
 {
     public static ItemUpgrade instance;
 
-// todo static IIcon baseIcon;
-//todo Icon Overlays
-    public ItemUpgrade(String n)
+    public ItemUpgrade()
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
+        setUnlocalizedName("upgrade");
+        setRegistryName("upgrade");
         setHasSubtypes(true);
         setMaxDamage(0);
     }
@@ -51,7 +50,7 @@ public class ItemUpgrade extends Item
     @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
-        return super.getUnlocalizedName() + "." + ItemFrame.unlocalizedName[par1ItemStack.getItemDamage() + 2];
+        return super.getUnlocalizedName() + "." + ItemPortalFrame.unlocalizedName[par1ItemStack.getItemDamage() + 2];
     }
 
     //todo SetItemUseFirst

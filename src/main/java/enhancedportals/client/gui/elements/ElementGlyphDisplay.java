@@ -31,7 +31,7 @@ public class ElementGlyphDisplay extends BaseElement
     protected void drawContent()
     {
         parent.getMinecraft().renderEngine.bindTexture(new ResourceLocation("enhancedportals", "textures/gui/player_inventory.png"));
-        drawTexturedModalRect(posX, posY, 7, 7, sizeX, sizeY);
+        parent.drawTexturedModalRect(posX, posY, 7, 7, sizeX, sizeY);
 
         parent.getMinecraft().renderEngine.bindTexture(ElementGlyphSelector.glyphs);
 
@@ -45,7 +45,7 @@ public class ElementGlyphDisplay extends BaseElement
                 }
 
                 int glyph = id.get(i), X2 = i % 9 * 18, X = glyph % 9 * 18, Y = glyph / 9 * 18;
-                drawTexturedModalRect(posX + X2, posY, X, Y, 18, 18);
+                parent.drawTexturedModalRect(posX + X2, posY, X, Y, 18, 18);
 
             }
         }

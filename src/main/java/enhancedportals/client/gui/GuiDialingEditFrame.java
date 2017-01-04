@@ -1,8 +1,8 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.PortalTextureManager;
 import enhancedportals.tile.TileDialingDevice;
@@ -62,17 +62,20 @@ public class GuiDialingEditFrame extends GuiTextureFrame
         else if (button.id == 1000)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? GuiHandler.DIALING_DEVICE_D : GuiHandler.DIALING_DEVICE_C));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
+                    .GUI_DIAL.DIAL_D : Reference.GuiEnums.GUI_DIAL.DIAL_C));
         }
         else if (button.id == 500)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? GuiHandler.TEXTURE_DIALING_EDIT_B : GuiHandler.TEXTURE_DIALING_SAVE_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
+                    .GUI_TEXTURE.TEXTURE_DIAL_EDIT_B : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_B));
         }
         else if (button.id == 501)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? GuiHandler.TEXTURE_DIALING_EDIT_C : GuiHandler.TEXTURE_DIALING_SAVE_C));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
+                    .GUI_TEXTURE.TEXTURE_DIAL_EDIT_C : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_C));
         }
     }
 

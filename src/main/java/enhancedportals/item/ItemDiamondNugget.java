@@ -13,6 +13,6 @@ public class ItemDiamondNugget extends Item
         setMaxStackSize(64);
         setCreativeTab(CommonProxy.creativeTab);
         instance = this;
-        setRegistryName("diamondNugget");
+        this.setRegistryName("diamond_nugget");
     }
 }

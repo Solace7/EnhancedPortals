@@ -12,7 +12,7 @@ public class TileFrameTransfer extends TileFrame
 
     }
 
-    @Override
+//    todo @Override
     public boolean canUpdate()
     {
         return true;
@@ -37,9 +37,12 @@ public class TileFrameTransfer extends TileFrame
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         tag.setBoolean("Sending", isSending);
+
+        return tag;
     }
+
 }

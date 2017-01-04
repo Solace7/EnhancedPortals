@@ -1,10 +1,9 @@
 package enhancedportals.inventory;
 
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.BaseGui;
 import enhancedportals.client.gui.GuiPortalControllerGlyphs;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalException;
@@ -14,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class ContainerPortalControllerGlyphs extends BaseContainer
 {
@@ -34,7 +34,7 @@ public class ContainerPortalControllerGlyphs extends BaseContainer
             try
             {
                 controller.setIdentifierUnique(new GlyphIdentifier(tag.getString("uid")));
-                player.openGui(EnhancedPortals.instance, GuiHandler.PORTAL_CONTROLLER_A, controller.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
+                player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_CONTROLLER.CONTROLLER_A.ordinal(), controller.getWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
             }
             catch (PortalException e)
             {

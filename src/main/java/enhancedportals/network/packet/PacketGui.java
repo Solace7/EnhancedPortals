@@ -49,9 +49,9 @@ public class PacketGui extends PacketEP
     @Override
     public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
     {
-        buffer.writeInt(tile.xCoord);
-        buffer.writeInt(tile.yCoord);
-        buffer.writeInt(tile.zCoord);
+        buffer.writeInt(tile.getPos().getX());
+        buffer.writeInt(tile.getPos().getY());
+        buffer.writeInt(tile.getPos().getZ());
 
         tile.packetGuiFill(buffer);
     }
@@ -59,8 +59,8 @@ public class PacketGui extends PacketEP
     @Override
     public void handleClientSide(EntityPlayer player)
     {
-        TileEntity t = player.worldObj.getTileEntity(x, y, z);
-        ItemStack stack = player.getCurrentEquippedItem();
+        TileEntity t = player.worldObj.getTileEntity(tile.getPos());
+        ItemStack stack = player.getHeldItemMainhand();
 
        if (t != null && t instanceof TileEP && stack == null)
         {

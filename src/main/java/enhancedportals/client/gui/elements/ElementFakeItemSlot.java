@@ -58,7 +58,7 @@ public class ElementFakeItemSlot extends BaseElement
 
         if (s != null)
         {
-            parent.drawItemStack(s, posX, posY);
+//           todo parent.drawItemStack(s, posX, posY);
         }
     }
 

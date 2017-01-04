@@ -16,7 +16,7 @@ public class ItemGlasses extends ItemArmor
         super(ArmorMaterial.LEATHER, EnhancedPortals.proxy.gogglesRenderIndex, EntityEquipmentSlot.HEAD);
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("enhancedportals:glasses");
+        setUnlocalizedName("glasses");
         setRegistryName("glasses");
     }
 

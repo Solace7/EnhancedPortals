@@ -1,7 +1,6 @@
 package enhancedportals.registration;
 
 import enhancedportals.block.*;
-import enhancedportals.item.ItemStabilizer;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -14,13 +13,13 @@ public class registerBlocks
     public static Block blockDecorEnderInfusedMetal;
     public static Block blockStabalizerEmpty;
 
-    public static void init()
+    public static void preinit()
     {
-        GameRegistry.registerBlock(blockFrame = new BlockFrame("frame"), "frame");
-        GameRegistry.registerBlock(blockPortal = new BlockPortal("portal"), "portal");
-        GameRegistry.registerBlock(blockStabalizer = new BlockStabilizer("dbs"), ItemStabilizer.class, "dbs");
-        GameRegistry.registerBlock(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"), "decor_frame");
-        GameRegistry.registerBlock(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"), "decor_dbs");
-        GameRegistry.registerBlock(blockStabalizerEmpty = new BlockStabilizerEmpty("dbs_empty"), "dbs_empty");
+        GameRegistry.register(blockFrame = new BlockFrame());
+        GameRegistry.register(blockPortal = new BlockPortal());
+        GameRegistry.register(blockStabalizer = new BlockStabilizer());
+        GameRegistry.register(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
+        GameRegistry.register(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));
+        GameRegistry.register(blockStabalizerEmpty = new BlockStabilizerEmpty());
     }
 }

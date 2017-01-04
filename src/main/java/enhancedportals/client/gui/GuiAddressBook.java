@@ -1,11 +1,11 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementScrollAddressBook;
 import enhancedportals.inventory.ContainerAddressBook;
 import enhancedportals.item.ItemAddressBook;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.utility.Localization;
@@ -48,7 +48,7 @@ public class GuiAddressBook extends BaseGui
     {
         if (button.id == 0)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_B));
         }
     }
 

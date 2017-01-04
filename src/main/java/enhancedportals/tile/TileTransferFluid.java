@@ -1,8 +1,5 @@
 package enhancedportals.tile;
 
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import enhancedportals.Reference;
 import enhancedportals.item.ItemNanobrush;
 import enhancedportals.network.GuiHandler;
@@ -24,7 +21,7 @@ import net.minecraftforge.fml.common.Optional.InterfaceList;
 import net.minecraftforge.fml.common.Optional.Method;
 
 @InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_COMPUTERCRAFT), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
-public class TileTransferFluid extends TileFrameTransfer implements IFluidHandler, IPeripheral, SimpleComponent
+public class TileTransferFluid extends TileFrameTransfer implements IFluidHandler, SimpleComponent
 {
     public FluidTank tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 16);
 
@@ -50,52 +47,17 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
         {
             if (GeneralUtils.isWrench(stack))
             {
-                GuiHandler.openGui(player, this, GuiHandler.TRANSFER_FLUID);
+                GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_TRANFER.TRANSFER_FLUID.ordinal());
                 return true;
             }
             else if (stack.getItem() == ItemNanobrush.instance)
             {
-                GuiHandler.openGui(player, controller, GuiHandler.TEXTURE_A);
+                GuiHandler.openGui(player, controller, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_A.ordinal());
                 return true;
             }
         }
 
         return false;
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void attach(IComputerAccess computer)
-    {
-
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception
-    {
-        if (method == 0)
-        {
-            return new Object[]{tank.getFluid() != null ? tank.getFluid().getFluid().getName() : ""};
-        }
-        else if (method == 1)
-        {
-            return new Object[]{tank.getFluidAmount()};
-        }
-        else if (method == 2)
-        {
-            return new Object[]{tank.getFluidAmount() == tank.getCapacity()};
-        }
-        else if (method == 3)
-        {
-            return new Object[]{tank.getFluidAmount() == 0};
-        }
-        else if (method == 4)
-        {
-            return new Object[]{isSending};
-        }
-
-        return null;
     }
 
     @Override
@@ -108,13 +70,6 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     public boolean canFill(EnumFacing from, Fluid fluid)
     {
         return true;
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void detach(IComputerAccess computer)
-    {
-
     }
 
     @Override
@@ -138,20 +93,6 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     public FluidTankInfo[] getTankInfo(EnumFacing from)
     {
         return new FluidTankInfo[]{tank.getInfo()};
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String getType()
-    {
-        return "ep_transfer_fluid";
-    }
-
-    @Callback(direct = true, doc = "function():boolean -- Returns true if the module is set to send fluids.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] isSending(Context context, Arguments args)
-    {
-        return new Object[]{isSending};
     }
 
     @Override
@@ -208,7 +149,7 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
 
     public void update()
     {
-//        super.updateEntity();
+        super.update();
 
         if (!worldObj.isRemote)
         {
@@ -302,19 +243,13 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
         tank.readFromNBT(tag);
-    }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public boolean equals(IPeripheral other)
-    {
-        return other == this;
+        return tag;
     }
-
     @Override
     public int fill(EnumFacing from, FluidStack resource, boolean doFill)
     {
@@ -335,10 +270,10 @@ public class TileTransferFluid extends TileFrameTransfer implements IFluidHandle
         return new Object[]{tank.getInfo()};
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String[] getMethodNames()
+    @Callback(direct = true, doc = "function():boolean -- Returns true if the module is set to send fluids.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] isSending(Context context, Arguments args)
     {
-        return new String[]{"getFluidStored", "getAmountStored", "isFull", "isEmpty", "isSending"};
+        return new Object[]{isSending};
     }
 }

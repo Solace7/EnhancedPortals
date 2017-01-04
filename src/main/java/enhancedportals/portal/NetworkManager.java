@@ -9,7 +9,7 @@ import enhancedportals.utility.DimensionCoordinates;
 import enhancedportals.utility.LogHelper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.commons.io.FileUtils;
 
@@ -136,7 +136,7 @@ public class NetworkManager
     /***
      * Gets the portal controller for the specified portal identifier
      */
-    public TileController getPortalController(GlyphIdentifier portal)
+    public TileController getPortalController(GlyphIdentifier portal, BlockPos pos)
     {
         DimensionCoordinates w = getPortalLocation(portal);
 
@@ -145,7 +145,7 @@ public class NetworkManager
             return null;
         }
 
-        TileEntity tile = w.getTileEntity();
+        TileEntity tile = w.getTileEntity(pos);
 
         if (tile == null || !(tile instanceof TileController))
         {

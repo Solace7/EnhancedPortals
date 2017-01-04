@@ -12,6 +12,8 @@ import java.util.List;
 public class ItemEP extends Item
 {
 
+    private final String name = "itemName";
+
     public void packetGuiFill(ByteBuf buffer)
     {
 
@@ -30,6 +32,11 @@ public class ItemEP extends Item
     public void readFromNBT(ItemStack itemStack)
     {
 
+    }
+
+    public String getName() {
+
+        return name;
     }
 
     @Override

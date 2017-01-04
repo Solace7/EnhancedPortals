@@ -1,6 +1,7 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.client.gui.button.GuiRGBSlider;
 import enhancedportals.client.gui.elements.ElementFakeItemSlot;
@@ -10,7 +11,6 @@ import enhancedportals.client.gui.tabs.TabTip;
 import enhancedportals.client.gui.tabs.TabTipSecondary;
 import enhancedportals.inventory.ContainerTexturePortal;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.PortalTextureManager;
@@ -130,11 +130,11 @@ public class GuiTexturePortal extends BaseGui implements IFakeSlotHandler
         }
         else if (button.id == 500)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.TEXTURE_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_A));
         }
         else if (button.id == 501)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.TEXTURE_C));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums.GUI_TEXTURE.TEXTURE_C));
         }
     }
 

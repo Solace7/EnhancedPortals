@@ -99,7 +99,8 @@ public class ElementScrollParticles extends BaseElement
             }
         }
 
-        if (isScrolling)
+        //todo scrolling
+       /* if (isScrolling)
         {
             if (!ignoreScroll)
             {
@@ -115,8 +116,8 @@ public class ElementScrollParticles extends BaseElement
                 currentScroll = 1f;
             }
 
-            int items = ClientProxy.customFrameTextures.size() - 27 + 1;
-            scrollAmount = (int) ((currentScroll * items) + 0.5D);
+            int item = ClientProxy.customFrameTextures.size() - 27 + 1;
+            scrollAmount = (int) ((currentScroll * item) + 0.5D);
 
             if (scrollAmount < 0)
             {
@@ -129,7 +130,7 @@ public class ElementScrollParticles extends BaseElement
             {
                 scrollAmount = max;
             }
-        }
+        }*/
     }
 
     @Override

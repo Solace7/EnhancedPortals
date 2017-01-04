@@ -1,5 +1,16 @@
 {
-  "variants": {
-    "normal": {"model": "enhancedportals:borderedQuartz"}
-  }
+      "forge_marker": 1,
+      "defaults": {
+        "textures": {
+          "all": "enhancedportals:blocks/frame0B"
+        }
+      },
+      "variants": {
+        "normal": {
+          "model": "cube_all"
+        },
+        "inventory": {
+          "model": "cube_all"
+        }
+      }
 }

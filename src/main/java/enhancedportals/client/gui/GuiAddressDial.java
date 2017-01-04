@@ -25,7 +25,7 @@ public class GuiAddressDial extends BaseGui
         xSize = CONTAINER_WIDTH;
         dial = d;
         addressBook = ab;
-        controller = dial.getPortalController(player.getPosition());
+        controller = dial.getPortalController();
         name = "enhancedportals.gui.addressTransfer";
         setHidePlayerInventory();
     }

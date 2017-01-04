@@ -2,12 +2,12 @@ package enhancedportals.client.gui;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
 import enhancedportals.client.gui.tabs.TabTip;
 import enhancedportals.inventory.ContainerDialingEditIdentifier;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.tile.TileDialingDevice;
@@ -72,12 +72,12 @@ public class GuiDialingEditIdentifier extends BaseGui
         }
         else if (button.id == buttonCancel.id)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_D));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_D));
         }
         else if (button.id == buttonSave.id) // Save Changes
         {
             ClientProxy.saveGlyph = selector.getGlyphIdentifier();
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, GuiHandler.DIALING_DEVICE_D));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, Reference.GuiEnums.GUI_DIAL.DIAL_D));
         }
     }
 

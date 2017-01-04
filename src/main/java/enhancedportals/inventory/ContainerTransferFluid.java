@@ -5,10 +5,7 @@ import enhancedportals.client.gui.GuiTransferFluid;
 import enhancedportals.tile.TileTransferFluid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
 
 public class ContainerTransferFluid extends BaseContainer
 {
@@ -22,14 +19,16 @@ public class ContainerTransferFluid extends BaseContainer
         fluid = f;
     }
 
-    @Override
+   /* @Override
     public void detectAndSendChanges()
     {
         super.detectAndSendChanges();
         byte isSending = (byte) (fluid.isSending ? 1 : 0);
         //todo getFluid
 
-        int fID = fluid.tank.getFluid() != null ? fluid.tank.getFluid().getFluidID() : -1, fAmt = fluid.tank.getFluidAmount();
+//        int fID = fluid.tank.getFluid() != null ? fluid.tank.getFluid().getFluidID() : -1, fAmt = fluid.tank.getFluidAmount();
+        int fID = fluid.tank.getFluid() != null ? fluid.tank.getFluid() : ;
+        int fAmt = fluid.tank.getFluidAmount();
 
         for (int i = 0; i < this.listeners.size(); i++)
         {
@@ -54,7 +53,7 @@ public class ContainerTransferFluid extends BaseContainer
             fluidID = fID;
             fluidAmt = fAmt;
         }
-    }
+    }*/
 
     @Override
     public void handleGuiPacket(NBTTagCompound tag, EntityPlayer player)
@@ -62,8 +61,10 @@ public class ContainerTransferFluid extends BaseContainer
         fluid.isSending = !fluid.isSending;
     }
 
+   /*
+    //todo fluid transfer
     @Override
-    public void updateProgressBar(int id, int val)
+    public void updateProgressBar(Fluid fluid, int val)
     {
         if (id == 0)
         {
@@ -90,5 +91,5 @@ public class ContainerTransferFluid extends BaseContainer
                 fluid.tank.setFluid(f);
             }
         }
-    }
+    }*/
 }

@@ -5,7 +5,7 @@ import enhancedportals.network.packet.*;
 
 public class registerPackets
 {
-    public static final void init()
+    public static final void preinit()
     {
         EnhancedPortals.packetPipeline.registerPacket(PacketRequestGui.class);
         EnhancedPortals.packetPipeline.registerPacket(PacketTextureData.class);

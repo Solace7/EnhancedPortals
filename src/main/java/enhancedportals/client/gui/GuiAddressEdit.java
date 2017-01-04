@@ -1,10 +1,10 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.inventory.ContainerAddressEdit;
 import enhancedportals.item.ItemAddressBook;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketGuiData;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.GlyphIdentifier;
@@ -65,7 +65,8 @@ public class GuiAddressEdit extends GuiAddressBookAdd
             if (mouseX >= guiLeft + 7 && mouseX <= guiLeft + 168 && mouseY >= guiTop + 52 && mouseY < guiTop + 70)
             {
                 isEditing = true;
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_E));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
+                        .GUI_ADDRESS_BOOK.AB_E));
             }
         }
     }
@@ -110,7 +111,8 @@ public class GuiAddressEdit extends GuiAddressBookAdd
         {
             try
             {
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_A));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
+                        .GUI_ADDRESS_BOOK.AB_A));
             }
             catch (Exception e)
             {

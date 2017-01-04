@@ -4,19 +4,14 @@ import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
-import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.item.ItemWrench;
 import enhancedportals.registration.registerRecipes;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static enhancedportals.guidebook.WormholeTunnelManual.categories;
 
 public class CategoryItems
 {
@@ -38,18 +33,18 @@ public class CategoryItems
         glasses.add(new PageIRecipe(registerRecipes.itemGlasses));
 
         List<IPage> locationCard = new ArrayList<IPage>();
-        locationCard.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.location_card.info")));
+        locationCard.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.itemLocationCard.info")));
         locationCard.add(new PageIRecipe(registerRecipes.itemLocationCard));
 
         List<IPage> addressBook = new ArrayList<IPage>();
         addressBook.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.address_book.info")));
         //addressBook.add(new PageIRecipe(registerRecipes.itemAddressBook));
 
-        entries.add(new EntryUniText(wrench, "enhancedportals.manual.wrench.title"));
+        /*entries.add(new EntryUniText(wrench, "enhancedportals.manual.wrench.title"));
         entries.add(new EntryUniText(nanobrush, "enhancedportals.manual.nanobrush.title"));
         entries.add(new EntryUniText(glasses, "enhancedportals.manual.glasses.title"));
-        entries.add(new EntryUniText(locationCard, "enhancedportals.manual.location_card.title"));
-        entries.add(new EntryUniText(addressBook, "enhancedportals.manual.address_book.title"));
+        entries.add(new EntryUniText(locationCard, "enhancedportals.manual.itemLocationCard.title"));
+        entries.add(new EntryUniText(addressBook, "enhancedportals.manual.address_book.title"));*/
 
         return entries;
     }

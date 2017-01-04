@@ -1,12 +1,12 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
 import enhancedportals.inventory.ContainerAddressManual;
 import enhancedportals.item.ItemAddressBook;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.utility.Localization;
 import net.minecraft.client.gui.GuiButton;
@@ -83,7 +83,8 @@ public class GuiAddressManual extends BaseGui
             {
                 ClientProxy.saveGlyph = selector.getGlyphIdentifier();
                 ClientProxy.saveName = "Unnamed Portal";
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_C));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
+                        .GUI_ADDRESS_BOOK.AB_C));
             }
             else
             {
@@ -92,7 +93,8 @@ public class GuiAddressManual extends BaseGui
         }
         else if (button.id == 2)
         { //cancel
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
+                    .GUI_ADDRESS_BOOK.AB_A));
         }
     }
 }

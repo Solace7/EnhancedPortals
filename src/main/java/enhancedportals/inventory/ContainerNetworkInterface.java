@@ -35,7 +35,7 @@ public class ContainerNetworkInterface extends BaseContainer
 
         for (int i = 0; i < this.listeners.size(); i++)
         {
-            IContainerListener iContainerListener = (IContainerListener)this.listeners.get(i);
+            IContainerListener iContainerListener = this.listeners.get(i);
             if (cPortals != connectedPortals)
             {
                 iContainerListener.sendProgressBarUpdate(this, 0, cPortals);

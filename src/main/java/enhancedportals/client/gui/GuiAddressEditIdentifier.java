@@ -2,13 +2,13 @@ package enhancedportals.client.gui;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementGlyphSelector;
 import enhancedportals.client.gui.elements.ElementGlyphViewer;
 import enhancedportals.client.gui.tabs.TabTip;
 import enhancedportals.inventory.ContainerAddressEditIdentifier;
 import enhancedportals.item.ItemAddressBook;
 import enhancedportals.network.ClientProxy;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.utility.Localization;
@@ -76,14 +76,15 @@ public class GuiAddressEditIdentifier extends BaseGui
         else if (button.id == buttonCancel.id)
         {
             //todo and this
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_D));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_D));
         }
         else if (button.id == buttonSave.id)
         {
             // Save Changes
             ClientProxy.saveGlyph = selector.getGlyphIdentifier();
             //todo fix this
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, GuiHandler.ADDRESS_BOOK_D));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
+                    .GUI_ADDRESS_BOOK.AB_D));
         }
     }
 

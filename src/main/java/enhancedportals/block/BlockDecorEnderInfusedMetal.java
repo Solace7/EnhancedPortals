@@ -11,6 +11,7 @@ public class BlockDecorEnderInfusedMetal extends BlockDecoration
     {
         super(n);
         instance = this;
+        setRegistryName("decor_dbs");
         connectedTextures = new ConnectedTexturesDetailed(BlockStabilizer.connectedTextures.toString(), this, -1);
     }
 

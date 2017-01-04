@@ -24,7 +24,7 @@ public class ItemWrench extends ItemEP implements IToolWrench
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("enhancedportals:wrench");
+        setUnlocalizedName("wrench");
         setRegistryName("wrench");
         setMaxStackSize(1);
     }

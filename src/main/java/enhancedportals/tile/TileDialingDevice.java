@@ -1,20 +1,23 @@
 package enhancedportals.tile;
 
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import enhancedportals.Reference;
+import enhancedportals.item.ItemAddressBook;
+import enhancedportals.network.GuiHandler;
 import enhancedportals.portal.GlyphElement;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
 import enhancedportals.utility.ComputerUtils;
+import enhancedportals.utility.Localization;
 import io.netty.buffer.ByteBuf;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.SimpleComponent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.Optional.Interface;
 import net.minecraftforge.fml.common.Optional.InterfaceList;
@@ -25,14 +28,14 @@ import java.util.ArrayList;
 
 @InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_COMPUTERCRAFT), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
 
-public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleComponent
+public class TileDialingDevice extends TileFrame implements SimpleComponent
 {
 
     public ArrayList<GlyphElement> glyphList = new ArrayList<GlyphElement>();
 
     //todo activate on Right click?
-/*
-    @Override
+
+//    @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         TileController controller = getPortalController();
@@ -50,7 +53,7 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
             }
             else if (!player.isSneaking())
             {
-                GuiHandler.openGui(player, this, GuiHandler.DIALING_DEVICE_A);
+                GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_DIAL.DIAL_A.ordinal());
             }
             else if (controller.isPortalActive())
             {
@@ -63,10 +66,10 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
         }
         else
         {
-            GuiHandler.openGui(player, this, GuiHandler.DIALING_DEVICE_B);
+            GuiHandler.openGui(player, this, Reference.GuiEnums.GUI_DIAL.DIAL_B.ordinal());
         }
         return true;
-    }*/
+    }
 
     @Override
     public void addDataToPacket(NBTTagCompound tag)
@@ -155,56 +158,68 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
         return tag;
     }
 
-    /////////////////////////////////
-    //ComputerCraft & OpenComputers//
-    /////////////////////////////////
-
-//ComputerCraft Methods
+    /////////////////
+    //OpenComputers//
+    /////////////////
 
     @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void attach(IComputerAccess computer)
-    {
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String getType()
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public String getComponentName()
     {
         return "ep_dialling_device";
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception
+
+    @Callback(doc = "function(uid:string):boolean -- Attempts to create a connection to the specified portal. UID must be given as a single string in the format of numbers separated by spaces.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] dial(Context context, Arguments args) throws Exception
     {
-        if (method == 0)
+        if (args.count() < 1)
         {
-            return comp_Dial(arguments);
-        }
-        else if (method == 1)
-        {
-            getPortalController().connectionTerminate();
-        }
-        else if (method == 2)
-        {
-            return comp_DialStored(arguments);
-        }
-        else if (method == 3)
-        {
-            return comp_GetStoredName(arguments);
-        }
-        else if (method == 4)
-        {
-            return comp_GetStoredGlyph(arguments);
-        }
-        else if (method == 5)
-        {
-            return new Object[]{glyphList.size()};
+            return null;
         }
 
-        return null;
+        return comp_Dial(ComputerUtils.argsToArray(args));
     }
+
+    @Callback(doc = "function(entry:number):boolean -- Dials the specified entry in the Dialing Device's list.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] dialStored(Context context, Arguments args) throws Exception
+    {
+        return comp_DialStored(ComputerUtils.argsToArray(args));
+    }
+
+  @Callback(direct = true, doc = "function():number -- Returns the amount of entries in the Dialing Device's list.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getStoredCount(Context context, Arguments args)
+    {
+        return new Object[]{glyphList.size()};
+    }
+
+    @Callback(direct = true, doc = "function(entry:number):string -- Returns the UID as a string of the specified entry in the Dialing Device's list.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getStoredGlyph(Context context, Arguments args) throws Exception
+    {
+        return comp_GetStoredGlyph(ComputerUtils.argsToArray(args));
+    }
+
+    @Callback(direct = true, doc = "function(entry:number):string -- Returns the name of the specified entry in the Dialing Device's list.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] getStoredName(Context context, Arguments args) throws Exception
+    {
+        return comp_GetStoredName(ComputerUtils.argsToArray(args));
+    }
+
+    @Callback(doc = "function():boolean -- Terminates any active connection.")
+    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
+    public Object[] terminate(Context context, Arguments args)
+    {
+        getPortalController().connectionTerminate();
+        return new Object[]{true};
+    }
+
+
+
 
     Object[] comp_Dial(Object[] arguments) throws Exception
     {
@@ -271,26 +286,6 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
         }
     }
 
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public void detach(IComputerAccess computer)
-    {
-
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public boolean equals(IPeripheral other)
-    {
-        return other == this;
-    }
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_COMPUTERCRAFT)
-    public String[] getMethodNames()
-    {
-        return new String[]{"dial", "terminate", "dialStored", "getStoredName", "getStoredGlyph", "getStoredCount"};
-    }
 
     int getSelectedEntry(Object[] arguments) throws Exception
     {
@@ -319,65 +314,6 @@ public class TileDialingDevice extends TileFrame implements IPeripheral, SimpleC
         }
 
         throw new Exception("Invalid number of arguments.");
-    }
-
-    //OpenComputers Methods
-
-
-    @Override
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public String getComponentName()
-    {
-        return "ep_dialling_device";
-    }
-
-
-    @Callback(doc = "function(uid:string):boolean -- Attempts to create a connection to the specified portal. UID must be given as a single string in the format of numbers separated by spaces.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] dial(Context context, Arguments args) throws Exception
-    {
-        if (args.count() < 1)
-        {
-            return null;
-        }
-
-        return comp_Dial(ComputerUtils.argsToArray(args));
-    }
-
-    @Callback(doc = "function(entry:number):boolean -- Dials the specified entry in the Dialing Device's list.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] dialStored(Context context, Arguments args) throws Exception
-    {
-        return comp_DialStored(ComputerUtils.argsToArray(args));
-    }
-
-  @Callback(direct = true, doc = "function():number -- Returns the amount of entries in the Dialing Device's list.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getStoredCount(Context context, Arguments args)
-    {
-        return new Object[]{glyphList.size()};
-    }
-
-    @Callback(direct = true, doc = "function(entry:number):string -- Returns the UID as a string of the specified entry in the Dialing Device's list.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getStoredGlyph(Context context, Arguments args) throws Exception
-    {
-        return comp_GetStoredGlyph(ComputerUtils.argsToArray(args));
-    }
-
-    @Callback(direct = true, doc = "function(entry:number):string -- Returns the name of the specified entry in the Dialing Device's list.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] getStoredName(Context context, Arguments args) throws Exception
-    {
-        return comp_GetStoredName(ComputerUtils.argsToArray(args));
-    }
-
-    @Callback(doc = "function():boolean -- Terminates any active connection.")
-    @Method(modid = Reference.Dependencies.MODID_OPENCOMPUTERS)
-    public Object[] terminate(Context context, Arguments args)
-    {
-        getPortalController().connectionTerminate();
-        return new Object[]{true};
     }
 
 }

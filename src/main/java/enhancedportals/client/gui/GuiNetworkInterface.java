@@ -1,9 +1,9 @@
 package enhancedportals.client.gui;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.client.gui.elements.ElementGlyphDisplay;
 import enhancedportals.inventory.ContainerNetworkInterface;
-import enhancedportals.network.GuiHandler;
 import enhancedportals.network.packet.PacketRequestGui;
 import enhancedportals.tile.TileController;
 import enhancedportals.utility.Localization;
@@ -33,7 +33,7 @@ public class GuiNetworkInterface extends BaseGui
 
         if (x >= guiLeft + 7 && x <= guiLeft + 169 && y >= guiTop + 29 && y < guiTop + 47)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, GuiHandler.NETWORK_INTERFACE_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums.GUI_MISC.NETWORK_INTERFACE_B));
         }
     }
 

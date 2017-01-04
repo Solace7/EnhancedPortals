@@ -103,7 +103,7 @@ public class DimensionCoordinates extends ChunkPos
 
     public DimensionCoordinates offset(EnumFacing facing)
     {
-        return new DimensionCoordinates(new BlockPos() + orientation.offsetX, posY + orientation.offsetY, posZ + orientation.offsetZ, dimension);
+        return new DimensionCoordinates(this.chunkXPos + facing.getFrontOffsetX(), this.chunkZPos + facing.getFrontOffsetZ(), dimension);
     }
 
     @Override

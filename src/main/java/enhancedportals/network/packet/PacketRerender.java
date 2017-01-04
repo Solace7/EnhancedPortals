@@ -41,7 +41,7 @@ public class PacketRerender extends PacketEP
     public void handleClientSide(EntityPlayer player)
     {
         //todo markBlockForUpdate
-        player.worldObj.markBlockForUpdate(posX, posY, posZ);
+        player.worldObj.notify();
     }
 
     @Override

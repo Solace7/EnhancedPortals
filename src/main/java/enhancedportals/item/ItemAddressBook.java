@@ -1,5 +1,6 @@
 package enhancedportals.item;
 
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.portal.GlyphElement;
@@ -78,7 +79,7 @@ public class ItemAddressBook extends ItemEP
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand)
     {
         readFromNBT(itemStack);
-        GuiHandler.openGui(player, GuiHandler.ADDRESS_BOOK_A);
+        GuiHandler.openGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_A.ordinal());
 
         return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStack);
     }

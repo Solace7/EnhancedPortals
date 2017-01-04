@@ -4,12 +4,8 @@ import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
-import amerifrance.guideapi.category.CategoryItemStack;
-import amerifrance.guideapi.entry.EntryResourceLocation;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.block.BlockDecorEnderInfusedMetal;
 import enhancedportals.registration.registerRecipes;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -66,7 +62,7 @@ public class CategoryBlocks
         energyTransportModule.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame9.info")));
         energyTransportModule.add(new PageIRecipe(registerRecipes.blockEnergyTransfer));
 
-        entries.put(new ResourceLocation("enhancedportals.manual.dbs.title"));
+       /* entries.put(new ResourceLocation("enhancedportals.manual.dbs.title"));
         entries.put(new EntryResourceLocation(portalFrame, "enhancedportals.manual.frame0.title"));
         entries.put(new EntryUniText(portalController, "enhancedportals.manual.frame1.title"));
         entries.put(new EntryUniText(redstoneInterface, "enhancedportals.manual.frame2.title"));
@@ -75,7 +71,7 @@ public class CategoryBlocks
         entries.put(new EntryUniText(portalManipulator, "enhancedportals.manual.frame6.title"));
         entries.put(new EntryUniText(fluidTransportModule, "enhancedportals.manual.frame7.title"));
         entries.put(new EntryUniText(itemTransportModule, "enhancedportals.manual.frame8.title"));
-        entries.put(new EntryUniText(energyTransportModule, "enhancedportals.manual.frame9.title"));
+        entries.put(new EntryUniText(energyTransportModule, "enhancedportals.manual.frame9.title"));*/
 
         return entries;
     }

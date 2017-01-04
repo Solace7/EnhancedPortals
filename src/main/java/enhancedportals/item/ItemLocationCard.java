@@ -21,9 +21,9 @@ public class ItemLocationCard extends ItemEP
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("location_card");
         setMaxDamage(0);
         setHasSubtypes(true);
+        setUnlocalizedName("location_card");
         setRegistryName("location_card");
     }
 

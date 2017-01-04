@@ -4,19 +4,14 @@ import amerifrance.guideapi.api.IPage;
 import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
-import amerifrance.guideapi.category.CategoryItemStack;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.item.ItemBlankUpgrade;
 import enhancedportals.registration.registerRecipes;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import static enhancedportals.guidebook.WormholeTunnelManual.categories;
 
 public class CategoryAdvanced
 {
@@ -37,8 +32,8 @@ public class CategoryAdvanced
         accessorizing.add(new PageIRecipe(registerRecipes.blockModuleManipulator));
         accessorizing.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.6.p.3")));
 
-        entries.add(new EntryUniText(phoneHome, "enhancedportals.manual.chapter.5.title"));
-        entries.add(new EntryUniText(accessorizing, "enhancedportals.manual.chapter.6.title"));
+        /*entries.add(new EntryUniText(phoneHome, "enhancedportals.manual.chapter.5.title"));
+        entries.add(new EntryUniText(accessorizing, "enhancedportals.manual.chapter.6.title"));*/
 
         return entries;
     }
