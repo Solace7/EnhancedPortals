@@ -22,6 +22,7 @@ gradle.properties
 
 ## intellij
 /out
+/idea
 /.idea
 /*.iml
 /*.ipr
