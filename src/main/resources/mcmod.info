@@ -6,12 +6,13 @@
   "version": "3.0.13",
   "mcversion": "${mc_version}",
   "logoFile": "assets/enhancedportals/textures/ep3logo.png",
-  "url": "https://github.com/enhancedportals/enhancedportals",
-  "updateUrl": "https://github.com/enhancedportals/enhancedportals/releases",
+  "url": "https://github.com/Solace7/EnhancedPortals",
+  "updateUrl": "https://github.com/Solace7/EnhancedPortals/releases",
   "authorList": ["Solace7"],
   "credits": "KzariusRex, SexyDexyDoo, SyiSeiko, Alz454",
   "parent": "",
+  "requiredMods": [ "GuideAPI" ],
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["GuideAPI"]
 }
 ]
