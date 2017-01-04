@@ -130,11 +130,11 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(PortalRenderer.ID, new PortalRenderer());
     }
 
-    /*public void registergoggles() {
+    public void registergoggles() {
         this.registergoggles();
         gogglesRenderIndex = RenderingRegistry.addNewArmourRendererPrefix("epGoggles");
 
-    }*/
+    }
 
 }
 
