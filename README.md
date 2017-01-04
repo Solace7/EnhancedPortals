@@ -1,6 +1,6 @@
 ![logo](http://mods.atomicbase.com/enhancedportals/forum_files/ep_banner.png)
 [![Build Status](https://travis-ci.org/enhancedportals/enhancedportals.svg)](https://travis-ci.org/enhancedportals/enhancedportals)
-[![](https://img.shields.io/badge/1.7.10 status-release-green.svg)]
+[![](https://img.shields.io/badge/1.7.10 status-release-green.svg)
 Useful Links:
 * [License](LICENSE)
 * [Downloads](http://www.curse.com/mc-mods/minecraft/225921-enhanced-portals-3#t1:other-downloads)
