@@ -37,7 +37,7 @@ public class EnhancedPortals
     public static final String MOD_NAME = Reference.EPMod.name,
             MOD_ID = Reference.EPMod.mod_id,
             MOD_VERSION = Reference.EPMod.version,
-            MOD_DEPENDENCIES = "after:ThermalExpansion",
+            MOD_DEPENDENCIES = "after:ThermalExpansion; required-after:guideapi;",
             UPDATE_URL = Reference.EPMod.URL;
 
     public static final PacketPipeline packetPipeline = new PacketPipeline();
