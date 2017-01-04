@@ -24,8 +24,6 @@ public class registerItems
         GameRegistry.registerItem(new ItemBlankPortalModule("blank_portal_module"), "blank_portal_module");
         GameRegistry.registerItem(new ItemBlankUpgrade("blank_upgrade"), "blank_upgrade");
         GameRegistry.registerItem(new ItemAddressBook("address_book"), "address_book");
-        GameRegistry.registerItem(new ItemDiamondNugget("diamondNugget"), "diamondNugget");
-
 
         if (CONFIG_RECIPES_TE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
         {
