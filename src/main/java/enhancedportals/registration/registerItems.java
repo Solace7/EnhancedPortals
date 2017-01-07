@@ -5,9 +5,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import enhancedportals.Reference;
 import enhancedportals.crafting.ThermalExpansion;
 import enhancedportals.item.*;
-import enhancedportals.utility.LogHelper;
-
-import static enhancedportals.utility.ConfigurationHandler.CONFIG_RECIPES_TE;
 
 public class registerItems
 
@@ -26,9 +23,8 @@ public class registerItems
         GameRegistry.registerItem(new ItemBlankUpgrade("blank_upgrade"), "blank_upgrade");
         GameRegistry.registerItem(new ItemAddressBook("address_book"), "address_book");
 
-        if (CONFIG_RECIPES_TE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
+        if (Reference.EPConfiguration.recipeTE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
         {
-            LogHelper.info("Debugging: Thermal Expansion Enabled");
             ThermalExpansion.registerItems();
             ThermalExpansion.registerMachineRecipes();
         }
