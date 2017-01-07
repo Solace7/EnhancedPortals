@@ -9,3 +9,4 @@
 + updated en_US.lang
 + Added potion config option fixes #1/#16
 + New Manual (Guide-API) | Deleted Old Manual
++ Misc reformating
