@@ -1,3 +1,4 @@
+
 buildscript {
     repositories {
         mavenCentral()
@@ -9,7 +10,7 @@ buildscript {
 
         maven {
             name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/uo"
         }
 
     }
@@ -69,8 +70,8 @@ repositories {
 }
 
 dependencies {
-    compile "li.cil.oc:OpenComputers:MC1.7.10-1.5.22.46:api"
-    compile "info.amerifrance.guideapi:Guide-API:1.7.10-1.0.1-20"
+    compile "li.cil.oc:OpenComputers:MC" + project.config.minecraft_version + "-" + project.config.oc_version + ":api"
+    compile "info.amerifrance.guideapi:Guide-API:" + project.config.minecraft_version + "-" + project.config.guideapi_version + ":deobf"
 }
 
 jar {
