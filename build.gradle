@@ -80,8 +80,8 @@ repositories {
 }
 
 dependencies {
-    compile "li.cil.oc:OpenComputers:MC${project.config.mc_version}-${project.config.oc_version}.+:api"
-    deobfCompile "info.amerifrance.guideapi:Guide-API:${project.config.mc_version}-${project.config.guideapi_version}"
+    compile "li.cil.oc:OpenComputers:MC${project.config.mc_version}-${project.config.oc_version}:api"
+    compile "info.amerifrance.guideapi:Guide-API:${project.config.mc_version}-${project.config.guideapi_version}:deobf"
     deobfCompile "mezz.jei:jei_${project.config.mc_version}:${project.config.jei_version}"
     compile "net.darkhax.tesla:Tesla:${project.config.mc_version}-${project.config.tesla_version}"
 }
