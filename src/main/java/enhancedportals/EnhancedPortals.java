@@ -30,7 +30,7 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 public class EnhancedPortals
 {
     public static final String MOD_NAME = Reference.EPMod.name, MOD_ID = Reference.EPMod.mod_id, MOD_VERSION =
-            Reference.EPMod.version, MOD_DEPENDENCIES = "after:guideapi", UPDATE_URL = Reference.EPMod.URL;
+            Reference.EPMod.version, MOD_DEPENDENCIES = "required-after:guideapi", UPDATE_URL = Reference.EPMod.URL;
 
     public static final PacketPipeline packetPipeline = new PacketPipeline();
 
