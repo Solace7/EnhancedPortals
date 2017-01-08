@@ -36,6 +36,11 @@ public class ConfigurationHandler
     {
         config = new Configuration(configFile);
 
+        loadConfiguration();
+    }
+
+    private static void loadConfiguration()
+    {
         CONFIG_FORCE_FRAME_OVERLAY = config.get("Misc", "ForceShowFrameOverlays", Reference.EPConfiguration.forceFrameOverlay).getBoolean(false);
         CONFIG_DISABLE_SOUNDS = config.get("Overrides", "DisableSounds", Reference.EPConfiguration.disableSounds).getBoolean(false);
         CONFIG_DISABLE_PARTICLES = config.get("Overrides", "DisableParticles", Reference.EPConfiguration.disableParticles).getBoolean(false);
@@ -49,7 +54,6 @@ public class ConfigurationHandler
         CONFIG_POTION_FEATHERFALL_ID = config.get("Potions", "PotionID", Reference.EPConfiguration.potionIDFeatherfall).getInt(40);
         CONFIG_UPDATE_NOTIFIER = config.get("Misc", "NotifyOfUpdates", true).getBoolean(true);
         CONFIG_RECIPES_VANILLA = config.get("Crafting", "Vanilla", Reference.EPConfiguration.recipeVanilla).getBoolean(true);
-//        CONFIG_RECIPES_TE = config.get("Crafting", "ThermalExpansion", true).getBoolean(true);
 
         if (config.hasChanged())
         {
@@ -67,15 +71,12 @@ public class ConfigurationHandler
         }
     }
 
-
-
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
         if (event.getModID().equalsIgnoreCase(Reference.EPMod.mod_id))
         {
 
-            //Resync configs
         }
     }
 }

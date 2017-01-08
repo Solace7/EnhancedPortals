@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import java.util.ArrayList;
 
-@InterfaceList(value = {@Interface(iface = "dan200.computercraft.api.peripheral.IPeripheral", modid = Reference.Dependencies.MODID_COMPUTERCRAFT), @Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
+@InterfaceList(value = {@Interface(iface = "li.cil.oc.api.network.SimpleComponent", modid = Reference.Dependencies.MODID_OPENCOMPUTERS)})
 
 public class TileDialingDevice extends TileFrame implements SimpleComponent
 {

@@ -20,7 +20,7 @@ public class Reference
     public static class Dependencies
     {
         public static final String MODID_OPENCOMPUTERS = "OpenComputers";
-        public static final String MODID_COMPUTERCRAFT = "ComputerCraft";
+//        public static final String MODID_COMPUTERCRAFT = "ComputerCraft";
 //        public static final String MODID_THERMALEXPANSION = "ThermalExpansion";
     }
 
