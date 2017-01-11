@@ -24,8 +24,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
-@Mod(name = EnhancedPortals.MOD_NAME, modid = EnhancedPortals.MOD_ID, version = EnhancedPortals.MOD_VERSION, guiFactory = Reference.EPMod.GUI_FACTORY_CLASS, acceptedMinecraftVersions = "[1.9.4]",
-        dependencies = EnhancedPortals.MOD_DEPENDENCIES)
+@Mod(name = EnhancedPortals.MOD_NAME, modid = EnhancedPortals.MOD_ID, version = EnhancedPortals.MOD_VERSION, guiFactory = Reference.EPMod.GUI_FACTORY_CLASS, acceptedMinecraftVersions = "[1.9.4]", dependencies = EnhancedPortals.MOD_DEPENDENCIES)
 
 public class EnhancedPortals
 {
