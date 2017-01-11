@@ -381,5 +381,5 @@ enhancedportals.manual.blank_module.title=Blank Portal Module
 enhancedportals.manual.blank_module.info=The foundation circuit module. This item is required to craft the other modules and the Portal Manipulator.
 
 item.portal.module.4.desc=Makes the portal completely invisible. This module is uncraftable and can only be found in dungeon chests.
-item.portal.module.8.desc=Enables looking glass. This module is currently uncraftable as looking glass has not been fully implemented just yet.
+item.portal.module.8.desc=Enables looking glass. §4[This module is currently uncraftable as looking glass has not been fully implemented just yet.]
 
