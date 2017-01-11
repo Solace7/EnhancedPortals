@@ -32,7 +32,7 @@ public class registerItems
         GameRegistry.register(itemBlankPortalModule = new ItemBlankPortalModule());
         GameRegistry.register(itemBlankUpgrade = new ItemBlankUpgrade());
         GameRegistry.register(itemAddressBook = new ItemAddressBook());
-        GameRegistry.register(itemDiamondNugget  = new ItemDiamondNugget());
+//        GameRegistry.register(itemDiamondNugget  = new ItemDiamondNugget());
         GameRegistry.register(itemFrame = new ItemPortalFrame(new BlockFrame()));
         GameRegistry.register(itemStabilizer = new ItemStabilizer());
 

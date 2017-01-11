@@ -37,7 +37,7 @@ public class BlockFrame extends BlockContainer implements IDismantleable
     public static BlockFrame instance;
     public static ConnectedTexturesDetailed connectedTextures;
    /* public static int PORTAL_CONTROLLER = 1, REDSTONE_INTERFACE = 2, NETWORK_INTERFACE = 3, DIALLING_DEVICE = 4, UNUSED = 5, MODULE_MANIPULATOR = 6, TRANSFER_FLUID = 7, TRANSFER_ITEM = 8, TRANSFER_ENERGY = 9;*/
-    public static int FRAME_TYPES = 10;
+    public static int FRAME_TYPES = 8;
 
     public static final PropertyEnum FRAME_TYPE = PropertyEnum.create("frames", BlockFrame.FrameType.class);
 
@@ -47,11 +47,10 @@ public class BlockFrame extends BlockContainer implements IDismantleable
         REDSTONE_INTERFACE(2, "redstone_interface"),
         NETWORK_INTERFACE(3, "network_interface"),
         DIALLING_DEVICE(4, "dialling_device"),
-        UNUSED(5, "unused"),
-        MODULE_MANIPULATOR(6, "module_manipulator"),
-        TRANSFER_FLUID(7, "transfer_fluid"),
-        TRANSFER_ITEM(8, "transfer_item"),
-        TRANSFER_ENERGY(9, "transfer_energy");
+        MODULE_MANIPULATOR(5, "module_manipulator"),
+        TRANSFER_FLUID(6, "transfer_fluid"),
+        TRANSFER_ITEM(7, "transfer_item"),
+        TRANSFER_ENERGY(8, "transfer_energy");
 
         private String name;
         private int id;

@@ -41,7 +41,7 @@ public class ItemUpgrade extends Item
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> subItems)
     {
-       for (int i = 0; i < BlockFrame.FRAME_TYPES - 2; i++)
+       for (int i = 0; i < BlockFrame.FRAME_TYPES; i++)
         {
             subItems.add(new ItemStack(par1, 1, i));
         }

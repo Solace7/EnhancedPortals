@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ItemPortalFrame extends ItemBlock
 {
-    public static String[] unlocalizedName = new String[]{"frame", "controller", "redstone", "network_interface", "dial_device", "program_interface", "upgrade", "fluid", "item", "energy"};
+    public static String[] unlocalizedName = new String[]{"frame", "controller", "redstone", "network_interface", "dial_device", "upgrade", "fluid", "item", "energy"};
 
     public ItemPortalFrame(Block block)
     {

@@ -35,7 +35,6 @@ item.diamondNugget.name=Diamond Nugget
 item.upgrade.redstone.name=Redstone Interface Upgrade
 item.upgrade.network_interface.name=Network Interface Upgrade
 item.upgrade.dial_device.name=Dialling Device Upgrade
-item.upgrade.program_interface.name=Programmable Interface Upgrade
 item.upgrade.upgrade.name=Portal Manipulator Upgrade
 item.upgrade.fluid.name=Fluid Transportation Upgrade
 item.upgrade.item.name=Item Transportation Upgrade
@@ -58,8 +57,6 @@ item.portal_module.6.name=Facing
 item.portal_module.6.desc=Direction to face on teleport
 item.portal_module.7.name=Featherfall
 item.portal_module.7.desc=Negates fall damage
-item.portal_module.8.name=Looking Glass [WIP]
-item.portal_module.8.desc=Enables looking glass
 
 enhancedportals.gui.facing.0=North
 enhancedportals.gui.facing.1=East
