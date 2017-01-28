@@ -19,13 +19,13 @@ public class ItemWrench extends ItemEP implements IToolWrench
 {
     public static ItemWrench instance;
 
-    public ItemWrench()
+    public ItemWrench(String n)
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("wrench");
-        setRegistryName("wrench");
+        setUnlocalizedName(n);
+        setRegistryName(n);
         setMaxStackSize(1);
     }
 

@@ -4,7 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.client.PortalParticleFX;
 import enhancedportals.network.ClientProxy;
 import enhancedportals.network.CommonProxy;
-import enhancedportals.registration.registerPotions;
+import enhancedportals.registration.RegisterPotions;
 import enhancedportals.tile.TilePortalManipulator;
 import enhancedportals.utility.IPortalModule;
 import enhancedportals.utility.Localization;
@@ -40,15 +40,15 @@ public class ItemPortalModule extends Item implements IPortalModule
 
     public static ItemPortalModule instance;
 
- //todo set Icon Overlay && fix potion
+ //todo fix potion
 
-    public ItemPortalModule()
+    public ItemPortalModule(String n)
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("portal_module");
-        setRegistryName("portal_module");
+        setUnlocalizedName(n);
+        setRegistryName(n);
         setMaxDamage(0);
         setMaxStackSize(64);
         setHasSubtypes(true);
@@ -156,11 +156,11 @@ public class ItemPortalModule extends Item implements IPortalModule
         {
             if (entity instanceof EntityPlayer)
             {
-                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(registerPotions.featherfallPotion, 200, 0));
+                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(RegisterPotions.featherfallPotion, 200, 0));
             }
             else if (entity instanceof EntityLiving)
             {
-                ((EntityLiving) entity).addPotionEffect(new PotionEffect(registerPotions.featherfallPotion, 200, 0));
+                ((EntityLiving) entity).addPotionEffect(new PotionEffect(RegisterPotions.featherfallPotion, 200, 0));
             }
         }
     }
@@ -172,11 +172,11 @@ public class ItemPortalModule extends Item implements IPortalModule
         {
             if (entity instanceof EntityPlayer)
             {
-                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(registerPotions.featherfallPotion, 200, 0));
+                ((EntityPlayer) entity).addPotionEffect(new PotionEffect(RegisterPotions.featherfallPotion, 200, 0));
             }
             else if (entity instanceof EntityLiving)
             {
-                ((EntityLiving) entity).addPotionEffect(new PotionEffect(registerPotions.featherfallPotion, 200, 0));
+                ((EntityLiving) entity).addPotionEffect(new PotionEffect(RegisterPotions.featherfallPotion, 200, 0));
             }
         }
 

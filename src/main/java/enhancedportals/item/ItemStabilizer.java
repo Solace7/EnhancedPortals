@@ -10,12 +10,13 @@ import java.util.List;
 
 public class ItemStabilizer extends Item
 {
-    public ItemStabilizer()
+    public ItemStabilizer(String n)
     {
         super();
         setMaxDamage(0);
         setHasSubtypes(true);
-        setRegistryName("bridge_stabilizer");
+        setUnlocalizedName(n);
+        setRegistryName(n);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

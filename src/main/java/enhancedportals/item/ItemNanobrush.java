@@ -11,14 +11,14 @@ public class ItemNanobrush extends ItemEP
     public static ItemNanobrush instance;
 
 
-    public ItemNanobrush()
+    public ItemNanobrush(String n)
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("nanobrush");
         setMaxStackSize(1);
-        setRegistryName("nanobrush");
+        setUnlocalizedName(n);
+        setRegistryName(n);
     }
 
     @Override

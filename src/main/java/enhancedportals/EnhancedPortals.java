@@ -5,7 +5,7 @@ import enhancedportals.network.CommonProxy;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.network.PacketPipeline;
 import enhancedportals.portal.NetworkManager;
-import enhancedportals.registration.registerPotions;
+import enhancedportals.registration.RegisterPotions;
 import enhancedportals.utility.LogHelper;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
@@ -51,7 +51,6 @@ public class EnhancedPortals
     public void preInit(FMLPreInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(new enhancedportals.network.LogOnHandler());
-        MinecraftForge.EVENT_BUS.register(new enhancedportals.network.LogOnHandler());
 
         WormholeTunnelManual.buildManual();
         proxy.preInit(event);
@@ -87,15 +86,15 @@ public class EnhancedPortals
     @SubscribeEvent
     public void onEntityUpdate(LivingUpdateEvent event)
     {
-        PotionEffect effect = event.getEntityLiving().getActivePotionEffect(registerPotions.featherfallPotion);
+        PotionEffect effect = event.getEntityLiving().getActivePotionEffect(RegisterPotions.featherfallPotion);
 
         if (effect != null)
         {
             event.getEntityLiving().fallDistance = 0f;
 
-            if (event.getEntityLiving().getActivePotionEffect(registerPotions.featherfallPotion).getDuration() <= 0)
+            if (event.getEntityLiving().getActivePotionEffect(RegisterPotions.featherfallPotion).getDuration() <= 0)
             {
-                event.getEntityLiving().removePotionEffect(registerPotions.featherfallPotion);
+                event.getEntityLiving().removePotionEffect(RegisterPotions.featherfallPotion);
             }
         }
     }

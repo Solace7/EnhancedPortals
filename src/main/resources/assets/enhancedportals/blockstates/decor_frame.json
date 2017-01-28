@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "enhancedportals:decor_frame"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

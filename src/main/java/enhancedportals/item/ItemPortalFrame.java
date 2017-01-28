@@ -12,12 +12,13 @@ public class ItemPortalFrame extends ItemBlock
 {
     public static String[] unlocalizedName = new String[]{"frame", "controller", "redstone", "network_interface", "dial_device", "upgrade", "fluid", "item", "energy"};
 
-    public ItemPortalFrame(Block block)
+    public ItemPortalFrame(String n, Block block)
     {
         super(block);
-        this.setMaxDamage(0);
-        this.setHasSubtypes(true);
-        this.setRegistryName("frame");
+        setMaxDamage(0);
+        setHasSubtypes(true);
+        setUnlocalizedName(n);
+        setRegistryName(n);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

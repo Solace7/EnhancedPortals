@@ -1,27 +1,32 @@
 package enhancedportals.client.render.blocks;
 
-import enhancedportals.registration.registerBlocks;
+import enhancedportals.registration.RegisterBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public final class BlockRenderRegister
 {
-
-    public static void register(Block block)
+    @SideOnly(Side.CLIENT)
+    private static void register(Block block)
     {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new
-                ModelResourceLocation(block.getRegistryName(), "inventory"));
+        if (Item.getItemFromBlock(block) != null) {
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+        }
     }
 
     public static void init()
     {
-        register(registerBlocks.blockDecorBorderedQuartz);
-        register(registerBlocks.blockStabalizerEmpty);
-        register(registerBlocks.blockStabalizer);
-        register(registerBlocks.blockDecorEnderInfusedMetal);
-        register(registerBlocks.blockFrame);
-        register(registerBlocks.blockPortal);
+//        register(RegisterBlocks.blockStabalizer);
+        register(RegisterBlocks.blockDecorBorderedQuartz);
+        register(RegisterBlocks.blockDecorEnderInfusedMetal);
+
+        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(RegisterBlocks.blockDecorEnderInfusedMetal), 0, new ModelResourceLocation(Item.getItemFromBlock(RegisterBlocks.blockDecorEnderInfusedMetal).getRegistryName(), "inventory"));
+
+//        register(RegisterBlocks.blockFrame);
+//        register(RegisterBlocks.blockPortal);
     }
 }

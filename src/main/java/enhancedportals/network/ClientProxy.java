@@ -6,6 +6,7 @@ import enhancedportals.client.render.items.ItemRenderRegister;
 import enhancedportals.guidebook.WormholeTunnelManual;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
+import enhancedportals.utility.LogHelper;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
@@ -25,6 +26,7 @@ public class ClientProxy extends CommonProxy
 
     public void preInit(FMLPreInitializationEvent e)
     {
+        LogHelper.info("Client Proxy Pre-init");
         super.preInit(e);
 
         ItemRenderRegister.preinit();

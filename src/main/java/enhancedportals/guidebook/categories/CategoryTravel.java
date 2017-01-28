@@ -6,7 +6,7 @@ import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.registration.registerRecipes;
+import enhancedportals.registration.RegisterRecipes;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -25,25 +25,25 @@ public class CategoryTravel
         Entry entryStabalizingDim = new Entry(stabalizingDim, "enhancedportals.manual.chapter.2.title");
         stabalizingDim.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.2.p.0")));
         stabalizingDim.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.2.p.1")));
-        stabalizingDim.add(new PageIRecipe(registerRecipes.blockStabilizer));
-        stabalizingDim.add(new PageIRecipe(registerRecipes.itemWrench));
+        stabalizingDim.add(new PageIRecipe(RegisterRecipes.blockStabilizer));
+        stabalizingDim.add(new PageIRecipe(RegisterRecipes.itemWrench));
         stabalizingDim.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.2.p.2")));
 
         List<IPage> buildingTheHarness = new ArrayList<IPage>();
         buildingTheHarness.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.3.p.0")));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.blockFrame));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.blockFrame));
         buildingTheHarness.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.3.p.1")));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.itemLocationCard));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.blockPortalController));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.itemLocationCard));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.blockPortalController));
         buildingTheHarness.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.3.p.2")));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.blockNetworkInterface));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.blockNetworkInterface));
         buildingTheHarness.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.3.p.3")));
 
 
         List<IPage> ignitingBlackhole = new ArrayList<IPage>();
         Entry entryIgnitingBlackhole = new Entry(ignitingBlackhole, "enhancedportals.manual.chapter.4.title");
         ignitingBlackhole.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.4.p.0")));
-        ignitingBlackhole.add(new PageIRecipe(registerRecipes.blockRedstoneInterface));
+        ignitingBlackhole.add(new PageIRecipe(RegisterRecipes.blockRedstoneInterface));
         ignitingBlackhole.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.chapter.4.p.1")));
 
         entries.put(new ResourceLocation("enhancedportals", "enhancedportals.manual.chapter.2.title"), entryStabalizingDim);

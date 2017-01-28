@@ -1,18 +1,15 @@
 package enhancedportals.block;
 
-import enhancedportals.utility.ConnectedTexturesDetailed;
-
 public class BlockDecorBorderedQuartz extends BlockDecoration
 {
     public static BlockDecorBorderedQuartz instance;
-    static ConnectedTexturesDetailed connectedTextures;
 
     public BlockDecorBorderedQuartz(String n)
     {
         super(n);
         instance = this;
-        setRegistryName("decor_frame");
-//        connectedTextures = new ConnectedTexturesDetailed(BlockFrame.connectedTextures.toString(), this, -1);
+//        setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
 }

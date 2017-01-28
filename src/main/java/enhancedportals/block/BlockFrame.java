@@ -1,8 +1,8 @@
 package enhancedportals.block;
 
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.*;
-import enhancedportals.utility.ConnectedTexturesDetailed;
 import enhancedportals.utility.IDismantleable;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
@@ -35,9 +35,6 @@ import static enhancedportals.block.BlockFrame.FrameType.*;
 public class BlockFrame extends BlockContainer implements IDismantleable
 {
     public static BlockFrame instance;
-    public static ConnectedTexturesDetailed connectedTextures;
-   /* public static int PORTAL_CONTROLLER = 1, REDSTONE_INTERFACE = 2, NETWORK_INTERFACE = 3, DIALLING_DEVICE = 4, UNUSED = 5, MODULE_MANIPULATOR = 6, TRANSFER_FLUID = 7, TRANSFER_ITEM = 8, TRANSFER_ENERGY = 9;*/
-    public static int FRAME_TYPES = 8;
 
     public static final PropertyEnum FRAME_TYPE = PropertyEnum.create("frames", BlockFrame.FrameType.class);
 
@@ -72,17 +69,16 @@ public class BlockFrame extends BlockContainer implements IDismantleable
     }
 
 
-    public BlockFrame()
+    public BlockFrame(String n)
     {
         super(Material.ROCK);
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setHardness(5);
         setResistance(2000);
-        setUnlocalizedName("frame");
+        setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(n);
         setSoundType(SoundType.STONE);
-//        connectedTextures = new ConnectedTexturesDetailed("enhancedportals:frame/%s", this, -1);
-        this.setRegistryName("frame");
         this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FRAME));
     }
 

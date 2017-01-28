@@ -11,13 +11,13 @@ public class ItemGlasses extends ItemArmor
     public static ItemGlasses instance;
 
 
-    public ItemGlasses()
+    public ItemGlasses(String n)
     {
         super(ArmorMaterial.LEATHER, EnhancedPortals.proxy.gogglesRenderIndex, EntityEquipmentSlot.HEAD);
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("glasses");
-        setRegistryName("glasses");
+        setUnlocalizedName(n);
+        setRegistryName(n);
     }
 
     @Override

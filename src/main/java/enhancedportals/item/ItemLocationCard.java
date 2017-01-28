@@ -16,15 +16,15 @@ public class ItemLocationCard extends ItemEP
 {
     public static ItemLocationCard instance;
 
-    public ItemLocationCard()
+    public ItemLocationCard(String n)
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setMaxDamage(0);
         setHasSubtypes(true);
-        setUnlocalizedName("location_card");
-        setRegistryName("location_card");
+        setUnlocalizedName(n);
+        setRegistryName(n);
     }
 
     public static void clearDBSLocation(ItemStack s)

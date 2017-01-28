@@ -1,5 +1,6 @@
 package enhancedportals.block;
 
+import enhancedportals.Reference;
 import enhancedportals.client.PortalParticleFX;
 import enhancedportals.item.ItemPortalModule;
 import enhancedportals.portal.EntityManager;
@@ -34,14 +35,14 @@ public class BlockPortal extends BlockContainer
 {
     public static BlockPortal instance;
 
-    public BlockPortal()
+    public BlockPortal(String n)
     {
         super(Material.PORTAL);
         instance = this;
         setBlockUnbreakable();
         setResistance(2000);
-        setUnlocalizedName("portal");
-        setRegistryName("portal");
+        setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(n);
         setLightOpacity(0);
         setSoundType(SoundType.GLASS);
     }

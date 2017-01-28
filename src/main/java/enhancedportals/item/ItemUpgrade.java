@@ -13,13 +13,13 @@ public class ItemUpgrade extends Item
 {
     public static ItemUpgrade instance;
 
-    public ItemUpgrade()
+    public ItemUpgrade(String n)
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("upgrade");
-        setRegistryName("upgrade");
+        setUnlocalizedName(n);
+        setRegistryName(n);
         setHasSubtypes(true);
         setMaxDamage(0);
     }
@@ -41,17 +41,17 @@ public class ItemUpgrade extends Item
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> subItems)
     {
-       for (int i = 0; i < BlockFrame.FRAME_TYPES; i++)
+       for (int i = 0; i < BlockFrame.FrameType.values().length; i++)
         {
             subItems.add(new ItemStack(par1, 1, i));
         }
     }
 
-    @Override
+ /*   @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
         return super.getUnlocalizedName() + "." + ItemPortalFrame.unlocalizedName[par1ItemStack.getItemDamage() + 2];
-    }
+    }*/
 
     //todo SetItemUseFirst
 

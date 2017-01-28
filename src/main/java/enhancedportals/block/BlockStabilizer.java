@@ -1,9 +1,9 @@
 package enhancedportals.block;
 
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.TileStabilizer;
 import enhancedportals.tile.TileStabilizerMain;
-import enhancedportals.utility.ConnectedTexturesDetailed;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -26,12 +26,11 @@ import static enhancedportals.block.BlockStabilizer.StabilizerPart.STABILIZER;
 public class BlockStabilizer extends BlockContainer
 {
     public static BlockStabilizer instance;
-    public static ConnectedTexturesDetailed connectedTextures;
 
     public static final PropertyEnum STABALIZER_PART = PropertyEnum.create("stabilizer", BlockStabilizer.StabilizerPart.class);
 
     public enum StabilizerPart implements IStringSerializable {
-        STABILIZER(0,"stabilizaer"),
+        STABILIZER(0,"stabilizer"),
         MAIN(1, "main");
 
         private String name;
@@ -50,17 +49,16 @@ public class BlockStabilizer extends BlockContainer
         }
     }
 
-    public BlockStabilizer()
+    public BlockStabilizer(String n)
     {
         super(Material.ROCK);
         instance = this;
         setHardness(5);
         setResistance(2000);
-        setUnlocalizedName("dbs");
-        setRegistryName("bridge_stabilizer");
+        setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(n);
         setSoundType(SoundType.STONE);
         setCreativeTab(CommonProxy.creativeTab);
-        connectedTextures = new ConnectedTexturesDetailed("enhancedportals:bridge/%s", this, -1);
     }
 
     @Override

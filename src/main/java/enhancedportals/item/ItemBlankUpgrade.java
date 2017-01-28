@@ -6,13 +6,13 @@ public class ItemBlankUpgrade extends ItemEP
 {
     public static ItemBlankUpgrade instance;
 
-    public ItemBlankUpgrade()
+    public ItemBlankUpgrade(String n)
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("blank_upgrade");
-        setRegistryName("blank_upgrade");
+        setUnlocalizedName(n);
+        setRegistryName(n);
     }
 
 }

@@ -30,15 +30,15 @@ public class ItemAddressBook extends ItemEP
     public static ItemAddressBook instance;
     private  final String name = "address_book";
 
-    public ItemAddressBook()
+    public ItemAddressBook(String n)
     {
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName("address_book");
         setMaxDamage(0);
         setMaxStackSize(1);
-        setRegistryName("address_book");
+        setUnlocalizedName(n);
+        setRegistryName(n);
     }
 
     public String getName() {

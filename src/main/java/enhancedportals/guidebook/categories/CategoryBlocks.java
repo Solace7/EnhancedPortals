@@ -5,7 +5,7 @@ import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.registration.registerRecipes;
+import enhancedportals.registration.RegisterRecipes;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -24,43 +24,43 @@ public class CategoryBlocks
 
         List<IPage> dbs = new ArrayList<IPage>();
         dbs.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.dbs.info")));
-        dbs.add(new PageIRecipe(registerRecipes.blockStabilizer));
+        dbs.add(new PageIRecipe(RegisterRecipes.blockStabilizer));
 
         List<IPage> portalFrame = new ArrayList<IPage>();
         portalFrame.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame0.info")));
-        portalFrame.add(new PageIRecipe(registerRecipes.blockFrame));
+        portalFrame.add(new PageIRecipe(RegisterRecipes.blockFrame));
 
         List<IPage> portalController = new ArrayList<IPage>();
         portalController.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame1.info")));
-        portalController.add(new PageIRecipe(registerRecipes.blockPortalController));
+        portalController.add(new PageIRecipe(RegisterRecipes.blockPortalController));
 
         List<IPage> redstoneInterface = new ArrayList<IPage>();
         redstoneInterface.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame2.info")));
-        redstoneInterface.add(new PageIRecipe(registerRecipes.blockRedstoneInterface));
+        redstoneInterface.add(new PageIRecipe(RegisterRecipes.blockRedstoneInterface));
 
         List<IPage> networkInterface = new ArrayList<IPage>();
         networkInterface.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame3.info")));
-        networkInterface.add(new PageIRecipe(registerRecipes.blockNetworkInterface));
+        networkInterface.add(new PageIRecipe(RegisterRecipes.blockNetworkInterface));
 
         List<IPage> diallingDevice = new ArrayList<IPage>();
         diallingDevice.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame4.info")));
-        diallingDevice.add(new PageIRecipe(registerRecipes.blockDiallingDevice));
+        diallingDevice.add(new PageIRecipe(RegisterRecipes.blockDiallingDevice));
 
         List<IPage> portalManipulator = new ArrayList<IPage>();
         portalManipulator.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame6.info")));
-        portalManipulator.add(new PageIRecipe(registerRecipes.blockModuleManipulator));
+        portalManipulator.add(new PageIRecipe(RegisterRecipes.blockModuleManipulator));
 
         List<IPage> fluidTransportModule = new ArrayList<IPage>();
         fluidTransportModule.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame7.info")));
-        fluidTransportModule.add(new PageIRecipe(registerRecipes.blockFluidTransfer));
+        fluidTransportModule.add(new PageIRecipe(RegisterRecipes.blockFluidTransfer));
 
         List<IPage> itemTransportModule = new ArrayList<IPage>();
         itemTransportModule.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame8.info")));
-        itemTransportModule.add(new PageIRecipe(registerRecipes.blockItemTranfer));
+        itemTransportModule.add(new PageIRecipe(RegisterRecipes.blockItemTranfer));
 
         List<IPage> energyTransportModule = new ArrayList<IPage>();
         energyTransportModule.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.frame9.info")));
-        energyTransportModule.add(new PageIRecipe(registerRecipes.blockEnergyTransfer));
+        energyTransportModule.add(new PageIRecipe(RegisterRecipes.blockEnergyTransfer));
 
        /* entries.put(new ResourceLocation("enhancedportals.manual.dbs.title"));
         entries.put(new EntryResourceLocation(portalFrame, "enhancedportals.manual.frame0.title"));

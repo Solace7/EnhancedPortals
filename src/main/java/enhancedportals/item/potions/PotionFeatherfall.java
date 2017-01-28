@@ -4,7 +4,6 @@ import net.minecraft.potion.Potion;
 
 public class PotionFeatherfall extends Potion
 {
-//todo potion id?
 
     public PotionFeatherfall(boolean isBad, int liquidColor)
     {

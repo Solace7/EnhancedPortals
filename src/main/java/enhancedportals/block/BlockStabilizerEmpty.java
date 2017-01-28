@@ -1,5 +1,6 @@
 package enhancedportals.block;
 
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -9,15 +10,15 @@ public class BlockStabilizerEmpty extends Block
 {
     public static BlockStabilizerEmpty instance;
 
-    public BlockStabilizerEmpty()
+    public BlockStabilizerEmpty(String n)
     {
         super(Material.ROCK);
-        setRegistryName("dbs_empty");
+        setRegistryName(Reference.EPMod.mod_id, n);
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setHardness(5);
         setResistance(2000);
-        setUnlocalizedName("dbs_empty");
+        setUnlocalizedName(n);
         setSoundType(SoundType.STONE);
     }
 }

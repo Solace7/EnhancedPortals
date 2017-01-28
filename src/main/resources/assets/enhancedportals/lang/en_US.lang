@@ -58,6 +58,13 @@ item.portal_module.6.desc=Direction to face on teleport
 item.portal_module.7.name=Featherfall
 item.portal_module.7.desc=Negates fall damage
 
+## MODULE INFORMATION ##
+enhancedportals.manual.blank_module.title=Blank Portal Module
+enhancedportals.manual.blank_module.info=The foundation circuit module. This item is required to craft the other modules and the Portal Manipulator.
+
+item.portal.module.4.desc=Makes the portal completely invisible. This module is uncraftable and can only be found in dungeon chests.
+item.portal.module.8.desc=Enables looking glass. This module is currently uncraftable as looking glass has not been fully implemented just yet.
+
 enhancedportals.gui.facing.0=North
 enhancedportals.gui.facing.1=East
 enhancedportals.gui.facing.2=South
@@ -373,11 +380,4 @@ enhancedportals.manual.frame8.title=Item Transportation Module
 enhancedportals.manual.frame8.info=This module allows you to teleport Items to a destination with another Item Transportation module.
 enhancedportals.manual.frame9.title=Energy Transportation Module
 enhancedportals.manual.frame9.info=This module allows you to teleport Energy to a destination with another Energy Transportation module.
-
-## MODULE INFORMATION ##
-enhancedportals.manual.blank_module.title=Blank Portal Module
-enhancedportals.manual.blank_module.info=The foundation circuit module. This item is required to craft the other modules and the Portal Manipulator.
-
-item.portal.module.4.desc=Makes the portal completely invisible. This module is uncraftable and can only be found in dungeon chests.
-item.portal.module.8.desc=Enables looking glass. This module is currently uncraftable as looking glass has not been fully implemented just yet.
 

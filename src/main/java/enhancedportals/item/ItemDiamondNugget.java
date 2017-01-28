@@ -9,10 +9,10 @@ public class ItemDiamondNugget extends Item
 
     public ItemDiamondNugget()
     {
-        setUnlocalizedName("diamondNugget");
         setMaxStackSize(64);
         setCreativeTab(CommonProxy.creativeTab);
         instance = this;
-        this.setRegistryName("diamond_nugget");
+        setUnlocalizedName("diamondNugget");
+        setRegistryName("diamondNugget");
     }
 }

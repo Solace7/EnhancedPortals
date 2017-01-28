@@ -38,11 +38,12 @@ public class CommonProxy
 
     public void preInit(FMLPreInitializationEvent event)
     {
-        registerItems.preinit();
-        registerBlocks.preinit();
-        registerPackets.preinit();
-        registerPotions.preinit();
-        registerTiles.preinit();
+        LogHelper.info("Common Proxy Pre-init");
+        RegisterItems.preinit();
+        RegisterBlocks.preinit();
+        RegisterPackets.preinit();
+        RegisterPotions.preinit();
+        RegisterTiles.preinit();
         ConfigurationHandler.setupConfiguration(new File(event.getSuggestedConfigurationFile().getParentFile(), MOD_NAME + File.separator + "config.cfg"));
     }
 
@@ -112,8 +113,8 @@ public class CommonProxy
     {
         if (CONFIG_RECIPES_VANILLA)
         {
-            registerRecipes.initShaped();
-            registerRecipes.initShapeless();
+            RegisterRecipes.initShaped();
+            RegisterRecipes.initShapeless();
         }
         /*if (CONFIG_RECIPES_TE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
         {

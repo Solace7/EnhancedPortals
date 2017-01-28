@@ -5,7 +5,7 @@ import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.registration.registerRecipes;
+import enhancedportals.registration.RegisterRecipes;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -23,42 +23,42 @@ public class CategoryModules
         List<IPage> blankModule = new ArrayList<IPage>();
 
         blankModule.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.blank_module.info")));
-        blankModule.add(new PageIRecipe(registerRecipes.blockModuleManipulator));
+        blankModule.add(new PageIRecipe(RegisterRecipes.blockModuleManipulator));
 
         List<IPage> particleDestroy = new ArrayList<IPage>();
         particleDestroy.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal_module.0.desc")));
-        particleDestroy.add(new PageIRecipe(registerRecipes.particleRemoveModule));
+        particleDestroy.add(new PageIRecipe(RegisterRecipes.particleRemoveModule));
 
         List<IPage> particleRainbow = new ArrayList<IPage>();
         particleRainbow.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal_module.1.desc")));
-        particleRainbow.add(new PageIRecipe(registerRecipes.rainbowParticlesModule));
+        particleRainbow.add(new PageIRecipe(RegisterRecipes.rainbowParticlesModule));
 
         List<IPage> silencer = new ArrayList<IPage>();
         silencer.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal_module.2.desc")));
-        silencer.add(new PageIRecipe(registerRecipes.silencerUpgrade));
+        silencer.add(new PageIRecipe(RegisterRecipes.silencerUpgrade));
 
         List<IPage> momentum = new ArrayList<IPage>();
         momentum.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal_module.3.dec")));
-        momentum.add(new PageIRecipe(registerRecipes.keepMomentumUpgrade));
+        momentum.add(new PageIRecipe(RegisterRecipes.keepMomentumUpgrade));
 
         List<IPage> cloaking = new ArrayList<IPage>();
         cloaking.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal.module.4.desc")));
 
         List<IPage> particleShader = new ArrayList<IPage>();
         particleShader.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal_module.5.desc")));
-        particleShader.add(new PageIRecipe(registerRecipes.tintUpgrade));
+        particleShader.add(new PageIRecipe(RegisterRecipes.tintUpgrade));
 
         List<IPage> facing = new ArrayList<IPage>();
         facing.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal_module.6.desc")));
-        facing.add(new PageIRecipe(registerRecipes.facingUpgrade));
+        facing.add(new PageIRecipe(RegisterRecipes.facingUpgrade));
 
         List<IPage> featherfall = new ArrayList<IPage>();
         featherfall.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal_module.7.desc")));
-        featherfall.add(new PageIRecipe(registerRecipes.featherfallUpgrade));
+        featherfall.add(new PageIRecipe(RegisterRecipes.featherfallUpgrade));
 
-        List<IPage> lookingGlass = new ArrayList<IPage>();
+        /*List<IPage> lookingGlass = new ArrayList<IPage>();
         lookingGlass.addAll(PageHelper.pagesForLongText(TextHelper.localize("item.portal.module.8.desc")));
-        //todo add looking glass module crafting recipe
+        //todo add looking glass module crafting recipe*/
 
 /*
 

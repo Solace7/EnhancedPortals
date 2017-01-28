@@ -5,7 +5,7 @@ import amerifrance.guideapi.api.impl.abstraction.EntryAbstract;
 import amerifrance.guideapi.api.util.PageHelper;
 import amerifrance.guideapi.api.util.TextHelper;
 import amerifrance.guideapi.page.PageIRecipe;
-import enhancedportals.registration.registerRecipes;
+import enhancedportals.registration.RegisterRecipes;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -22,19 +22,19 @@ public class CategoryItems
         List<IPage> wrench = new ArrayList<IPage>();
 
         wrench.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.wrench.info")));
-        wrench.add(new PageIRecipe(registerRecipes.itemWrench));
+        wrench.add(new PageIRecipe(RegisterRecipes.itemWrench));
 
         List<IPage> nanobrush = new ArrayList<IPage>();
         nanobrush.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.nanobrush.info")));
-        nanobrush.add(new PageIRecipe(registerRecipes.itemNanobrush));
+        nanobrush.add(new PageIRecipe(RegisterRecipes.itemNanobrush));
 
         List<IPage> glasses = new ArrayList<IPage>();
         glasses.addAll((PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.glasses.info"))));
-        glasses.add(new PageIRecipe(registerRecipes.itemGlasses));
+        glasses.add(new PageIRecipe(RegisterRecipes.itemGlasses));
 
         List<IPage> locationCard = new ArrayList<IPage>();
         locationCard.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.itemLocationCard.info")));
-        locationCard.add(new PageIRecipe(registerRecipes.itemLocationCard));
+        locationCard.add(new PageIRecipe(RegisterRecipes.itemLocationCard));
 
         List<IPage> addressBook = new ArrayList<IPage>();
         addressBook.addAll(PageHelper.pagesForLongText(TextHelper.localize("enhancedportals.manual.address_book.info")));
