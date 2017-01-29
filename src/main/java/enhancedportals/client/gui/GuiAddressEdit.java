@@ -110,8 +110,7 @@ public class GuiAddressEdit extends GuiAddressBookAdd
         {
             try
             {
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
-                        .GUI_ADDRESS_BOOK.AB_A));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_A));
             }
             catch (Exception e)
             {

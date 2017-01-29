@@ -62,20 +62,17 @@ public class GuiDialingEditFrame extends GuiTextureFrame
         else if (button.id == 1000)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
-                    .GUI_DIAL.DIAL_D : Reference.GuiEnums.GUI_DIAL.DIAL_C));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums.GUI_DIAL.DIAL_D : Reference.GuiEnums.GUI_DIAL.DIAL_C));
         }
         else if (button.id == 500)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
-                    .GUI_TEXTURE.TEXTURE_DIAL_EDIT_B : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_B : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_B));
         }
         else if (button.id == 501)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
-                    .GUI_TEXTURE.TEXTURE_DIAL_EDIT_C : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_C));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_C : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_C));
         }
     }
 

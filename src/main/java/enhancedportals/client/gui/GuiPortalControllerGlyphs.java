@@ -82,8 +82,7 @@ public class GuiPortalControllerGlyphs extends BaseGui
         }
         else if (button.id == buttonCancel.id)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums
-                    .GUI_CONTROLLER.CONTROLLER_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums.GUI_CONTROLLER.CONTROLLER_A));
         }
         else if (button.id == buttonSave.id) // Save Changes
         {

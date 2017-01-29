@@ -1,14 +1,16 @@
 package enhancedportals.block;
 
+import enhancedportals.Reference;
+
 public class BlockDecorBorderedQuartz extends BlockDecoration
 {
     public static BlockDecorBorderedQuartz instance;
 
-    public BlockDecorBorderedQuartz(String n)
+    public BlockDecorBorderedQuartz(String q)
     {
-        super(n);
+        super(q);
         instance = this;
-//        setRegistryName(Reference.EPMod.mod_id, n);
+        setRegistryName(Reference.EPMod.mod_id, q);
         setUnlocalizedName(getRegistryName().toString());
     }
 

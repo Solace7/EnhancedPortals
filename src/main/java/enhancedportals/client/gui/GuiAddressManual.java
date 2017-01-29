@@ -83,8 +83,7 @@ public class GuiAddressManual extends BaseGui
             {
                 ClientProxy.saveGlyph = selector.getGlyphIdentifier();
                 ClientProxy.saveName = "Unnamed Portal";
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
-                        .GUI_ADDRESS_BOOK.AB_C));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_C));
             }
             else
             {
@@ -93,8 +92,7 @@ public class GuiAddressManual extends BaseGui
         }
         else if (button.id == 2)
         { //cancel
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
-                    .GUI_ADDRESS_BOOK.AB_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_A));
         }
     }
 }

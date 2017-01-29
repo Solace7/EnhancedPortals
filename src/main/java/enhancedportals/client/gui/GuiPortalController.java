@@ -49,8 +49,7 @@ public class GuiPortalController extends BaseGui
 
         if (x >= guiLeft + 7 && x <= guiLeft + 168 && y >= guiTop + 32 && y < guiTop + 47)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums
-                    .GUI_CONTROLLER.CONTROLLER_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(controller, Reference.GuiEnums.GUI_CONTROLLER.CONTROLLER_B));
         }
     }
 

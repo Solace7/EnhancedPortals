@@ -66,14 +66,12 @@ public class GuiDialingEditParticle extends GuiTextureParticle
         else if (button.id == 500)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
-                    .GUI_TEXTURE.TEXTURE_DIAL_EDIT_A : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_A));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_A : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_A));
         }
         else if (button.id == 501)
         {
             didSave = true;
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums
-                    .GUI_TEXTURE.TEXTURE_DIAL_EDIT_B : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(dial, returnToEdit ? Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_EDIT_B : Reference.GuiEnums.GUI_TEXTURE.TEXTURE_DIAL_SAVE_B));
         }
     }
 

@@ -83,8 +83,7 @@ public class GuiAddressEditIdentifier extends BaseGui
             // Save Changes
             ClientProxy.saveGlyph = selector.getGlyphIdentifier();
             //todo fix this
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
-                    .GUI_ADDRESS_BOOK.AB_D));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_D));
         }
     }
 
