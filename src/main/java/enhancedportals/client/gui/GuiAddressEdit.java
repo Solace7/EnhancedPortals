@@ -65,8 +65,7 @@ public class GuiAddressEdit extends GuiAddressBookAdd
             if (mouseX >= guiLeft + 7 && mouseX <= guiLeft + 168 && mouseY >= guiTop + 52 && mouseY < guiTop + 70)
             {
                 isEditing = true;
-                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums
-                        .GUI_ADDRESS_BOOK.AB_E));
+                EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_E));
             }
         }
     }
