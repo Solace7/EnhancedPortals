@@ -1,5 +1,6 @@
 package enhancedportals.item;
 
+import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.network.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,7 +20,7 @@ public class ItemUpgrade extends Item
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setUnlocalizedName(n);
-        setRegistryName(n);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setHasSubtypes(true);
         setMaxDamage(0);
     }

@@ -44,23 +44,23 @@ public class GuiHandler implements IGuiHandler
 
             ItemAddressBook addressBook = (ItemAddressBook) i;
 
-            if (ID == AB_A.ordinal())
+            if (ID == ADDRESS_BOOK_A.ordinal())
             {
                 return new GuiAddressBook(addressBook, player);
             }
-            else if (ID == AB_B.ordinal())
+            else if (ID == ADDRESS_BOOK_B.ordinal())
             {
                 return new GuiAddressManual(addressBook, player);
             }
-            else if (ID == AB_C.ordinal())
+            else if (ID == ADDRESS_BOOK_C.ordinal())
             {
                 return new GuiAddressBookAdd(addressBook, player);
             }
-            else if (ID == AB_D.ordinal())
+            else if (ID == ADDRESS_BOOK_D.ordinal())
             {
                 return new GuiAddressEdit(addressBook, player);
             }
-            else if (ID == AB_E.ordinal())
+            else if (ID == ADDRESS_BOOK_E.ordinal())
             {
                 return new GuiAddressEditIdentifier(addressBook, player);
             }
@@ -195,24 +195,24 @@ public class GuiHandler implements IGuiHandler
             Item i = stack.getItem();
             ItemAddressBook addressBook = (ItemAddressBook) i;
 
-            if (ID == AB_A.ordinal())
+            if (ID == ADDRESS_BOOK_A.ordinal())
             {
                 addressBook.readFromNBT(stack);
                 return new ContainerAddressBook(addressBook, player.inventory);
             }
-            else if (ID == AB_B.ordinal())
+            else if (ID == ADDRESS_BOOK_B.ordinal())
             {
                 return new ContainerAddressManual(addressBook, player.inventory);
             }
-            else if (ID == AB_C.ordinal())
+            else if (ID == ADDRESS_BOOK_C.ordinal())
             {
                 return new ContainerAddressBookAdd(addressBook, player.inventory);
             }
-            else if (ID == AB_D.ordinal())
+            else if (ID == ADDRESS_BOOK_D.ordinal())
             {
                 return new ContainerAddressEdit(addressBook, player.inventory);
             }
-            else if (ID == AB_E.ordinal())
+            else if (ID == ADDRESS_BOOK_E.ordinal())
             {
                 return new ContainerAddressEditIdentifier(addressBook, player.inventory);
             }

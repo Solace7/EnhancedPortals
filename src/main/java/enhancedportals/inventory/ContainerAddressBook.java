@@ -66,7 +66,7 @@ public class ContainerAddressBook extends BaseContainer
             if (addressBook.glyphList.size() > id)
             {
                 GlyphElement e = addressBook.glyphList.get(id);
-                player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_D.ordinal(), Minecraft.getMinecraft().theWorld, (int) player.posX, (int) player.posY, (int) player.posZ);
+                player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_ADDRESS_BOOK.ADDRESS_BOOK_D.ordinal(), Minecraft.getMinecraft().theWorld, (int) player.posX, (int) player.posY, (int) player.posZ);
                 EnhancedPortals.packetPipeline.sendTo(new PacketTextureData(e.name, e.identifier.getGlyphString(), e.texture), (EntityPlayerMP) player);
             }
         }

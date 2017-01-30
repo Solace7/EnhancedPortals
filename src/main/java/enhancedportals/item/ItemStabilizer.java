@@ -1,6 +1,7 @@
 package enhancedportals.item;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import enhancedportals.Reference;
 import enhancedportals.utility.Localization;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -16,7 +17,7 @@ public class ItemStabilizer extends Item
         setMaxDamage(0);
         setHasSubtypes(true);
         setUnlocalizedName(n);
-        setRegistryName(n);
+        setRegistryName(Reference.EPMod.mod_id, n);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

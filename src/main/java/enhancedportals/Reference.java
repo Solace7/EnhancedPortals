@@ -52,7 +52,7 @@ public class Reference
         }
 
         public enum GUI_ADDRESS_BOOK {
-            AB_A, AB_B, AB_C, AB_D, AB_E
+            ADDRESS_BOOK_A, ADDRESS_BOOK_B, ADDRESS_BOOK_C, ADDRESS_BOOK_D, ADDRESS_BOOK_E
         }
 
         public enum GUI_CONTROLLER {

@@ -48,7 +48,7 @@ public class GuiAddressBook extends BaseGui
     {
         if (button.id == 0)
         {
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_B));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.ADDRESS_BOOK_B));
         }
     }
 

@@ -1,5 +1,6 @@
 package enhancedportals.item;
 
+import enhancedportals.Reference;
 import enhancedportals.utility.Localization;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +18,8 @@ public class ItemPortalFrame extends ItemBlock
         super(block);
         setMaxDamage(0);
         setHasSubtypes(true);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(n);
-        setRegistryName(n);
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

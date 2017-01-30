@@ -1,5 +1,6 @@
 package enhancedportals.item;
 
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 
 public class ItemBlankPortalModule extends ItemEP
@@ -11,8 +12,8 @@ public class ItemBlankPortalModule extends ItemEP
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(n);
-        setRegistryName(n);
     }
     
 }

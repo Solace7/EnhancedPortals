@@ -1,5 +1,6 @@
 package enhancedportals.item;
 
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.utility.DimensionCoordinates;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +24,8 @@ public class ItemLocationCard extends ItemEP
         setCreativeTab(CommonProxy.creativeTab);
         setMaxDamage(0);
         setHasSubtypes(true);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(n);
-        setRegistryName(n);
     }
 
     public static void clearDBSLocation(ItemStack s)

@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "enhancedportals:blocks/frame0B"
+      "all": "enhancedportals:blocks/bridge/0"
     }
   },
   "variants": {
@@ -10,7 +10,10 @@
       "model": "cube_all"
     },
     "inventory": {
-      "model": "cube_all"
+      "model": "cube_all",
+      "textures": {
+        "texture": "enhancedportals:blocks/bridge/0"
+      }
     }
   }
 }

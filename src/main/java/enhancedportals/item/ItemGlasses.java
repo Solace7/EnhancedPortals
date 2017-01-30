@@ -1,6 +1,7 @@
 package enhancedportals.item;
 
 import enhancedportals.EnhancedPortals;
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
@@ -16,8 +17,8 @@ public class ItemGlasses extends ItemArmor
         super(ArmorMaterial.LEATHER, EnhancedPortals.proxy.gogglesRenderIndex, EntityEquipmentSlot.HEAD);
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(n);
-        setRegistryName(n);
     }
 
     @Override

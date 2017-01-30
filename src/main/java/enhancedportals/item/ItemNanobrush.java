@@ -1,5 +1,6 @@
 package enhancedportals.item;
 
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,8 +18,8 @@ public class ItemNanobrush extends ItemEP
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setMaxStackSize(1);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(n);
-        setRegistryName(n);
     }
 
     @Override

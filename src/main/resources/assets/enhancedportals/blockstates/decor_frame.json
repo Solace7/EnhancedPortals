@@ -1,10 +1,16 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "enhancedportals:decor_frame"
+    "textures": {
+      "all": "enhancedportals:blocks/frame0B"
+    }
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}]
+    "normal": {
+      "model": "cube_all"
+    },
+    "inventory": {
+      "model": "cube_all"
+    }
   }
 }

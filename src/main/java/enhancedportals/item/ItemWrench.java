@@ -1,6 +1,7 @@
 package enhancedportals.item;
 
 import buildcraft.api.tools.IToolWrench;
+import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.utility.IDismantleable;
 import net.minecraft.block.Block;
@@ -25,7 +26,7 @@ public class ItemWrench extends ItemEP implements IToolWrench
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setUnlocalizedName(n);
-        setRegistryName(n);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setMaxStackSize(1);
     }
 

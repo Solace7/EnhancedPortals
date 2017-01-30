@@ -38,7 +38,7 @@ public class ItemAddressBook extends ItemEP
         setMaxDamage(0);
         setMaxStackSize(1);
         setUnlocalizedName(n);
-        setRegistryName(n);
+        setRegistryName(Reference.EPMod.mod_id, n);
     }
 
     public String getName() {
@@ -79,7 +79,7 @@ public class ItemAddressBook extends ItemEP
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World world, EntityPlayer player, EnumHand hand)
     {
         readFromNBT(itemStack);
-        GuiHandler.openGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_A.ordinal());
+        GuiHandler.openGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.ADDRESS_BOOK_A.ordinal());
 
         return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStack);
     }

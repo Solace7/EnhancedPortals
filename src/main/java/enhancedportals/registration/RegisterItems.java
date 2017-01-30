@@ -1,6 +1,5 @@
 package enhancedportals.registration;
 
-import enhancedportals.block.BlockFrame;
 import enhancedportals.item.*;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -18,8 +17,6 @@ public class RegisterItems
     public static Item itemBlankUpgrade;
     public static Item itemAddressBook;
     public static Item itemDiamondNugget;
-    public static Item itemFrame;
-    public static Item itemStabilizer;
 
     public static void preinit()
     {
@@ -32,9 +29,6 @@ public class RegisterItems
         itemBlankPortalModule = GameRegistry.register(new ItemBlankPortalModule("blank_portal_module"));
         itemBlankUpgrade = GameRegistry.register(new ItemBlankUpgrade("blank_upgrade"));
         itemAddressBook = GameRegistry.register(new ItemAddressBook("address_book"));
-        itemFrame = GameRegistry.register(new ItemPortalFrame("frame", new BlockFrame("frame")));
-        itemStabilizer = GameRegistry.register(new ItemStabilizer("bridge_stabilizer"));
-
         //        itemDiamondNugget  = GameRegistry.register(new ItemDiamondNugget("diamondNugget));
     }
 

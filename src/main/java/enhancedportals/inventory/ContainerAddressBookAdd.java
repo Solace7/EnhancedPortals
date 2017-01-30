@@ -29,7 +29,7 @@ public class ContainerAddressBookAdd extends BaseContainer
             PortalTextureManager ptm = new PortalTextureManager();
             ptm.readFromNBT(tag, "texture");
             addressBook.glyphList.add(new GlyphElement(tag.getString("name"), new GlyphIdentifier(tag.getString("uid")), ptm));
-            player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_A.ordinal(),player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+            player.openGui(EnhancedPortals.instance, Reference.GuiEnums.GUI_ADDRESS_BOOK.ADDRESS_BOOK_A.ordinal(),player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
         }
     }
 }

@@ -1,6 +1,7 @@
 package enhancedportals.item;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import enhancedportals.Reference;
 import enhancedportals.client.PortalParticleFX;
 import enhancedportals.network.ClientProxy;
 import enhancedportals.network.CommonProxy;
@@ -48,7 +49,7 @@ public class ItemPortalModule extends Item implements IPortalModule
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setUnlocalizedName(n);
-        setRegistryName(n);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setMaxDamage(0);
         setMaxStackSize(64);
         setHasSubtypes(true);
