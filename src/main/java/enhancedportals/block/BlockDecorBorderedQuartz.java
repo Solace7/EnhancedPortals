@@ -6,11 +6,11 @@ public class BlockDecorBorderedQuartz extends BlockDecoration
 {
     public static BlockDecorBorderedQuartz instance;
 
-    public BlockDecorBorderedQuartz(String q)
+    public BlockDecorBorderedQuartz(String n)
     {
-        super(q);
+        super(n);
         instance = this;
-        setRegistryName(Reference.EPMod.mod_id, q);
+        setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(getRegistryName().toString());
     }
 

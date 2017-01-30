@@ -11,7 +11,7 @@ public class BlockDecorEnderInfusedMetal extends BlockDecoration
         super(n);
         instance = this;
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
 }
