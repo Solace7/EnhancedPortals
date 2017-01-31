@@ -16,7 +16,7 @@ public class ItemUpgrade extends Item
         REDSTONE_UPGRADE, NETWORK_INTERFACE, DIAL_DEVICE, PORTAL_MANIPULATOR, FLUID_TRANSFER, ITEM_TRANSFER, ENERGY_TRANSFER
     }
 
-    public static String[] unlocalizedName = new String[]{"redstone", "network_interface", "dial_device", "fluid", "manipulator", "item", "energy"};
+    public static String[] unlocalizedName = new String[]{"redstone", "network_interface", "dial_device", "manipulator", "fluid", "item", "energy"};
 
     public static ItemUpgrade instance;
 

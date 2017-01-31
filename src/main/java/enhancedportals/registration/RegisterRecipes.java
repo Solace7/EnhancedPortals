@@ -146,17 +146,18 @@ public class RegisterRecipes
         tintUpgrade = RecipeRegistry.getLatestCraftingRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(ItemPortalModule.instance, 1, 6), new ItemStack(ItemBlankPortalModule.instance), new ItemStack(Items.COMPASS));
         facingUpgrade = RecipeRegistry.getLatestCraftingRecipe();
+
         GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 1), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL);
         networkInterfaceUpgrade = RecipeRegistry.getLatestCraftingRecipe();
         GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 2), new ItemStack(ItemUpgrade.instance, 1, 1), Items.DIAMOND);
         diallingDeviceUpgrade = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 4), new ItemStack(ItemBlankUpgrade.instance), Items.DIAMOND, Items.EMERALD, new ItemStack(ItemBlankPortalModule.instance));
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 3), new ItemStack(ItemBlankUpgrade.instance), Items.DIAMOND, Items.EMERALD, new ItemStack(ItemBlankPortalModule.instance));
         portalManipulatorUpgrade = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 5), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL, Items.DIAMOND, Items.BUCKET);
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 4), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL, Items.DIAMOND, Items.BUCKET);
         transferFluidUpgrade = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 6), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL, Items.DIAMOND, Blocks.CHEST);
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 5), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL, Items.DIAMOND, Blocks.CHEST);
         transferItemsUpgrade = RecipeRegistry.getLatestCraftingRecipe();
-        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 7), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL, Items.DIAMOND, Blocks.REDSTONE_BLOCK);
+        GameRegistry.addShapelessRecipe(new ItemStack(ItemUpgrade.instance, 1, 6), new ItemStack(ItemBlankUpgrade.instance), Items.ENDER_PEARL, Items.DIAMOND, Blocks.REDSTONE_BLOCK);
         transferEnergyUpgrade = RecipeRegistry.getLatestCraftingRecipe();
     }
 }

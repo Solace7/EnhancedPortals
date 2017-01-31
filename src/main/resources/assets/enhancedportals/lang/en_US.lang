@@ -36,8 +36,8 @@ item.enhancedportals:upgrade.redstone.name=Redstone Interface Upgrade
 item.enhancedportals:upgrade.network_interface.name=Network Interface Upgrade
 item.enhancedportals:upgrade.dial_device.name=Dialling Device Upgrade
 item.enhancedportals:upgrade.manipulator.name=Portal Manipulator Upgrade
-item.enhancedportals:upgrade.item.name=Item Transportation Upgrade
 item.enhancedportals:upgrade.fluid.name=Fluid Transportation Upgrade
+item.enhancedportals:upgrade.item.name=Item Transportation Upgrade
 item.enhancedportals:upgrade.energy.name=Energy Transportation Upgrade
 
 # Modules
