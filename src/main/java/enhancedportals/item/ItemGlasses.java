@@ -18,7 +18,7 @@ public class ItemGlasses extends ItemArmor
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
     @Override

@@ -25,7 +25,7 @@ public class ItemLocationCard extends ItemEP
         setMaxDamage(0);
         setHasSubtypes(true);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
     public static void clearDBSLocation(ItemStack s)

@@ -18,7 +18,7 @@ public class BlockStabilizerEmpty extends Block
         setCreativeTab(CommonProxy.creativeTab);
         setHardness(5);
         setResistance(2000);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
     }
 }

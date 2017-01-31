@@ -1,9 +1,12 @@
 package enhancedportals.item;
 
 import enhancedportals.Reference;
+import enhancedportals.block.BlockFrame;
 import enhancedportals.utility.Localization;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
@@ -11,7 +14,7 @@ import java.util.List;
 
 public class ItemPortalFrame extends ItemBlock
 {
-    public static String[] unlocalizedName = new String[]{"frame", "controller", "redstone", "network_interface", "dial_device", "upgrade", "fluid", "item", "energy"};
+    public static String[] unlocalizedName = new String[]{"frame", "controller", "redstone", "network_interface", "dial_device", "manipulator", "fluid", "item", "energy"};
 
     public ItemPortalFrame(String n, Block block)
     {
@@ -19,7 +22,7 @@ public class ItemPortalFrame extends ItemBlock
         setMaxDamage(0);
         setHasSubtypes(true);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -40,15 +43,15 @@ public class ItemPortalFrame extends ItemBlock
         return metadata;
     }
 
-    /*@SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list)
     {
-        for (int i = 0; i < BlockFrame.FRAME_TYPES; i++)
+        for (int i = 0; i < BlockFrame.FrameType.values().length; i++)
         {
             list.add(new ItemStack(par1, 1, i));
         }
-    }*/
+    }
 
     @Override
     public String getUnlocalizedName(ItemStack stack)

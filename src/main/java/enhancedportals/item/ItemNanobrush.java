@@ -19,7 +19,7 @@ public class ItemNanobrush extends ItemEP
         setCreativeTab(CommonProxy.creativeTab);
         setMaxStackSize(1);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
     @Override

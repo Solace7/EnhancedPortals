@@ -13,6 +13,6 @@ public class ItemDiamondNugget extends Item
         setCreativeTab(CommonProxy.creativeTab);
         instance = this;
         setRegistryName("diamondNugget");
-        setUnlocalizedName("diamondNugget");
+        setUnlocalizedName(getRegistryName().toString());
     }
 }

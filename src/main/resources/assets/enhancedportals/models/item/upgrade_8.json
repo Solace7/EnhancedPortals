@@ -2,6 +2,6 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "enhancedportals:items/upgrade",
-    "layer3": "enhancedportals:items/upgrade_2"
+    "layer1": "enhancedportals:items/upgrade"
   }
 }

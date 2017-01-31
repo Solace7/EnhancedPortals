@@ -1,7 +1,6 @@
 package enhancedportals.item;
 
 import enhancedportals.Reference;
-import enhancedportals.block.BlockFrame;
 import enhancedportals.network.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +11,13 @@ import java.util.List;
 
 public class ItemUpgrade extends Item
 {
+    public static enum FrameUpgrades
+    {
+        REDSTONE_UPGRADE, NETWORK_INTERFACE, DIAL_DEVICE, PORTAL_MANIPULATOR, FLUID_TRANSFER, ITEM_TRANSFER, ENERGY_TRANSFER
+    }
+
+    public static String[] unlocalizedName = new String[]{"redstone", "network_interface", "dial_device", "fluid", "manipulator", "item", "energy"};
+
     public static ItemUpgrade instance;
 
     public ItemUpgrade(String n)
@@ -19,10 +25,11 @@ public class ItemUpgrade extends Item
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
         setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(getRegistryName().toString());
         setHasSubtypes(true);
         setMaxDamage(0);
+        setMaxStackSize(16);
     }
 
     private void decrementStack(EntityPlayer player, ItemStack stack)
@@ -42,17 +49,17 @@ public class ItemUpgrade extends Item
     @Override
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> subItems)
     {
-       for (int i = 0; i < BlockFrame.FrameType.values().length; i++)
+       for (int i = 0; i < FrameUpgrades.values().length; i++)
         {
             subItems.add(new ItemStack(par1, 1, i));
         }
     }
 
- /*   @Override
+    @Override
     public String getUnlocalizedName(ItemStack par1ItemStack)
     {
-        return super.getUnlocalizedName() + "." + ItemPortalFrame.unlocalizedName[par1ItemStack.getItemDamage() + 2];
-    }*/
+        return super.getUnlocalizedName() + "." + ItemUpgrade.unlocalizedName[par1ItemStack.getItemDamage()];
+    }
 
     //todo SetItemUseFirst
 

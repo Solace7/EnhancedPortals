@@ -13,7 +13,7 @@ public class ItemBlankUpgrade extends ItemEP
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
 }

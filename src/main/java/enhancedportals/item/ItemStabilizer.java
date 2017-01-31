@@ -16,8 +16,8 @@ public class ItemStabilizer extends Item
         super();
         setMaxDamage(0);
         setHasSubtypes(true);
-        setUnlocalizedName(n);
         setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

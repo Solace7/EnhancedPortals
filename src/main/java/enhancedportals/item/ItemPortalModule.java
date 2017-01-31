@@ -48,8 +48,8 @@ public class ItemPortalModule extends Item implements IPortalModule
         super();
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
-        setUnlocalizedName(n);
         setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(getRegistryName().toString());
         setMaxDamage(0);
         setMaxStackSize(64);
         setHasSubtypes(true);

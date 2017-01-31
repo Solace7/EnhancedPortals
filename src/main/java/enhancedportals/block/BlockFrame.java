@@ -77,7 +77,7 @@ public class BlockFrame extends BlockContainer implements IDismantleable
         setHardness(5);
         setResistance(2000);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FRAME));
     }
@@ -222,16 +222,10 @@ public class BlockFrame extends BlockContainer implements IDismantleable
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs creativeTab, List list)
     {
-
         FrameType[] allFrames = FrameType.values();
         for (FrameType frame: allFrames) {
             list.add(new ItemStack(par1, 1, frame.getMetadata()));
         }
-
-        /*for (int i = 0; i < FRAME_TYPES; i++)
-        {
-            list.add(new ItemStack(this, 1, i));
-        }*/
     }
 
     @Override
@@ -239,18 +233,6 @@ public class BlockFrame extends BlockContainer implements IDismantleable
     {
         return false;
     }
-
-   /* @Override
-    public boolean isBlockNormalCube()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean isOpaqueCube()
-    {
-        return false;
-    }*/
 
     @Override
     public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
@@ -325,7 +307,6 @@ public class BlockFrame extends BlockContainer implements IDismantleable
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-
 
         return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
     }

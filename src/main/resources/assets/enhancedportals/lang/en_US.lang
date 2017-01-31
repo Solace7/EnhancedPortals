@@ -1,19 +1,19 @@
 # Blocks
-tile.frame.frame.name=Portal Frame
-tile.frame.controller.name=Portal Controller
-tile.frame.redstone.name=Redstone Interface
-tile.frame.network_interface.name=Network Interface
-tile.frame.dial_device.name=Dialling Device
-tile.frame.program_interface.name=Programmable Interface
-tile.frame.upgrade.name=Portal Manipulator
-tile.frame.fluid.name=Fluid Transportation Module
-tile.frame.item.name=Item Transportation Module
-tile.frame.energy.name=Energy Transportation Module
-tile.portal.name=Portal
-tile.dbs.name=Dimensional Bridge Stabilizer
-tile.dbs_empty.name=Dimensional Bridge Stabilizer (Empty)
-tile.decor_dbs.name=Ender-Infused Metal
-tile.decor_frame.name=Bordered Quartz
+tile.enhancedportals:frame.frame.name=Portal Frame
+tile.enhancedportals:frame.controller.name=Portal Controller
+tile.enhancedportals:frame.redstone.name=Redstone Interface
+tile.enhancedportals:frame.network_interface.name=Network Interface
+tile.enhancedportals:frame.dial_device.name=Dialling Device
+tile.enhancedportals:frame.program_interface.name=Programmable Interface
+tile.enhancedportals:frame.manipulator.name=Portal Manipulator
+tile.enhancedportals:frame.fluid.name=Fluid Transportation Module
+tile.enhancedportals:frame.item.name=Item Transportation Module
+tile.enhancedportals:frame.energy.name=Energy Transportation Module
+tile.enhancedportals:portal.name=Portal
+tile.enhancedportals:dbs.name=Dimensional Bridge Stabilizer
+tile.enhancedportals:dbs_empty.name=Dimensional Bridge Stabilizer (Empty)
+tile.enhancedportals:decor_dbs.name=Ender-Infused Metal
+tile.enhancedportals:decor_frame.name=Bordered Quartz
 
 # Block Misc
 enhancedportals.block.portalFramePart=Portal Frame Part
@@ -22,48 +22,55 @@ enhancedportals.block.dbsSize=2x3x2 to 2x3x256
 enhancedportals.block.decorativeBlock=Decorative Block
 
 # Items
-item.wrench.name=Wrench
-item.address_book.name=Address Book
-item.nanobrush.name=Nanobrush
-item.glasses.name=Glasses
-item.location_card.name=Location Card
-item.blank_portal_module.name=Blank Portal Module
-item.blank_upgrade.name=Blank Upgrade
-item.diamondNugget.name=Diamond Nugget
+item.enhancedportals:wrench.name=Wrench
+item.enhancedportals:address_book.name=Address Book
+item.enhancedportals:nanobrush.name=Nanobrush
+item.enhancedportals:glasses.name=Glasses
+item.enhancedportals:location_card.name=Location Card
+item.enhancedportals:blank_portal_module.name=Blank Portal Module
+item.enhancedportals:blank_upgrade.name=Blank Upgrade
+item.enhancedportals:diamondNugget.name=Diamond Nugget
 
 # In-place upgrades
-item.upgrade.redstone.name=Redstone Interface Upgrade
-item.upgrade.network_interface.name=Network Interface Upgrade
-item.upgrade.dial_device.name=Dialling Device Upgrade
-item.upgrade.upgrade.name=Portal Manipulator Upgrade
-item.upgrade.fluid.name=Fluid Transportation Upgrade
-item.upgrade.item.name=Item Transportation Upgrade
-item.upgrade.energy.name=Energy Transportation Upgrade
+item.enhancedportals:upgrade.redstone.name=Redstone Interface Upgrade
+item.enhancedportals:upgrade.network_interface.name=Network Interface Upgrade
+item.enhancedportals:upgrade.dial_device.name=Dialling Device Upgrade
+item.enhancedportals:upgrade.manipulator.name=Portal Manipulator Upgrade
+item.enhancedportals:upgrade.item.name=Item Transportation Upgrade
+item.enhancedportals:upgrade.fluid.name=Fluid Transportation Upgrade
+item.enhancedportals:upgrade.energy.name=Energy Transportation Upgrade
 
 # Modules
-item.portal_module.0.name=Particle Destroyer
-item.portal_module.0.desc=Stops particles from getting created
-item.portal_module.1.name=Rainbow Particles
-item.portal_module.1.desc=Every particle will have a random colour
-item.portal_module.2.name=Silencer
-item.portal_module.2.desc=Silences the portal
-item.portal_module.3.name=Momentum
-item.portal_module.3.desc=Entities keep their momentum
-item.portal_module.4.name=Cloaking
-item.portal_module.4.desc=Makes the portal completely invisible
-item.portal_module.5.name=Particle Shader
-item.portal_module.5.desc=Particles randomly spawn lighter or darker
-item.portal_module.6.name=Facing
-item.portal_module.6.desc=Direction to face on teleport
-item.portal_module.7.name=Featherfall
-item.portal_module.7.desc=Negates fall damage
+item.enhancedportals:portal_module.0.name=Particle Destroyer
+item.enhancedportals:portal_module.0.desc=Stops particles from getting created
+
+item.enhancedportals:portal_module.1.name=Rainbow Particles
+item.enhancedportals:portal_module.1.desc=Every particle will have a random colour
+
+item.enhancedportals:portal_module.2.name=Silencer
+item.enhancedportals:portal_module.2.desc=Silences the portal
+
+item.enhancedportals:portal_module.3.name=Momentum
+item.enhancedportals:portal_module.3.desc=Entities keep their momentum
+
+item.enhancedportals:portal_module.4.name=Cloaking
+item.enhancedportals:portal_module.4.desc=Makes the portal completely invisible
+
+item.enhancedportals:portal_module.5.name=Particle Shader
+item.enhancedportals:portal_module.5.desc=Particles randomly spawn lighter or darker
+
+item.enhancedportals:portal_module.6.name=Facing
+item.enhancedportals:portal_module.6.desc=Direction to face on teleport
+
+item.enhancedportals:portal_module.7.name=Featherfall
+item.enhancedportals:portal_module.7.desc=Negates fall damage
 
 ## MODULE INFORMATION ##
 enhancedportals.manual.blank_module.title=Blank Portal Module
 enhancedportals.manual.blank_module.info=The foundation circuit module. This item is required to craft the other modules and the Portal Manipulator.
 
-item.portal.module.4.desc=Makes the portal completely invisible. This module is uncraftable and can only be found in dungeon chests.
-item.portal.module.8.desc=Enables looking glass. This module is currently uncraftable as looking glass has not been fully implemented just yet.
+item.enhancedportals:portal.module.4.desc=Makes the portal completely invisible. This module is uncraftable and can only be found in dungeon chests.
+item.enhancedportals:portal.module.8.desc=Enables looking glass. This module is currently uncraftable as looking glass has not been fully implemented just yet.
 
 enhancedportals.gui.facing.0=North
 enhancedportals.gui.facing.1=East

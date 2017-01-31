@@ -56,7 +56,7 @@ public class BlockStabilizer extends BlockContainer
         setHardness(5);
         setResistance(2000);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
         setCreativeTab(CommonProxy.creativeTab);
     }

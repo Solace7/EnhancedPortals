@@ -37,8 +37,8 @@ public class ItemAddressBook extends ItemEP
         setCreativeTab(CommonProxy.creativeTab);
         setMaxDamage(0);
         setMaxStackSize(1);
-        setUnlocalizedName(n);
         setRegistryName(Reference.EPMod.mod_id, n);
+        setUnlocalizedName(getRegistryName().toString());
     }
 
     public String getName() {

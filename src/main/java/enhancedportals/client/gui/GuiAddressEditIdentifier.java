@@ -76,14 +76,14 @@ public class GuiAddressEditIdentifier extends BaseGui
         else if (button.id == buttonCancel.id)
         {
             //todo and this
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_D));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.ADDRESS_BOOK_D));
         }
         else if (button.id == buttonSave.id)
         {
             // Save Changes
             ClientProxy.saveGlyph = selector.getGlyphIdentifier();
             //todo fix this
-            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.AB_D));
+            EnhancedPortals.packetPipeline.sendToServer(new PacketRequestGui(player, Reference.GuiEnums.GUI_ADDRESS_BOOK.ADDRESS_BOOK_D));
         }
     }
 

@@ -19,33 +19,28 @@ public class RegisterBlocks
     public static Item itemStabilizer;
 
     public static Block blockDecorBorderedQuartz;
-    public static ItemBlock itemBlockDecorBorderedQuartz;
 
-    public static ItemBlock itemblockDecorEnderInfusedMetal;
     public static Block blockDecorEnderInfusedMetal;
 
-    private static void registerTiles(Block block)
+    private static void registerBlocks(Block block)
     {
-
+        GameRegistry.register(block);
+        GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
     }
 
 
     public static void preinit()
     {
+        blockPortal = (new BlockPortal("portal"));
+
         blockFrame = GameRegistry.register(new BlockFrame("frame"));
         itemFrame = GameRegistry.register(new ItemPortalFrame("frame", new BlockFrame("frame")));
-
-        blockPortal = (new BlockPortal("portal"));
 
         blockStabilizer = (new BlockStabilizer("dbs"));
         itemStabilizer = GameRegistry.register(new ItemStabilizer("bridge_stabilizer"));
 
-        blockDecorBorderedQuartz = GameRegistry.register(new BlockDecorBorderedQuartz("decor_frame"));
-        itemBlockDecorBorderedQuartz = new ItemBlock(blockDecorBorderedQuartz);
-        GameRegistry.register(itemBlockDecorBorderedQuartz.setRegistryName(blockDecorBorderedQuartz.getRegistryName()));
+       registerBlocks(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
 
-        blockDecorEnderInfusedMetal = GameRegistry.register(new BlockDecorEnderInfusedMetal("decor_dbs"));
-        itemblockDecorEnderInfusedMetal = new ItemBlock(blockDecorEnderInfusedMetal);
-        GameRegistry.register(itemblockDecorEnderInfusedMetal.setRegistryName(blockDecorEnderInfusedMetal.getRegistryName()));
+        registerBlocks(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));
     }
 }

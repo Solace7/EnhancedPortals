@@ -42,7 +42,7 @@ public class BlockPortal extends BlockContainer
         setBlockUnbreakable();
         setResistance(2000);
         setRegistryName(Reference.EPMod.mod_id, n);
-        setUnlocalizedName(n);
+        setUnlocalizedName(getRegistryName().toString());
         setLightOpacity(0);
         setSoundType(SoundType.GLASS);
     }
