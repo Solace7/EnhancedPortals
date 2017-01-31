@@ -10,10 +10,7 @@
       "model": "cube_all"
     },
     "inventory": {
-      "model": "cube_all",
-      "textures": {
-        "texture": "enhancedportals:blocks/bridge/0"
-      }
+      "model": "cube_all"
     }
   }
 }

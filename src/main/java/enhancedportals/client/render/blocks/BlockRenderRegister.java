@@ -23,8 +23,8 @@ public final class BlockRenderRegister
 
     public static void init()
     {
-//        registerRender(RegisterBlocks.blockDecorBorderedQuartz);
-//        registerRender(RegisterBlocks.blockDecorEnderInfusedMetal);
+        registerRender(RegisterBlocks.blockDecorBorderedQuartz);
+        registerRender(RegisterBlocks.blockDecorEnderInfusedMetal);
         registerRender(RegisterBlocks.blockFrame);
         registerRender(RegisterBlocks.blockPortal);
         registerRender(RegisterBlocks.blockStabilizer);

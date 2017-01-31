@@ -37,7 +37,7 @@ public class RegisterBlocks
         itemFrame = GameRegistry.register(new ItemPortalFrame("frame", new BlockFrame("frame")));
 
         blockStabilizer = GameRegistry.register(new BlockStabilizer("dbs"));
-        itemStabilizer = GameRegistry.register(new ItemStabilizer(new BlockStabilizer("dbs")));
+        itemStabilizer = GameRegistry.register(new ItemStabilizer("dbs", new BlockStabilizer("dbs")));
 
        registerBlocks(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
 

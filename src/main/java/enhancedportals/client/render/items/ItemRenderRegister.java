@@ -2,6 +2,7 @@ package enhancedportals.client.render.items;
 
 import enhancedportals.block.BlockFrame;
 import enhancedportals.item.ItemPortalModule;
+import enhancedportals.registration.RegisterBlocks;
 import enhancedportals.registration.RegisterItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -11,7 +12,7 @@ import net.minecraftforge.client.model.ModelLoader;
 public class ItemRenderRegister
 {
 
-    private static void registerRender(Item item){
+    public static void registerRender(Item item){
         Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }
 
@@ -37,6 +38,17 @@ public class ItemRenderRegister
         registerRender(RegisterItems.itemLocationCard);
         registerRender(RegisterItems.itemNanobrush);
         registerRender(RegisterItems.itemWrench);
+
+        registerRender(RegisterBlocks.itemStabilizer);
+        registerRender(RegisterBlocks.itemFrame);
+
+        Item itemBlockDecorBorderedQuartz = Item.getItemFromBlock(RegisterBlocks.blockDecorBorderedQuartz);
+        registerRender(itemBlockDecorBorderedQuartz);
+
+        Item itemEnderInfusedMetal = Item.getItemFromBlock(RegisterBlocks.blockDecorEnderInfusedMetal);
+        registerRender(itemEnderInfusedMetal);
+
+
 
 //        registerRender(RegisterItems.itemDiamondNugget);
 
