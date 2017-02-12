@@ -11,6 +11,12 @@
     },
     "inventory": {
       "model": "cube_all"
+    },
+    "main": {
+      "model": "cube_all"
+    },
+    "stabilizer": {
+      "model": "cube_all"
     }
   }
 }

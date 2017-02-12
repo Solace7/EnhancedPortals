@@ -4,7 +4,6 @@ import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import enhancedportals.utility.GeneralUtils;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -28,11 +27,10 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
         mainBlock = null;
     }
 
-
     //todo renable activate, get offset
 
-    public boolean activate(EntityPlayer player)
-    {/*
+   /* public boolean activate(EntityPlayer player)
+    {
         if (worldObj.isRemote)
         {
             return true;
@@ -129,9 +127,9 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                     return true;
                 }
             }
-        }*/
+        }
         return false;
-    }
+    }*/
 
     public void breakBlock()
     {
@@ -301,7 +299,6 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
     {
         NBTTagCompound tag = pkt.getNbtCompound();
         isFormed = tag.getBoolean("formed");
-//   todo     worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         final IBlockState state = getWorld().getBlockState(getPos());
         worldObj.notifyBlockUpdate(getPos(), state, state, 3);
     }
