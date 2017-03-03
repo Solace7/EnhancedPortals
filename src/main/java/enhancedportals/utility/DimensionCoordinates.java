@@ -1,6 +1,5 @@
 package enhancedportals.utility;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -49,7 +48,7 @@ public class DimensionCoordinates extends ChunkPos
     }
 
     //todo getMeta
-    public IBlockState getMetadata(BlockPos pos)
+    /*public int getMetadata()
     {
         WorldServer world = getWorld();
 
@@ -58,9 +57,8 @@ public class DimensionCoordinates extends ChunkPos
             world.getChunkProvider().loadChunk(this.chunkXPos >> 4, this.chunkZPos >> 4);
         }
 
-        return world.getBlockState(pos);
-    }
-
+        return world.getBlockState()
+    }*/
 
     public TileEntity getTileEntity(BlockPos pos)
     {

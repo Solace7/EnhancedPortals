@@ -4,7 +4,7 @@ import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.*;
 import enhancedportals.utility.IDismantleable;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -30,7 +30,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockFrame extends Block implements IDismantleable
+import static enhancedportals.block.BlockFrame.FrameType.*;
+
+public class BlockFrame extends BlockContainer implements IDismantleable
 {
     public static BlockFrame instance;
 
@@ -77,7 +79,7 @@ public class BlockFrame extends Block implements IDismantleable
         setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FrameType.FRAME));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FRAME));
     }
 
     @Override
@@ -85,13 +87,13 @@ public class BlockFrame extends Block implements IDismantleable
         return new BlockStateContainer(this, new IProperty[]{FRAME_TYPE});
     }
 
-
+/*
     @Override
     public IBlockState getStateFromMeta(int meta){
 
         return this.getDefaultState().withProperty(FRAME_TYPE, meta);
     }
-
+*/
 
     @Override
     public int getMetaFromState(IBlockState state){
@@ -119,6 +121,14 @@ public class BlockFrame extends Block implements IDismantleable
         return true;
     }
 
+    /*@Override
+    public boolean canRenderInPass(int pass)
+    {
+        ClientProxy.renderPass = pass;
+        return pass < 2;
+    }*/
+
+
     //todo color multiplier?
     public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z)
     {
@@ -133,53 +143,46 @@ public class BlockFrame extends Block implements IDismantleable
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state)
+    public TileEntity createNewTileEntity(World world, int metadata)
     {
-        return true;
-    }
-
-    @Override
-    public TileEntity createTileEntity(World world, IBlockState state)
-    {
-        if (state == getStateFromMeta(FrameType.FRAME.getMetadata()))
+        if (metadata == FRAME.ordinal())
         {
             return new TileFrameBasic();
         }
-        else if (state == getStateFromMeta(FrameType.PORTAL_CONTROLLER.getMetadata()))
+        else if (metadata == PORTAL_CONTROLLER.ordinal())
         {
             return new TileController();
         }
-        else if (state == getStateFromMeta(FrameType.REDSTONE_INTERFACE.getMetadata()))
+        else if (metadata == REDSTONE_INTERFACE.ordinal())
         {
             return new TileRedstoneInterface();
         }
-        else if (state == getStateFromMeta(FrameType.NETWORK_INTERFACE.getMetadata()))
+        else if (metadata == NETWORK_INTERFACE.ordinal())
         {
             return new TileNetworkInterface();
         }
-        else if (state == getStateFromMeta(FrameType.DIALLING_DEVICE.getMetadata()))
+        else if (metadata == DIALLING_DEVICE.ordinal())
         {
             return new TileDialingDevice();
         }
-        else if (state == getStateFromMeta(FrameType.MODULE_MANIPULATOR.getMetadata()))
+        else if (metadata == MODULE_MANIPULATOR.ordinal())
         {
             return new TilePortalManipulator();
         }
-        else if (state == getStateFromMeta(FrameType.TRANSFER_FLUID.getMetadata()))
+        else if (metadata == TRANSFER_FLUID.ordinal())
         {
             return new TileTransferFluid();
         }
-        else if (state == getStateFromMeta(FrameType.TRANSFER_ITEM.getMetadata()))
+        else if (metadata == TRANSFER_ITEM.ordinal())
         {
             return new TileTransferItem();
         }
-        else if (state == getStateFromMeta(FrameType.TRANSFER_ENERGY.getMetadata()))
+        else if (metadata == TRANSFER_ENERGY.ordinal())
         {
             return new TileTransferEnergy();
         }
 
         return null;
-
     }
 
     @Override
@@ -207,6 +210,12 @@ public class BlockFrame extends Block implements IDismantleable
             world.spawnEntityInWorld(item);
         }
     }
+
+    /*@Override
+    public int getRenderBlockPass()
+    {
+        return 1;
+    }*/
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override

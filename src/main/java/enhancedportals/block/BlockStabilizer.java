@@ -4,23 +4,30 @@ import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.TileStabilizer;
 import enhancedportals.tile.TileStabilizerMain;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockStabilizer extends Block
+import javax.annotation.Nullable;
+
+import static enhancedportals.block.BlockStabilizer.StabilizerPart.MAIN;
+import static enhancedportals.block.BlockStabilizer.StabilizerPart.STABILIZER;
+
+public class BlockStabilizer extends BlockContainer
 {
     public static BlockStabilizer instance;
 
-    public static final PropertyEnum STABILIZER_PART = PropertyEnum.create("stabilizer", BlockStabilizer.StabilizerPart.class);
+    public static final PropertyEnum STABALIZER_PART = PropertyEnum.create("stabilizer", BlockStabilizer.StabilizerPart.class);
 
     public enum StabilizerPart implements IStringSerializable {
         STABILIZER(0,"stabilizer"),
@@ -52,12 +59,6 @@ public class BlockStabilizer extends Block
         setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
         setCreativeTab(CommonProxy.creativeTab);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(STABILIZER_PART, StabilizerPart.MAIN));
-    }
-
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[]{STABILIZER_PART});
     }
 
     @Override
@@ -78,37 +79,21 @@ public class BlockStabilizer extends Block
     }
 
     @Override
-    public IBlockState getStateFromMeta(int meta)
+    public TileEntity createNewTileEntity(World world, int metadata)
     {
-
-        System.out.println("Debug: getStateFromMeta:" + this.getDefaultState().withProperty(STABILIZER_PART,StabilizerPart.STABILIZER));
-        return this.getDefaultState().withProperty(STABILIZER_PART, StabilizerPart.STABILIZER);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state)
-    {
-     StabilizerPart part = (StabilizerPart) state.getValue(STABILIZER_PART);
-
-        System.out.println("Debug: getMetaFromState:" + part.ordinal());
-        return part.ordinal();
-    }
-
-    @Override
-    public TileEntity createTileEntity(World world, IBlockState state)
-    {
-        if (state == getStateFromMeta(StabilizerPart.STABILIZER.getMetadata()))
+        if (metadata == STABILIZER.ordinal())
         {
             return new TileStabilizer();
         }
-        else if (state == getStateFromMeta(StabilizerPart.MAIN.getMetadata()));
+        else if (metadata == MAIN.ordinal())
         {
             return new TileStabilizerMain();
         }
+
+        return null;
     }
 
 
-/*
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
@@ -125,6 +110,5 @@ public class BlockStabilizer extends Block
 
         return false;
     }
-*/
 
 }

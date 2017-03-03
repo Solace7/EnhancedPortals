@@ -1,7 +1,7 @@
 package enhancedportals.client.render.items;
 
+import enhancedportals.block.BlockFrame;
 import enhancedportals.item.ItemPortalModule;
-import enhancedportals.item.ItemUpgrade;
 import enhancedportals.registration.RegisterBlocks;
 import enhancedportals.registration.RegisterItems;
 import net.minecraft.client.Minecraft;
@@ -21,12 +21,10 @@ public class ItemRenderRegister
     }
 
     public static void preinit(){
-        for(int i = 0; i < ItemPortalModule.PortalModules.values().length; i++)
-        {
+        for(int i = 0; i < ItemPortalModule.PortalModules.values().length; i++) {
             registerMetaRender(RegisterItems.itemPortalModule, i);
         }
-        for(int i = 0; i < ItemUpgrade.FrameUpgrades.values().length; i++)
-        {
+        for(int i = 0; i < BlockFrame.FrameType.values().length; i++) {
             registerMetaRender(RegisterItems.itemUpgrade, i);
         }
     }
@@ -42,12 +40,15 @@ public class ItemRenderRegister
         registerRender(RegisterItems.itemWrench);
 
         registerRender(RegisterBlocks.itemStabilizer);
+        registerRender(RegisterBlocks.itemFrame);
 
         Item itemBlockDecorBorderedQuartz = Item.getItemFromBlock(RegisterBlocks.blockDecorBorderedQuartz);
         registerRender(itemBlockDecorBorderedQuartz);
 
         Item itemEnderInfusedMetal = Item.getItemFromBlock(RegisterBlocks.blockDecorEnderInfusedMetal);
         registerRender(itemEnderInfusedMetal);
+
+
 
 //        registerRender(RegisterItems.itemDiamondNugget);
 
