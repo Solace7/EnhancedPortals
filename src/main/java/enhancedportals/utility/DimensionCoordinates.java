@@ -47,19 +47,6 @@ public class DimensionCoordinates extends ChunkPos
         return new BlockPos(this.chunkXPos << 4 + x, y, (this.chunkZPos << 4) + z);
     }
 
-    //todo getMeta
-    /*public int getMetadata()
-    {
-        WorldServer world = getWorld();
-
-        if (!world.getChunkProvider().chunkExists(this.chunkXPos >> 4, this.chunkZPos >> 4))
-        {
-            world.getChunkProvider().loadChunk(this.chunkXPos >> 4, this.chunkZPos >> 4);
-        }
-
-        return world.getBlockState()
-    }*/
-
     public TileEntity getTileEntity(BlockPos pos)
     {
         WorldServer world = getWorld();

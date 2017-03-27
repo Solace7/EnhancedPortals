@@ -11,7 +11,6 @@
           //if true render color on block
         },
         "false": {
-
         }
       },
         "inventory":{
@@ -62,5 +61,5 @@
           "layer0": "enhnacedportals:blocks/frame9",
           "layer1" :"enhancedpotals:blocks/frame9B"
        }
-      }
+    }
 }

@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -36,7 +37,7 @@ public class BlockFrame extends BlockContainer implements IDismantleable
 {
     public static BlockFrame instance;
 
-    public static final PropertyEnum FRAME_TYPE = PropertyEnum.create("frames", BlockFrame.FrameType.class);
+    public static final PropertyEnum<BlockFrame.FrameType> VARIANT = PropertyEnum.<BlockFrame.FrameType>create("variant", BlockFrame.FrameType.class);
 
     public enum FrameType implements IStringSerializable {
         FRAME(0,"frame"),
@@ -49,8 +50,8 @@ public class BlockFrame extends BlockContainer implements IDismantleable
         TRANSFER_ITEM(7, "transfer_item"),
         TRANSFER_ENERGY(8, "transfer_energy");
 
-        private String name;
-        private int id;
+        private final String name;
+        private final int id;
 
         private FrameType(int id, String name){
             this.name = name;
@@ -72,6 +73,7 @@ public class BlockFrame extends BlockContainer implements IDismantleable
     public BlockFrame(String n)
     {
         super(Material.ROCK);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, FrameType.FRAME));
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setHardness(5);
@@ -79,27 +81,67 @@ public class BlockFrame extends BlockContainer implements IDismantleable
         setRegistryName(Reference.EPMod.mod_id, n);
         setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FRAME));
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[]{FRAME_TYPE});
+        return new BlockStateContainer(this, new IProperty[] {VARIANT});
     }
 
-/*
+
     @Override
     public IBlockState getStateFromMeta(int meta){
 
-        return this.getDefaultState().withProperty(FRAME_TYPE, meta);
+        FrameType type;
+        switch(meta)
+        {
+            case 0:
+                type = FrameType.FRAME;
+                break;
+            case 1:
+                type = FrameType.PORTAL_CONTROLLER;
+                break;
+
+            case 2:
+                type = FrameType.REDSTONE_INTERFACE;
+                break;
+            case 3:
+                type = FrameType.NETWORK_INTERFACE;
+                break;
+            case 4:
+                type = FrameType.DIALLING_DEVICE;
+                break;
+            case 5:
+                type = FrameType.MODULE_MANIPULATOR;
+                break;
+            case 6:
+                type = FrameType.TRANSFER_FLUID;
+                break;
+            case 7:
+                type = FrameType.TRANSFER_ITEM;
+                break;
+            case 8:
+                type = FrameType.TRANSFER_ENERGY;
+                break;
+        default:
+            type = FrameType.FRAME;
+        }
+
+        System.out.println("Debugging: " + type);
+        return this.getDefaultState().withProperty(VARIANT, type);
     }
-*/
+
 
     @Override
     public int getMetaFromState(IBlockState state){
-        FrameType type = (FrameType) state.getValue(FRAME_TYPE);
 
-        return type.ordinal();
+        return ((BlockFrame.FrameType)state.getValue(VARIANT)).getMetadata();
     }
 
     @Override
@@ -120,13 +162,6 @@ public class BlockFrame extends BlockContainer implements IDismantleable
     {
         return true;
     }
-
-    /*@Override
-    public boolean canRenderInPass(int pass)
-    {
-        ClientProxy.renderPass = pass;
-        return pass < 2;
-    }*/
 
 
     //todo color multiplier?
@@ -210,12 +245,6 @@ public class BlockFrame extends BlockContainer implements IDismantleable
             world.spawnEntityInWorld(item);
         }
     }
-
-    /*@Override
-    public int getRenderBlockPass()
-    {
-        return 1;
-    }*/
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override

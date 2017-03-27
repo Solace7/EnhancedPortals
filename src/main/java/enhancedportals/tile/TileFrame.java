@@ -34,7 +34,6 @@ public abstract class TileFrame extends TilePortalPart implements ITickable
         }
     }
 
-
     //todo Get texture and colour
 
     public int getColour()

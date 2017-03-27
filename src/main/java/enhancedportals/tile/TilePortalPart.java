@@ -67,7 +67,6 @@ public abstract class TilePortalPart extends TileEP
         return null;
     }
 
-
     /*
      * Called when this block is placed in the world.
      *

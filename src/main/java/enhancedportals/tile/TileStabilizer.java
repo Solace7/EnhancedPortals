@@ -4,7 +4,6 @@ import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import enhancedportals.utility.GeneralUtils;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -31,8 +30,8 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
 
     //todo renable activate, get offset
 
-    public boolean activate(EntityPlayer player)
-    {/*
+   /* public boolean activate(EntityPlayer player)
+    {
         if (worldObj.isRemote)
         {
             return true;
@@ -47,23 +46,10 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
         else if (GeneralUtils.isWrench(player.inventory.getCurrentItem()))
         {
             DimensionCoordinates topLeft = getDimensionCoordinates();
+
             IBlockState state = this.worldObj.getBlockState(getPos());
 
             // todo Get the Top-Northwest-most block in the DBS block group.
-            while (topLeft.offset(EnumFacing.WEST) instanceof BlockStabilizer)
-            {
-                topLeft = topLeft.offset(EnumFacing.WEST);
-            }
-
-            while (topLeft.offset(EnumFacing.NORTH).getBlock() == BlockStabilizer.instance)
-            {
-                topLeft = topLeft.offset(EnumFacing.NORTH);
-            }
-
-            while (topLeft.offset(EnumFacing.UP).getBlock() == BlockStabilizer.instance)
-            {
-                topLeft = topLeft.offset(EnumFacing.UP);
-            }
 
             // todo Check for valid DBS configurations (3x3, 2x3, 3x2):
             ArrayList<ChunkPos> blocks = checkShapeThreeWide(topLeft); // 3x3
@@ -101,7 +87,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                 for (ChunkPos c : blocks)
                 {
 //todo                    worldObj.setBlock(getPos(), BlockStabilizer.instance, 0, 2);
-                    final IBlockState state = getWorld().getBlockState(getPos());
+//                    final IBlockState state = getWorld().getBlockState(getPos());
                     worldObj.setBlockState(getPos(), state, 3);
 
                     TileEntity tile = worldObj.getTileEntity(getPos());
@@ -117,7 +103,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
 
                 // todo Create a BlockStabilizer.
 //                worldObj.setBlock(topLeft.posX, topLeft.posY, topLeft.posZ, BlockStabilizer.instance, 1, 3);
-                final IBlockState state = getWorld().getBlockState(getPos());
+//                final IBlockState state = getWorld().getBlockState(getPos());
                 worldObj.setBlockState(getPos(), state);
 
                 TileEntity tile = topLeft.getTileEntity(getPos());
@@ -129,9 +115,9 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                     return true;
                 }
             }
-        }*/
+        }
         return false;
-    }
+    }*/
 
     public void breakBlock()
     {
@@ -152,11 +138,11 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
     }
 
     //todo multiblock
-
-/*    ArrayList<ChunkPos> checkShapeThreeWide(DimensionCoordinates topLeft)
+/*
+    ArrayList<ChunkPos> checkShapeThreeWide(DimensionCoordinates topLeft)
     {
         ArrayList<ChunkPos> blocks = new ArrayList<ChunkPos>();
-//        ChunkPos heightChecker = new ChunkPos(topLeft);
+        ChunkPos heightChecker = new ChunkPos(topLeft.getBlock(getPos().getX(), getPos().getY(), getPos().getZ()));
         rows = 0;
 
 //        while (worldObj.getBlock(heightChecker.posX, heightChecker.posY, heightChecker.posZ) == BlockStabilizer.instance)
@@ -190,9 +176,9 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
 
         is3x3 = true;
         return blocks;
-    }
+    }*/
 
-    ArrayList<ChunkPos> checkShapeTwoWide(DimensionCoordinates topLeft, boolean isX)
+/*    ArrayList<ChunkPos> checkShapeTwoWide(DimensionCoordinates topLeft, boolean isX)
     {
         ArrayList<ChunkPos> blocks = new ArrayList<ChunkPos>();
         ChunkPos heightChecker = new ChunkPos(topLeft);

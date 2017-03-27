@@ -8,6 +8,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,14 +21,11 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-import static enhancedportals.block.BlockStabilizer.StabilizerPart.MAIN;
-import static enhancedportals.block.BlockStabilizer.StabilizerPart.STABILIZER;
-
 public class BlockStabilizer extends BlockContainer
 {
     public static BlockStabilizer instance;
 
-    public static final PropertyEnum STABALIZER_PART = PropertyEnum.create("stabilizer", BlockStabilizer.StabilizerPart.class);
+    public static final PropertyEnum STABILIZER_PART = PropertyEnum.create("stabilizer", BlockStabilizer.StabilizerPart.class);
 
     public enum StabilizerPart implements IStringSerializable {
         STABILIZER(0,"stabilizer"),
@@ -59,7 +57,14 @@ public class BlockStabilizer extends BlockContainer
         setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
         setCreativeTab(CommonProxy.creativeTab);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(STABILIZER_PART, StabilizerPart.STABILIZER));
     }
+
+    /*    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }*/
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
@@ -79,13 +84,50 @@ public class BlockStabilizer extends BlockContainer
     }
 
     @Override
+    public BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, STABILIZER_PART);
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        StabilizerPart part = (StabilizerPart) state.getValue(STABILIZER_PART);
+
+        return part.ordinal();
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+
+        StabilizerPart part;
+        switch(meta)
+        {
+        case 0:
+            part = StabilizerPart.STABILIZER;
+            break;
+        case 1:
+            part = StabilizerPart.MAIN;
+            break;
+        default:
+            part = StabilizerPart.MAIN;
+        }
+
+        System.out.println("Debugging: " + part);
+        return this.getDefaultState().withProperty(STABILIZER_PART, part);
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World world, int metadata)
     {
-        if (metadata == STABILIZER.ordinal())
+        if (metadata == StabilizerPart.STABILIZER.ordinal())
         {
             return new TileStabilizer();
         }
-        else if (metadata == MAIN.ordinal())
+        else if (metadata == StabilizerPart.MAIN.ordinal())
         {
             return new TileStabilizerMain();
         }
@@ -99,14 +141,14 @@ public class BlockStabilizer extends BlockContainer
     {
         TileEntity tile = world.getTileEntity(pos);
 
-        if (tile instanceof TileStabilizer)
+/*        if (tile instanceof TileStabilizer)
         {
             return ((TileStabilizer) tile).activate(player);
         }
         else if (tile instanceof TileStabilizerMain)
         {
             return ((TileStabilizerMain) tile).activate(player);
-        }
+        }*/
 
         return false;
     }
