@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "enhancedportals:blocks/bridge/0"
-  }
-}
