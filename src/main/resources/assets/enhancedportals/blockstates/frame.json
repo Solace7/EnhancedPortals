@@ -13,8 +13,8 @@
           "model": "cube_all"
         },
         "frame_type": {
-            "portal_controller": {
-              "model": "enhancedportals:portal_controller",
+            "controller": {
+              "model": "enhancedportals:controller",
               "textures": {
                   "all": "enhancedportals:blocks/controllerB"
               }

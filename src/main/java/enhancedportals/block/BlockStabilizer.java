@@ -4,7 +4,7 @@ import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.TileStabilizer;
 import enhancedportals.tile.TileStabilizerMain;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -13,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockStabilizer extends BlockContainer
+public class BlockStabilizer extends Block
 {
     public static BlockStabilizer instance;
 
@@ -60,11 +61,11 @@ public class BlockStabilizer extends BlockContainer
         this.setDefaultState(this.blockState.getBaseState().withProperty(STABILIZER_PART, StabilizerPart.STABILIZER));
     }
 
-    /*    @Override
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
-    }*/
+    }
 
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
@@ -121,13 +122,13 @@ public class BlockStabilizer extends BlockContainer
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata)
+    public TileEntity createTileEntity (World world, IBlockState state)
     {
-        if (metadata == StabilizerPart.STABILIZER.ordinal())
+        if (state == getDefaultState().withProperty(STABILIZER_PART, StabilizerPart.STABILIZER))
         {
             return new TileStabilizer();
         }
-        else if (metadata == StabilizerPart.MAIN.ordinal())
+        else if (state == getDefaultState().withProperty(STABILIZER_PART,StabilizerPart.MAIN))
         {
             return new TileStabilizerMain();
         }

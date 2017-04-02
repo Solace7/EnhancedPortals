@@ -127,7 +127,6 @@ public class BlockFrame extends Block implements IDismantleable
         }
 
         System.out.println("Debugging Type: " + type);
-        System.out.println("Debugging Name: " + getRegistryName());
         return this.getDefaultState().withProperty(FRAME_TYPE, type);
     }
 
@@ -250,31 +249,37 @@ public class BlockFrame extends Block implements IDismantleable
         return EnumBlockRenderType.MODEL;
     }
 
-    @Override
+/*    @Override
     @Deprecated
     public boolean isOpaqueCube(IBlockState state)
     {
-        return false;
+        return true;
     }
 
     @Override
     @Deprecated
     public boolean isFullCube(IBlockState state) {
-        return false;
-    }
+        return true;
+    }*/
 
     @Override
     public boolean isBlockSolid(IBlockAccess p_149747_1_, BlockPos pos, EnumFacing side)
     {
-        return false;
+        return true;
     }
 
-    @Override
+    /*    @Override
+    public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
+    {
+        return true;
+    }*/
+
+/*    @Override
     public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
     {
 
         return state.getMaterial().isOpaque() && state.isFullCube() && !state.canProvidePower();
-    }
+    }*/
 
     public int isProvidingStrongPower(IBlockAccess blockAccess, BlockPos pos, int side)
     {
@@ -298,12 +303,6 @@ public class BlockFrame extends Block implements IDismantleable
         }
 
         return 0;
-    }
-
-    @Override
-    public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
-        return true;
     }
 
     @Override
@@ -333,12 +332,12 @@ public class BlockFrame extends Block implements IDismantleable
         }
     }
 
-    @Override
+/*    @Override
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {
         if (blockAccess.getBlockState(pos).getBlock() == this) return false;
         return super.shouldSideBeRendered(state, blockAccess, pos, side);
-    }
+    }*/
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
