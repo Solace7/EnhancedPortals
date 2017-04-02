@@ -1,5 +1,6 @@
 package enhancedportals.tile;
 
+import enhancedportals.utility.GeneralUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,6 +10,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -67,25 +69,26 @@ public abstract class TilePortalPart extends TileEP
         return null;
     }
 
-    /*
-     * Called when this block is placed in the world.
+    /**
+     *Called when this block is placed in the world.
      *
-     * @param entity
-     * @param stack
+     *@param entity
+     *@param stack
+     */
 
     public void onBlockPlaced(EntityLivingBase entity, ItemStack stack, EntityPlayer player)
     {
         for (int i = 0; i < 6; i++)
         {
-            ChunkPos c = GeneralUtils.offset(getChunkCoordinates(), EnumFacing.getFront(i));
-            TileEntity tile = worldObj.getTileEntity(c.posX, c.posY, c.posZ);
+            BlockPos c = GeneralUtils.offset(getPos(), EnumFacing.getFront(i));
+            TileEntity tile = worldObj.getTileEntity(entity.getPosition());
 
             if (tile != null && tile instanceof TilePortalPart)
             {
-                ((TilePortalPart) tile).onNeighborPlaced(entity, xCoord, yCoord, zCoord);
+                ((TilePortalPart) tile).onNeighborPlaced(entity, getPos());
             }
         }
-    }*/
+    }
 
     public abstract void onDataPacket(NBTTagCompound tag);
 
@@ -110,11 +113,9 @@ public abstract class TilePortalPart extends TileEP
     /**
      * Called when a portal part gets placed next to this one. Is used to notify the Portal Controller to dismantle the structure.
      *
-     * @param x
-     * @param y
-     * @param z
+     *
      */
-    public void onNeighborPlaced(EntityLivingBase entity, int x, int y, int z)
+    public void onNeighborPlaced(EntityLivingBase entity, BlockPos pos)
     {
         TileController controller = getPortalController();
 

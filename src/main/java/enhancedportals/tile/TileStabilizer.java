@@ -2,13 +2,16 @@ package enhancedportals.tile;
 
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import enhancedportals.block.BlockStabilizer;
 import enhancedportals.utility.GeneralUtils;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -129,6 +132,15 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
         }
 
         main.deconstruct();
+    }
+
+    private boolean isStabilizerAt(BlockPos pos) {
+        if (this.worldObj ==null) {
+            return false;
+        } else {
+            Block block = this.worldObj.getBlockState(pos).getBlock();
+            return block instanceof BlockStabilizer;
+        }
     }
 
     @Override

@@ -4,7 +4,7 @@ import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.*;
 import enhancedportals.utility.IDismantleable;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -17,7 +17,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
@@ -31,13 +30,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static enhancedportals.block.BlockFrame.FrameType.*;
-
-public class BlockFrame extends BlockContainer implements IDismantleable
+public class BlockFrame extends Block implements IDismantleable
 {
     public static BlockFrame instance;
 
-    public static final PropertyEnum<BlockFrame.FrameType> VARIANT = PropertyEnum.<BlockFrame.FrameType>create("variant", BlockFrame.FrameType.class);
+    public static final PropertyEnum<BlockFrame.FrameType> FRAME_TYPE = PropertyEnum.<BlockFrame.FrameType>create("variant", BlockFrame.FrameType.class);
 
     public enum FrameType implements IStringSerializable {
         FRAME(0,"frame"),
@@ -73,7 +70,7 @@ public class BlockFrame extends BlockContainer implements IDismantleable
     public BlockFrame(String n)
     {
         super(Material.ROCK);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, FrameType.FRAME));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FrameType.FRAME));
         instance = this;
         setCreativeTab(CommonProxy.creativeTab);
         setHardness(5);
@@ -83,15 +80,22 @@ public class BlockFrame extends BlockContainer implements IDismantleable
         setSoundType(SoundType.STONE);
     }
 
-    @Override
+/*    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
+    }*/
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
     }
+
+
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {VARIANT});
+        return new BlockStateContainer(this, new IProperty[] {FRAME_TYPE});
     }
 
 
@@ -107,7 +111,6 @@ public class BlockFrame extends BlockContainer implements IDismantleable
             case 1:
                 type = FrameType.PORTAL_CONTROLLER;
                 break;
-
             case 2:
                 type = FrameType.REDSTONE_INTERFACE;
                 break;
@@ -133,15 +136,15 @@ public class BlockFrame extends BlockContainer implements IDismantleable
             type = FrameType.FRAME;
         }
 
-        System.out.println("Debugging: " + type);
-        return this.getDefaultState().withProperty(VARIANT, type);
+        System.out.println("Debugging Type: " + type);
+        return this.getDefaultState().withProperty(FRAME_TYPE, type);
     }
 
 
     @Override
     public int getMetaFromState(IBlockState state){
 
-        return ((BlockFrame.FrameType)state.getValue(VARIANT)).getMetadata();
+        return ((BlockFrame.FrameType)state.getValue(FRAME_TYPE)).getMetadata();
     }
 
     @Override
@@ -163,56 +166,42 @@ public class BlockFrame extends BlockContainer implements IDismantleable
         return true;
     }
 
-
-    //todo color multiplier?
-    public int colorMultiplier(IBlockAccess blockAccess, int x, int y, int z)
-    {
-        TileEntity tile = blockAccess.getTileEntity(new BlockPos(x, y, z));
-
-        if (tile instanceof TileFrame)
-        {
-            return ((TileFrame) tile).getColour();
-        }
-
-        return 0xFFFFFF;
-    }
-
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata)
+    public TileEntity createTileEntity(World world, IBlockState state)
     {
-        if (metadata == FRAME.ordinal())
+        if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.FRAME))
         {
             return new TileFrameBasic();
         }
-        else if (metadata == PORTAL_CONTROLLER.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.PORTAL_CONTROLLER))
         {
             return new TileController();
         }
-        else if (metadata == REDSTONE_INTERFACE.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.REDSTONE_INTERFACE))
         {
             return new TileRedstoneInterface();
         }
-        else if (metadata == NETWORK_INTERFACE.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.NETWORK_INTERFACE))
         {
             return new TileNetworkInterface();
         }
-        else if (metadata == DIALLING_DEVICE.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.DIALLING_DEVICE))
         {
             return new TileDialingDevice();
         }
-        else if (metadata == MODULE_MANIPULATOR.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.MODULE_MANIPULATOR))
         {
             return new TilePortalManipulator();
         }
-        else if (metadata == TRANSFER_FLUID.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.TRANSFER_FLUID))
         {
             return new TileTransferFluid();
         }
-        else if (metadata == TRANSFER_ITEM.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.TRANSFER_ITEM))
         {
             return new TileTransferItem();
         }
-        else if (metadata == TRANSFER_ENERGY.ordinal())
+        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.TRANSFER_ENERGY))
         {
             return new TileTransferEnergy();
         }

@@ -9,7 +9,7 @@ import enhancedportals.utility.CreativeTabEP3;
 import enhancedportals.utility.LogHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -57,17 +57,17 @@ public class CommonProxy
 
     }
 
-    public void waitForController(ChunkPos controller, ChunkPos frame)
+    public void waitForController(BlockPos controller, BlockPos frame)
     {
 
     }
 
-    public ArrayList<ChunkPos> getControllerList(ChunkPos controller)
+    public ArrayList<BlockPos> getControllerList(BlockPos controller)
     {
         return null;
     }
 
-    public void clearControllerList(ChunkPos controller)
+    public void clearControllerList(BlockPos controller)
     {
 
     }

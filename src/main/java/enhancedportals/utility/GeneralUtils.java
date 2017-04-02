@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -141,5 +142,9 @@ public class GeneralUtils
     public static ChunkPos offset(ChunkPos c, EnumFacing f)
     {
         return new ChunkPos(c.chunkXPos+ f.getFrontOffsetX() + f.getFrontOffsetY(), c.chunkZPos + f.getFrontOffsetZ());
+    }
+
+    public static BlockPos offset(BlockPos pos, EnumFacing f) {
+        return new BlockPos(pos.getX() + f.getFrontOffsetX(), pos.getY() + f.getFrontOffsetY(), pos.getZ() + f.getFrontOffsetZ());
     }
 }

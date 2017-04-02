@@ -2,64 +2,15 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "all": "enhancedportals:blocks/frame0B"
-        }
-  },
-    "variants": {
-      "wearingGoggles": {
-        "true": {
-          //if true render color on block
-        },
-        "false": {
-        }
-      },
-        "inventory":{
-          "model": "cube_all"
-        },
-        "controller": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame1",
-          "layer1" :"enhancedpotals:blocks/frame1B"
-        },
-        "redstone_interface": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame2",
-          "layer1" :"enhancedpotals:blocks/frame2B"
-        },
-        "network_interface": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame3",
-          "layer1" :"enhancedpotals:blocks/frame3B"
-        },
-        "dialling_device": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame4",
-          "layer1" :"enhancedpotals:blocks/frame4B"
-        },
-        "unused": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame5",
-          "layer1" :"enhancedpotals:blocks/frame5B"
-        },
-        "module_manipulator": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame6",
-          "layer1" :"enhancedpotals:blocks/frame6B"
-        },
-        "transfer_fluid": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame7",
-          "layer1" :"enhancedpotals:blocks/frame7B"
-        },
-        "transfer_item": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame8",
-          "layer1" :"enhancedpotals:blocks/frame8B"
-        },
-        "transfer_energy": {
-          "model": "cube_all",
-          "layer0": "enhnacedportals:blocks/frame9",
-          "layer1" :"enhancedpotals:blocks/frame9B"
-       }
+      "all": "enhancedportals:blocks/frameB"
     }
+  },
+  "variants": {
+    "normal": {
+      "model": "cube_all"
+    },
+    "inventory":{
+      "model": "cube_all"
+    }
+  }
 }

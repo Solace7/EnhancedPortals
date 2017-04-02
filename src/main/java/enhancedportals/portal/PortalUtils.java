@@ -22,32 +22,33 @@ public class PortalUtils
     /***
      * Adds all the touching blocks to the processing queue.
      */
-    static void addNearbyBlocks(World world, ChunkPos chunkPos, int portalDirection, Queue<ChunkPos> q)
+    static void addNearbyBlocks(World world, ChunkPos pos, int portalDirection, Queue<BlockPos> q)
     {
-        /*// (world controller is in, the offset block from controller, 1-5, blank linkedList neighbors)
-        // if portalDirection = 1, then add up, down, west, east
-        // if portalDirection = 2, then add up, down, north, south
-        // if portalDirection = 3, then add north, south, west, east
-        // if portalDirection = 4, then add up, down, north-east, south-west
-        // if portalDirection = 5, then add up, down, north-west, south-east
-        //
+        /* (world controller is in, the offset block from controller, 1-5, blank linkedList neighbors)
+         if portalDirection = 1, then add up, down, west, east
+         if portalDirection = 2, then add up, down, north, south
+         if portalDirection = 3, then add north, south, west, east
+         if portalDirection = 4, then add up, down, north-east, south-west
+         if portalDirection = 5, then add up, down, north-west, south-east
+        */
+
         if (portalDirection == 4)
         {
             //todo manipulate chunks in the y
-            q.add(new ChunkPos(chunkPos.chunkXPos, chunkPos.chunkZPos)); // Up
-            q.add(new ChunkPos(w.posX, w.posY - 1, w.posZ)); // Down
+            q.add(new BlockPos(pos.getX(), pos.getY(), pos.getZ())); // Up
+            q.add(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())); // Down
 
-            q.add(new ChunkPos(w.posX + 1, w.posY, w.posZ - 1)); // North-East
-            q.add(new ChunkPos(w.posX - 1, w.posY, w.posZ + 1)); // South-West
+            q.add(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ() - 1)); // North-East
+            q.add(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ() + 1)); // South-West
             //
         }
         else if (portalDirection == 5)
         {
-            q.add(new ChunkPos(w.posX, w.posY + 1, w.posZ)); // Up
-            q.add(new ChunkPos(w.posX, w.posY - 1, w.posZ)); // Down
+            q.add(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ())); // Up
+            q.add(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ())); // Down
 
-            q.add(new ChunkPos(w.posX - 1, w.posY, w.posZ - 1)); // North-West
-            q.add(new ChunkPos(w.posX + 1, w.posY, w.posZ + 1)); // South-East
+            q.add(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ() - 1)); // North-West
+            q.add(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ() + 1)); // South-East
         }
         else
         // Loop through the different directions for portalDirection 1-3.
@@ -69,17 +70,17 @@ public class PortalUtils
                 {
                     continue;
                 }
-                EnumFacing d = EnumFacing.getFront(i);
-                q.add(new ChunkPos(w.posX + d.offsetX, w.posY + d.offsetY, w.posZ + d.offsetZ));
+                EnumFacing facing = EnumFacing.getFront(i);
+                q.add(new BlockPos(pos.getX() + facing.getFrontOffsetX(), pos.getY() + facing.getFrontOffsetY(), pos.getZ() + facing.getFrontOffsetZ()));
             }
-        }*/
+        }
     }
 
     public static ArrayList<ChunkPos> getAllPortalComponents(TileController controller) throws PortalException
     {
         ArrayList<ChunkPos> portalComponents = new ArrayList<ChunkPos>();
         Queue<ChunkPos> toProcess = new LinkedList<ChunkPos>();
-        Queue<ChunkPos> portalBlocks = getGhostedPortalBlocks(controller);
+        Queue<BlockPos> portalBlocks = getGhostedPortalBlocks(controller);
         toProcess.add(controller.getChunkPos());
 
         if (portalBlocks.isEmpty())
@@ -148,7 +149,7 @@ public class PortalUtils
         return portalComponents;
     }
 
-    static Queue<ChunkPos> getGhostedPortalBlocks(TileController controller)
+    static Queue<BlockPos> getGhostedPortalBlocks(TileController controller)
     {
         for (int j = 0; j < 6; j++)
         {
@@ -156,9 +157,9 @@ public class PortalUtils
             {
                 // Forge directions: Down, Up, North, South, West, East
                 // Get Controller and cycle through forge directions from the coord.
-                ChunkPos c = GeneralUtils.offset(controller.getChunkPos(), EnumFacing.getFront(j));
+                BlockPos c = GeneralUtils.offset(controller.getPos(), EnumFacing.getFront(j));
                 // portalBlocks = (the world controller is in, the offset from the controller we're exploring, 1-5)
-                Queue<ChunkPos> portalBlocks = getGhostedPortalBlocks(controller.getWorld(), c, i, controller.getPos());
+                Queue<BlockPos> portalBlocks = getGhostedPortalBlocks(controller.getWorld(), c, i, controller.getPos());
 
                 if (!portalBlocks.isEmpty())
                 {
@@ -168,13 +169,13 @@ public class PortalUtils
             }
         }
 
-        return new LinkedList<ChunkPos>();
+        return new LinkedList<BlockPos>();
     }
 
-    static Queue<ChunkPos> getGhostedPortalBlocks(World world, ChunkPos start, int portalType, BlockPos pos)
+    static Queue<BlockPos> getGhostedPortalBlocks(World world, BlockPos start, int portalType, BlockPos pos)
     {
-        Queue<ChunkPos> portalBlocks = new LinkedList<ChunkPos>();
-        Queue<ChunkPos> toProcess = new LinkedList<ChunkPos>();
+        Queue<BlockPos> portalBlocks = new LinkedList<BlockPos>();
+        Queue<BlockPos> toProcess = new LinkedList<BlockPos>();
         int chances = 0;
         // Start is the offset block from the controller.
         toProcess.add(start);
@@ -182,7 +183,7 @@ public class PortalUtils
         while (!toProcess.isEmpty())
         {
             // c is now the offset block (start).
-            ChunkPos c = toProcess.remove();
+            BlockPos c = toProcess.remove();
             // Pass as long as portalBlocks does not already contain the offset block from the controller.
             if (!portalBlocks.contains(c)) // Check if the coords of the offset block happens to be an air block.
             {
@@ -203,7 +204,7 @@ public class PortalUtils
                         }
                         else
                         {
-                            return new LinkedList<ChunkPos>();
+                            return new LinkedList<BlockPos>();
                         }
                     }
 
@@ -215,7 +216,7 @@ public class PortalUtils
                 }
                 else if (!isPortalPart(world, c, pos))
                 {
-                    return new LinkedList<ChunkPos>();
+                    return new LinkedList<BlockPos>();
                 }
             }
         }
@@ -223,10 +224,10 @@ public class PortalUtils
         return portalBlocks;
     }
 
-    static int getGhostedSides(World world, ChunkPos block, Queue<ChunkPos> portalBlocks, int portalType, BlockPos pos)
+    static int getGhostedSides(World world, BlockPos block, Queue<BlockPos> portalBlocks, int portalType, BlockPos pos)
     {
         int sides = 0;
-        Queue<ChunkPos> neighbors = new LinkedList<ChunkPos>();
+        Queue<BlockPos> neighbors = new LinkedList<BlockPos>();
         // (world controller is in, the offset block from controller, 1-5, blank linkedList neighbors)
         // if portalDirection = 1, then add up, down, west, east
         // if portalDirection = 2, then add up, down, north, south
@@ -236,7 +237,7 @@ public class PortalUtils
         addNearbyBlocks(world, block, portalType, neighbors);
 
         // Go through all neighbor blocks.
-        for (ChunkPos c : neighbors)
+        for (BlockPos c : neighbors)
         {
             if (portalBlocks.contains(c) || isPortalPart(world, c, pos))
             {
@@ -247,22 +248,22 @@ public class PortalUtils
         return sides;
     }
 
-    static boolean isPortalPart(World world, ChunkPos c, BlockPos pos)
+    static boolean isPortalPart(World world, BlockPos c, BlockPos pos)
     {
         TileEntity tile = world.getTileEntity(pos);
         return tile != null && tile instanceof TilePortalPart;
     }
 
-    public static boolean netherCreatePortal(World world, ChunkPos w, int portalDirection, BlockPos pos)
+    public static boolean netherCreatePortal(World world, BlockPos w, int portalDirection, BlockPos pos)
     {
-        Queue<ChunkPos> processed = new LinkedList<ChunkPos>();
-        Queue<ChunkPos> toProcess = new LinkedList<ChunkPos>();
+        Queue<BlockPos> processed = new LinkedList<BlockPos>();
+        Queue<BlockPos> toProcess = new LinkedList<BlockPos>();
         int chances = 0;
         toProcess.add(w);
 
         while (!toProcess.isEmpty())
         {
-            ChunkPos c = toProcess.remove();
+            BlockPos c = toProcess.remove();
 
             if (!processed.contains(c))
             {
@@ -305,13 +306,13 @@ public class PortalUtils
         return true;
     }
 
-    static int netherGetSides(World world, ChunkPos w, int portalDirection, BlockPos pos)
+    static int netherGetSides(World world, BlockPos w, int portalDirection, BlockPos pos)
     {
         int sides = 0;
-        Queue<ChunkPos> neighbors = new LinkedList<ChunkPos>();
+        Queue<BlockPos> neighbors = new LinkedList<BlockPos>();
         addNearbyBlocks(world, w, portalDirection, neighbors);
 
-        for (ChunkPos c : neighbors)
+        for (BlockPos c : neighbors)
         {
             if (netherIsPortalPart(world, pos))
             {
@@ -332,11 +333,11 @@ public class PortalUtils
         return netherIsPortalPart(world.getBlockState(pos).getBlock());
     }
 
-    static void netherRemoveFailedPortal(World world, Queue<ChunkPos> processed, BlockPos pos)
+    static void netherRemoveFailedPortal(World world, Queue<BlockPos> processed, BlockPos pos)
     {
         while (!processed.isEmpty())
         {
-            ChunkPos c = processed.remove();
+            BlockPos c = processed.remove();
             world.setBlockToAir(pos);
         }
     }
