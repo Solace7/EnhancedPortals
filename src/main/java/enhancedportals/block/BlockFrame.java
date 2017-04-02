@@ -17,9 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
@@ -34,7 +32,7 @@ public class BlockFrame extends Block implements IDismantleable
 {
     public static BlockFrame instance;
 
-    public static final PropertyEnum<BlockFrame.FrameType> FRAME_TYPE = PropertyEnum.<BlockFrame.FrameType>create("variant", BlockFrame.FrameType.class);
+    public static final PropertyEnum<BlockFrame.FrameType> FRAME_TYPE = PropertyEnum.<BlockFrame.FrameType>create("frame_type", BlockFrame.FrameType.class);
 
     public enum FrameType implements IStringSerializable {
         FRAME(0,"frame"),
@@ -80,18 +78,10 @@ public class BlockFrame extends Block implements IDismantleable
         setSoundType(SoundType.STONE);
     }
 
-/*    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
-        return EnumBlockRenderType.MODEL;
-    }*/
-
     @Override
     public boolean hasTileEntity(IBlockState state) {
         return true;
     }
-
-
 
     @Override
     protected BlockStateContainer createBlockState() {
@@ -137,6 +127,7 @@ public class BlockFrame extends Block implements IDismantleable
         }
 
         System.out.println("Debugging Type: " + type);
+        System.out.println("Debugging Name: " + getRegistryName());
         return this.getDefaultState().withProperty(FRAME_TYPE, type);
     }
 
@@ -244,6 +235,32 @@ public class BlockFrame extends Block implements IDismantleable
         for (FrameType frame: allFrames) {
             list.add(new ItemStack(par1, 1, frame.getMetadata()));
         }
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.SOLID;
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }
+
+    @Override
+    @Deprecated
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
+
+    @Override
+    @Deprecated
+    public boolean isFullCube(IBlockState state) {
+        return false;
     }
 
     @Override

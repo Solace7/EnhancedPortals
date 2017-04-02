@@ -6,11 +6,20 @@
     }
   },
   "variants": {
-    "normal": {
-      "model": "cube_all"
-    },
-    "inventory":{
-      "model": "cube_all"
-    }
+        "normal": {
+          "model": "cube_all"
+        },
+        "inventory":{
+          "model": "cube_all"
+        },
+        "frame_type": {
+            "portal_controller": {
+              "model": "enhancedportals:portal_controller",
+              "textures": {
+                  "all": "enhancedportals:blocks/controllerB"
+              }
+            }
+        }
+
   }
 }
