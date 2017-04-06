@@ -23,22 +23,14 @@ public final class BlockRenderRegister
         }
     }
 
-    private static void registerVariantRender(Block block, int meta)
-    {
-        if (Item.getItemFromBlock(block) != null) {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), "inventory"));
-        }
-    }
-
     public static void init()
     {
-        registerRender(RegisterBlocks.blockDecorBorderedQuartz, 0);
+//        registerRender(RegisterBlocks.blockDecorBorderedQuartz, 0);
         registerRender(RegisterBlocks.blockDecorEnderInfusedMetal, 0);
         registerRender(RegisterBlocks.blockPortal, 0);
 
         registerRender(RegisterBlocks.blockFrame, BlockFrame.FrameType.FRAME.getMetadata());
         registerRender(RegisterBlocks.blockFrame, BlockFrame.FrameType.PORTAL_CONTROLLER.getMetadata());
-
         registerRender(RegisterBlocks.blockStabilizer, BlockStabilizer.StabilizerPart.STABILIZER.getMetadata());
         registerRender(RegisterBlocks.blockStabilizer, BlockStabilizer.StabilizerPart.MAIN.getMetadata());
 

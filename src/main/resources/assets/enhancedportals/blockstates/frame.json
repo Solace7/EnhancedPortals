@@ -6,20 +6,54 @@
     }
   },
   "variants": {
-        "normal": {
-          "model": "cube_all"
-        },
-        "inventory":{
-          "model": "cube_all"
-        },
-        "frame_type": {
-            "controller": {
-              "model": "enhancedportals:controller",
-              "textures": {
-                  "all": "enhancedportals:blocks/controllerB"
-              }
-            }
+    "normal": {
+      "model": "cube_all"
+    },
+    "inventory": {
+      "model": "cube_all"
+    },
+    "frame_type": {
+      "controller": {
+        "model": "enhancedportals:controller",
+        "textures": {
+          "all": "enhancedportals:blocks/controllerB"
         }
-
+      },
+      "redstone_interface": {
+        "textures": {
+          "all": "enhancedportals:blocks/redstone_interfaceB"
+        }
+      },
+      "network_interface": {
+        "textures": {
+          "all": "enhancedportals:blocks/network_interfaceB"
+        }
+      },
+      "dialling_device": {
+        "textures": {
+          "all": "enhancedportals:blocks/dialling_deviceB"
+        }
+      },
+      "module_manipulator": {
+        "textures": {
+          "all": "enhancedportals:blocks/module_manipulatorB"
+        }
+      },
+      "transfer_fluid": {
+        "textures": {
+          "all": "enhancedportals:blocks/transfer_fluidB"
+        }
+      },
+      "transfer_item": {
+        "textures": {
+          "all": "enhancedportals:blocks/transfer_itemB"
+        }
+      },
+      "transfer_energy": {
+        "textures": {
+          "all": "enhancedportals:blocks/transfer_energyB"
+        }
+      }
+    }
   }
 }

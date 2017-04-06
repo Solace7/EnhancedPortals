@@ -31,16 +31,16 @@ public class RegisterBlocks
 
     public static void preinit()
     {
-        blockPortal = GameRegistry.register(new BlockPortal("portal"));
+         GameRegistry.register(blockPortal = new BlockPortal("portal"));
 
-        blockFrame = GameRegistry.register(new BlockFrame("frame"));
+        GameRegistry.register(blockFrame = new BlockFrame("frame"));
         itemFrame = GameRegistry.register(new ItemPortalFrame("frame", new BlockFrame("frame")));
 
-        blockStabilizer = GameRegistry.register(new BlockStabilizer("dbs"));
+
+        GameRegistry.register(blockStabilizer = new BlockStabilizer("dbs"));
         itemStabilizer = GameRegistry.register(new ItemStabilizer("dbs", new BlockStabilizer("dbs")));
 
-       registerBlocks(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
-
+        registerBlocks(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
         registerBlocks(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));
     }
 }

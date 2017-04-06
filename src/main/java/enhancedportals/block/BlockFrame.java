@@ -68,8 +68,8 @@ public class BlockFrame extends Block implements IDismantleable
     public BlockFrame(String n)
     {
         super(Material.ROCK);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FrameType.FRAME));
         instance = this;
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FRAME_TYPE, FrameType.FRAME));
         setCreativeTab(CommonProxy.creativeTab);
         setHardness(5);
         setResistance(2000);
@@ -127,6 +127,7 @@ public class BlockFrame extends Block implements IDismantleable
         }
 
         System.out.println("Debugging Type: " + type);
+        System.out.println("Debugging Type: " + this.getUnlocalizedName());
         return this.getDefaultState().withProperty(FRAME_TYPE, type);
     }
 
@@ -161,10 +162,12 @@ public class BlockFrame extends Block implements IDismantleable
     {
         if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.FRAME))
         {
+            System.out.println("Debugging: TileFrameBasic Created");
             return new TileFrameBasic();
         }
         else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.PORTAL_CONTROLLER))
         {
+            System.out.println("Debugging: TileController Created");
             return new TileController();
         }
         else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.REDSTONE_INTERFACE))
@@ -236,18 +239,18 @@ public class BlockFrame extends Block implements IDismantleable
         }
     }
 
-    @Override
+/*    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
         return BlockRenderLayer.SOLID;
-    }
+    }*/
 
-    @Override
+/*    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
-    }
+    }*/
 
 /*    @Override
     @Deprecated
@@ -262,11 +265,11 @@ public class BlockFrame extends Block implements IDismantleable
         return true;
     }*/
 
-    @Override
+/*    @Override
     public boolean isBlockSolid(IBlockAccess p_149747_1_, BlockPos pos, EnumFacing side)
     {
         return true;
-    }
+    }*/
 
     /*    @Override
     public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
@@ -279,6 +282,13 @@ public class BlockFrame extends Block implements IDismantleable
     {
 
         return state.getMaterial().isOpaque() && state.isFullCube() && !state.canProvidePower();
+    }*/
+
+/*    @Override
+    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+    {
+        if (blockAccess.getBlockState(pos).getBlock() == this) return false;
+        return super.shouldSideBeRendered(state, blockAccess, pos, side);
     }*/
 
     public int isProvidingStrongPower(IBlockAccess blockAccess, BlockPos pos, int side)
@@ -331,13 +341,6 @@ public class BlockFrame extends Block implements IDismantleable
             ((TileFrameTransfer) tile).onNeighborChanged();
         }
     }
-
-/*    @Override
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
-    {
-        if (blockAccess.getBlockState(pos).getBlock() == this) return false;
-        return super.shouldSideBeRendered(state, blockAccess, pos, side);
-    }*/
 
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
