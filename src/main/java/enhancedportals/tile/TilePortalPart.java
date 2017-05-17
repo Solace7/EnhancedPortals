@@ -108,6 +108,7 @@ public abstract class TilePortalPart extends TileEP
         onDataPacket(tag);
         //worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         //todo mark for update
+        worldObj.notify();
     }
 
     /**
@@ -149,6 +150,7 @@ public abstract class TilePortalPart extends TileEP
         markDirty();
         //worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
         //todo mark for update
+        worldObj.notify();
     }
 
     @Override

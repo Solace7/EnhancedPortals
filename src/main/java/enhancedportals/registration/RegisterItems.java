@@ -29,6 +29,7 @@ public class RegisterItems
         itemBlankPortalModule = GameRegistry.register(new ItemBlankPortalModule("blank_portal_module"));
         itemBlankUpgrade = GameRegistry.register(new ItemBlankUpgrade("blank_upgrade"));
         itemAddressBook = GameRegistry.register(new ItemAddressBook("address_book"));
+
         // itemDiamondNugget  = GameRegistry.register(new ItemDiamondNugget("diamondNugget));
     }
 

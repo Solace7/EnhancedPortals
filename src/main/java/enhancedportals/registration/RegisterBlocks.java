@@ -13,14 +13,14 @@ public class RegisterBlocks
     public static Block blockFrame;
     public static Item itemFrame;
 
-    public static Block blockPortal;
-
     public static Block blockStabilizer;
     public static Item itemStabilizer;
 
     public static Block blockDecorBorderedQuartz;
 
     public static Block blockDecorEnderInfusedMetal;
+
+    public static Block blockPortal;
 
     private static void registerBlocks(Block block)
     {
@@ -42,5 +42,7 @@ public class RegisterBlocks
 
         registerBlocks(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
         registerBlocks(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));
+
+
     }
 }

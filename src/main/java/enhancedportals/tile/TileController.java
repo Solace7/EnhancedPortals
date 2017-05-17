@@ -69,7 +69,7 @@ public class TileController extends TileFrame implements SimpleComponent
 
 //todo Activate
 
-//    @Override
+//   @Override
     public boolean activate(EntityPlayer player, ItemStack stack)
     {
         if (player.isSneaking())
@@ -257,9 +257,10 @@ public class TileController extends TileFrame implements SimpleComponent
         }
 
         portalState = ControlState.FINALIZED;
-        markDirty();
+//        markDirty();
 //   todo     worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-        worldObj.notify();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     public void connectionDial()
@@ -326,7 +327,9 @@ public class TileController extends TileFrame implements SimpleComponent
             }
         }
 
-        markDirty();
+//        markDirty();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     public void connectionTerminate()
@@ -354,7 +357,9 @@ public class TileController extends TileFrame implements SimpleComponent
         }
 
         temporaryDBS = null;
-        markDirty();
+//        markDirty();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     /**
@@ -462,8 +467,9 @@ public class TileController extends TileFrame implements SimpleComponent
         transferEnergy.clear();
         moduleManipulator = null;
         portalState = ControlState.REQUIRES_WRENCH;
-        markDirty();
-        worldObj.notify();
+//        markDirty();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
         //todo MarkBlockForupdate
     }
 
@@ -471,14 +477,18 @@ public class TileController extends TileFrame implements SimpleComponent
     public void setupTemporaryDBS(TileStabilizerMain sA)
     {
         temporaryDBS = sA.getDimensionCoordinates();
-        markDirty();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
+//        markDirty();
     }
 
     public void swapTextureData(PortalTextureManager textureManager)
     {
         inactiveTextureData = new PortalTextureManager(activeTextureData);
         activeTextureData = textureManager;
-        markDirty();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
+//        markDirty();
     }
 
     @Override
@@ -529,21 +539,27 @@ public class TileController extends TileFrame implements SimpleComponent
     {
         cachedDestinationUID = id;
         cachedDestinationLoc = wc;
-        markDirty();
+//        markDirty();
         //todo worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
     }
 
     public void setPortalColour(int colour)
     {
         activeTextureData.setPortalColour(colour);
-        markDirty();
+//        markDirty();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
         sendUpdatePacket(true);
     }
 
     public void setPortalItem(ItemStack s)
     {
         activeTextureData.setPortalItem(s);
-        markDirty();
+//        markDirty();
+        final IBlockState state = getWorld().getBlockState(getPos());
+        worldObj.notifyBlockUpdate(getPos(), state, state, 3);
         sendUpdatePacket(true);
     }
 

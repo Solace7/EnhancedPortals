@@ -3,6 +3,7 @@ package enhancedportals.tile;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
 import enhancedportals.block.BlockStabilizer;
+import enhancedportals.utility.DimensionCoordinates;
 import enhancedportals.utility.GeneralUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
 
 public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyProvider
 {
@@ -150,7 +153,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
     }
 
     //todo multiblock
-/*
+
     ArrayList<ChunkPos> checkShapeThreeWide(DimensionCoordinates topLeft)
     {
         ArrayList<ChunkPos> blocks = new ArrayList<ChunkPos>();
@@ -160,7 +163,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
 //        while (worldObj.getBlock(heightChecker.posX, heightChecker.posY, heightChecker.posZ) == BlockStabilizer.instance)
           while (worldObj.getBlockState(getPos()) == BlockStabilizer.instance)
         {
-            heightChecker.posY--;
+            heightChecker.get--;
             rows++;
         }
 
@@ -176,19 +179,19 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
             {
                 for (int k = 0; k < rows; k++)
                 {
-                    if (worldObj.getBlock(topLeft.posX + i, topLeft.posY - k, topLeft.posZ + j) != BlockStabilizer.instance)
+                    if (worldObj.getBlockState(getPos()).getBlock(topLeft.posX + i, topLeft.posY - k, topLeft.posZ + j) != BlockStabilizer.instance)
                     {
                         return new ArrayList<ChunkPos>();
                     }
 
-                    blocks.add(new ChunkPos(topLeft.posX + i, topLeft.posY - k, topLeft.posZ + j));
+                    blocks.add(new ChunkPos(topLeft.getXStart() + i, topLeft.posY - k, topLeft.getZStart() + j));
                 }
             }
         }
 
         is3x3 = true;
         return blocks;
-    }*/
+    }
 
 /*    ArrayList<ChunkPos> checkShapeTwoWide(DimensionCoordinates topLeft, boolean isX)
     {

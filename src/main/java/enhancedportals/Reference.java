@@ -21,7 +21,7 @@ public class Reference
     {
         public static final String MODID_OPENCOMPUTERS = "OpenComputers";
 //        public static final String MODID_COMPUTERCRAFT = "ComputerCraft";
-//        public static final String MODID_THERMALEXPANSION = "ThermalExpansion";
+        public static final String MODID_THERMALEXPANSION = "ThermalExpansion";
     }
 
     public static class EPConfiguration
@@ -36,7 +36,7 @@ public class Reference
         public static int activePortalsPerRow = 2;
 
         public static boolean recipeVanilla = true;
-//        public static boolean recipeTE = true;
+        public static boolean recipeTE = true;
 
         public static boolean requirePower = true;
         public static int initializationCost = 10000;

@@ -126,8 +126,6 @@ public class BlockFrame extends Block implements IDismantleable
             type = FrameType.FRAME;
         }
 
-        System.out.println("Debugging Type: " + type);
-        System.out.println("Debugging Type: " + this.getUnlocalizedName());
         return this.getDefaultState().withProperty(FRAME_TYPE, type);
     }
 

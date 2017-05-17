@@ -1,9 +1,8 @@
+
 ## Version 3.0.14
-+ Updated to 1.9.4!
-+ Removed CC(ComputerCraft) Integration - No CC API for 1.9.4
-+ Removed options pertaining to Thermal Expansion - No TE for 1.9.4
-+ Removed all references to LookingGlass - No Looking Glass for 1.9.4
-+ Changed all localization
++ Updated to 1.10.2!
++ Removed CC(ComputerCraft) Integration - No CC API for 1.10.2
++ Removed all references to LookingGlass - No Looking Glass for 1.10.2
 
 ## Version 3.0.13
 
