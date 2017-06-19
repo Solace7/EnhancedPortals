@@ -2,6 +2,6 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "enhancedportals:items/upgrade",
-    "layer1": "enhancedportals:items/upgrade_6"
+    "layer1": "enhancedportals:items/upgrade_dial_device"
   }
 }

@@ -2,6 +2,6 @@
   "parent": "item/generated",
   "textures": {
       "layer0": "enhancedportals:items/portal_module",
-      "layer1": "enhancedportals:items/portal_module_3"
+      "layer1": "enhancedportals:items/portal_module_remove_sounds"
   }
 }

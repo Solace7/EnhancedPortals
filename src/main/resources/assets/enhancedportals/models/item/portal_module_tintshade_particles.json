@@ -2,6 +2,6 @@
   "parent": "item/generated",
   "textures": {
       "layer0": "enhancedportals:items/portal_module",
-      "layer1": "enhancedportals:items/portal_module_1"
+      "layer1": "enhancedportals:items/portal_module_tintshade_particles"
   }
 }
