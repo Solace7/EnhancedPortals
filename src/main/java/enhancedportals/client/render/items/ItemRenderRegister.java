@@ -1,36 +1,33 @@
 package enhancedportals.client.render.items;
 
+import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.item.ItemPortalModule;
+import enhancedportals.item.ItemUpgrade;
 import enhancedportals.registration.RegisterBlocks;
 import enhancedportals.registration.RegisterItems;
-import net.minecraft.client.Minecraft;
+import enhancedportals.utility.ConfigurationHandler;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 
 public class ItemRenderRegister
 {
 
     public static void registerRender(Item item){
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }
 
-    private static void registerMetaRender(Item item, int metadata) {
+    private static void registerRender(Item item, int metadata) {
         ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(item.getRegistryName() + "_" + metadata));
     }
 
-    public static void preinit(){
-        for(int i = 0; i < ItemPortalModule.PortalModules.values().length; i++) {
-            registerMetaRender(RegisterItems.itemPortalModule, i);
-        }
-        for(int i = 0; i < BlockFrame.FrameType.values().length; i++) {
-            registerMetaRender(RegisterItems.itemUpgrade, i);
-        }
+    private static void registerRender(Item item, int metadata, String fileName) {
+        ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(new ResourceLocation(Reference.EPMod.mod_id, fileName), "inventory"));
     }
 
-    public static void init()
-    {
+    public static void preinit(){
         registerRender(RegisterItems.itemAddressBook);
         registerRender(RegisterItems.itemBlankUpgrade);
         registerRender(RegisterItems.itemBlankPortalModule);
@@ -40,7 +37,10 @@ public class ItemRenderRegister
         registerRender(RegisterItems.itemWrench);
 
         registerRender(RegisterBlocks.itemStabilizer);
-        registerRender(RegisterBlocks.itemFrame);
+
+        for(int i = 0; i < BlockFrame.FrameType.values().length; i++) {
+            registerRender(RegisterBlocks.itemFrame, i, "block_frame_" + BlockFrame.FrameType.values()[i].getName());
+        }
 
         Item itemBlockDecorBorderedQuartz = Item.getItemFromBlock(RegisterBlocks.blockDecorBorderedQuartz);
         registerRender(itemBlockDecorBorderedQuartz);
@@ -49,9 +49,17 @@ public class ItemRenderRegister
         registerRender(itemEnderInfusedMetal);
 
 
+        if(ConfigurationHandler.CONFIG_RECIPES_TE) {
+            registerRender(RegisterItems.itemDiamondNugget);
+        }
 
-//        registerRender(RegisterItems.itemDiamondNugget);
-
+        for(int i = 0; i < ItemPortalModule.PortalModule.values().length; i++) {
+            registerRender(RegisterItems.itemPortalModule, i, "portal_module_" + ItemPortalModule.PortalModule.values()[i].getName());
+        }
+        for(int i = 0; i < 7; i++) {
+            registerRender(RegisterItems.itemUpgrade, i, "upgrade_" + ItemUpgrade.unlocalizedName[i]);
+        }
     }
+
 }
 

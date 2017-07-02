@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
@@ -103,11 +104,11 @@ public class BlockPortal extends BlockContainer
         return 1;
     }*/
 
-    /*@Override
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
-        return PortalRenderer.ID;
-    }*/
+        return EnumBlockRenderType.MODEL;
+    }
 
     @Override
     public boolean isOpaqueCube(IBlockState state)
@@ -185,10 +186,10 @@ public class BlockPortal extends BlockContainer
         {
             if (doSounds)
             {
-                doSounds = !module.hasModule(ItemPortalModule.PortalModules.REMOVE_SOUNDS.getUniqueID());
+                doSounds = !module.hasModule(ItemPortalModule.PortalModule.REMOVE_SOUNDS.getUniqueID());
             }
 
-            doParticles = !module.hasModule(ItemPortalModule.PortalModules.REMOVE_PARTICLES.getUniqueID());
+            doParticles = !module.hasModule(ItemPortalModule.PortalModule.REMOVE_PARTICLES.getUniqueID());
         }
 
         if (doSounds)

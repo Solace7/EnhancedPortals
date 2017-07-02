@@ -58,8 +58,10 @@ public class BlockStabilizer extends Block
         setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
         setCreativeTab(CommonProxy.creativeTab);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(STABILIZER_PART, StabilizerPart.STABILIZER));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(STABILIZER_PART, StabilizerPart.MAIN));
     }
+
+    //todo DynamicProperty == getActualState method, check for surrounding by other Stabilizer Blocks
 
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
@@ -99,7 +101,7 @@ public class BlockStabilizer extends Block
     @Override
     public IBlockState getStateFromMeta(int meta) {
 
-        StabilizerPart part;
+/*        StabilizerPart part;
         switch(meta)
         {
         case 0:
@@ -110,10 +112,8 @@ public class BlockStabilizer extends Block
             break;
         default:
             part = StabilizerPart.MAIN;
-        }
-
-        System.out.println("Debugging: " + part);
-        return this.getDefaultState().withProperty(STABILIZER_PART, part);
+        }*/
+        return this.getDefaultState().withProperty(STABILIZER_PART, meta == 0 ? StabilizerPart.MAIN : StabilizerPart.STABILIZER);
     }
 
     @Override

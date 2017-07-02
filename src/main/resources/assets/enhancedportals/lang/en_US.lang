@@ -41,29 +41,29 @@ item.enhancedportals:upgrade.item.name=Item Transportation Upgrade
 item.enhancedportals:upgrade.energy.name=Energy Transportation Upgrade
 
 # Modules
-item.enhancedportals:portal_module.0.name=Particle Destroyer
-item.enhancedportals:portal_module.0.desc=Stops particles from getting created
+item.enhancedportals:portal_module.remove_particles.name=Particle Destroyer
+item.enhancedportals:portal_module.remove_particles.desc=Stops particles from getting created
 
-item.enhancedportals:portal_module.1.name=Rainbow Particles
-item.enhancedportals:portal_module.1.desc=Every particle will have a random colour
+item.enhancedportals:portal_module.rainbow_particles.name=Rainbow Particles
+item.enhancedportals:portal_module.rainbow_particles.desc=Every particle will have a random colour
 
-item.enhancedportals:portal_module.2.name=Silencer
-item.enhancedportals:portal_module.2.desc=Silences the portal
+item.enhancedportals:portal_module.remove_sounds.name=Silencer
+item.enhancedportals:portal_module.remove_sounds.desc=Silences the portal
 
-item.enhancedportals:portal_module.3.name=Momentum
-item.enhancedportals:portal_module.3.desc=Entities keep their momentum
+item.enhancedportals:portal_module.keep_momentum.name=Momentum
+item.enhancedportals:portal_module.keep_momentum.desc=Entities keep their momentum
 
-item.enhancedportals:portal_module.4.name=Cloaking
-item.enhancedportals:portal_module.4.desc=Makes the portal completely invisible
+item.enhancedportals:portal_module.invisible_portal.name=Cloaking
+item.enhancedportals:portal_module.invisible_portal.desc=Makes the portal completely invisible
 
-item.enhancedportals:portal_module.5.name=Particle Shader
-item.enhancedportals:portal_module.5.desc=Particles randomly spawn lighter or darker
+item.enhancedportals:portal_module.tintshade_particles.name=Particle Shader
+item.enhancedportals:portal_module.tintshade_particles.desc=Particles randomly spawn lighter or darker
 
-item.enhancedportals:portal_module.6.name=Facing
-item.enhancedportals:portal_module.6.desc=Direction to face on teleport
+item.enhancedportals:portal_module.facing.name=Facing
+item.enhancedportals:portal_module.facing.desc=Direction to face on teleport
 
-item.enhancedportals:portal_module.7.name=Featherfall
-item.enhancedportals:portal_module.7.desc=Negates fall damage
+item.enhancedportals:portal_module.featherfall.name=Featherfall
+item.enhancedportals:portal_module.featherfall.desc=Negates fall damage
 
 ## MODULE INFORMATION ##
 enhancedportals.manual.blank_module.title=Blank Portal Module

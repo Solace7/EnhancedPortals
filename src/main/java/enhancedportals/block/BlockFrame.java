@@ -2,7 +2,9 @@ package enhancedportals.block;
 
 import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
-import enhancedportals.tile.*;
+import enhancedportals.tile.TileFrame;
+import enhancedportals.tile.TileFrameTransfer;
+import enhancedportals.tile.TileRedstoneInterface;
 import enhancedportals.utility.IDismantleable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -17,7 +19,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
@@ -53,7 +57,7 @@ public class BlockFrame extends Block implements IDismantleable
             this.id = id;
         }
 
-        public int getMetadata(){
+        public int getID(){
             return this.id;
         }
 
@@ -78,62 +82,35 @@ public class BlockFrame extends Block implements IDismantleable
         setSoundType(SoundType.STONE);
     }
 
-    @Override
+    /*@Override
     public boolean hasTileEntity(IBlockState state) {
         return true;
-    }
+    }*/
 
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, new IProperty[] {FRAME_TYPE});
     }
 
-
     @Override
     public IBlockState getStateFromMeta(int meta){
-
-        FrameType type;
-        switch(meta)
-        {
-            case 0:
-                type = FrameType.FRAME;
-                break;
-            case 1:
-                type = FrameType.PORTAL_CONTROLLER;
-                break;
-            case 2:
-                type = FrameType.REDSTONE_INTERFACE;
-                break;
-            case 3:
-                type = FrameType.NETWORK_INTERFACE;
-                break;
-            case 4:
-                type = FrameType.DIALLING_DEVICE;
-                break;
-            case 5:
-                type = FrameType.MODULE_MANIPULATOR;
-                break;
-            case 6:
-                type = FrameType.TRANSFER_FLUID;
-                break;
-            case 7:
-                type = FrameType.TRANSFER_ITEM;
-                break;
-            case 8:
-                type = FrameType.TRANSFER_ENERGY;
-                break;
-        default:
-            type = FrameType.FRAME;
-        }
-
-        return this.getDefaultState().withProperty(FRAME_TYPE, type);
+        System.out.println("Debugging: MetaValue: " + meta );
+        System.out.println("Debugging: getStateFromMeta " + this.getDefaultState().withProperty(FRAME_TYPE, FrameType.values()[meta]));
+        return this.getDefaultState().withProperty(FRAME_TYPE, FrameType.values()[meta]);
     }
 
 
     @Override
     public int getMetaFromState(IBlockState state){
+        System.out.println("Debugging getFromState stateValue: " + state);
+        System.out.println("Debugging getMetaFromState metaValue: " + ((BlockFrame.FrameType)state.getValue(FRAME_TYPE)).getID());
 
-        return ((BlockFrame.FrameType)state.getValue(FRAME_TYPE)).getMetadata();
+       return state.getValue(FRAME_TYPE).getID();
+    }
+
+    @Override
+    public int damageDropped(IBlockState state) {
+        return getMetaFromState(state);
     }
 
     @Override
@@ -155,7 +132,7 @@ public class BlockFrame extends Block implements IDismantleable
         return true;
     }
 
-    @Override
+    /*@Override
     public TileEntity createTileEntity(World world, IBlockState state)
     {
         if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.FRAME))
@@ -198,7 +175,7 @@ public class BlockFrame extends Block implements IDismantleable
         }
 
         return null;
-    }
+    }*/
 
     @Override
     public void dismantleBlock(EntityPlayer player, World world, BlockPos pos)
@@ -233,7 +210,8 @@ public class BlockFrame extends Block implements IDismantleable
     {
         FrameType[] allFrames = FrameType.values();
         for (FrameType frame: allFrames) {
-            list.add(new ItemStack(par1, 1, frame.getMetadata()));
+            System.out.println("Debugging SubBlocks: " + frame);
+            list.add(new ItemStack(par1, 1, frame.getID()));
         }
     }
 

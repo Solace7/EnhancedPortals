@@ -1,6 +1,5 @@
 package enhancedportals.item;
 
-import enhancedportals.Reference;
 import enhancedportals.block.BlockFrame;
 import enhancedportals.utility.Localization;
 import net.minecraft.block.Block;
@@ -16,12 +15,12 @@ public class ItemPortalFrame extends ItemBlock
 {
     public static String[] unlocalizedName = new String[]{"frame", "controller", "redstone", "network_interface", "dial_device", "manipulator", "fluid", "item", "energy"};
 
-    public ItemPortalFrame(String n, Block block)
+    public ItemPortalFrame(Block block)
     {
         super(block);
-        setMaxDamage(0);
-        setHasSubtypes(true);
-        setRegistryName(Reference.EPMod.mod_id, n);
+        this.setMaxDamage(0);
+        this.setHasSubtypes(true);
+        setRegistryName(block.getRegistryName());
         setUnlocalizedName(getRegistryName().toString());
     }
 

@@ -161,7 +161,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
         rows = 0;
 
 //        while (worldObj.getBlock(heightChecker.posX, heightChecker.posY, heightChecker.posZ) == BlockStabilizer.instance)
-          while (worldObj.getBlockState(getPos()) == BlockStabilizer.instance)
+/*          while (worldObj.getBlockState(getPos()) == BlockStabilizer.instance)
         {
             heightChecker.get--;
             rows++;
@@ -187,7 +187,7 @@ public class TileStabilizer extends TileEP implements IEnergyReceiver, IEnergyPr
                     blocks.add(new ChunkPos(topLeft.getXStart() + i, topLeft.posY - k, topLeft.getZStart() + j));
                 }
             }
-        }
+        }*/
 
         is3x3 = true;
         return blocks;

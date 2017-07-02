@@ -66,8 +66,8 @@ public class EnhancedPortals
         proxy.miscSetup();
         proxy.setupCrafting();
         proxy.init(event);
+//        proxy.registerModelBakery();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-
     }
 
     @EventHandler

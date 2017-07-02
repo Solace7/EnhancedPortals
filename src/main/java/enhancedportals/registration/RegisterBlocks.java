@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class RegisterBlocks
 {
     public static Block blockFrame;
-    public static Item itemFrame;
+    public static ItemBlock itemFrame;
 
     public static Block blockStabilizer;
     public static Item itemStabilizer;
@@ -22,26 +22,31 @@ public class RegisterBlocks
 
     public static Block blockPortal;
 
-    private static void registerBlocks(Block block)
+    private static void registerBlock(Block block)
     {
         GameRegistry.register(block);
         GameRegistry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
     }
 
+    private static void registerBlock(Block block, ItemBlock itemBlock)
+    {
+        GameRegistry.register(block);
+        GameRegistry.register(itemBlock);
+    }
+
 
     public static void preinit()
     {
-         GameRegistry.register(blockPortal = new BlockPortal("portal"));
+         registerBlock(blockPortal = new BlockPortal("portal"));
 
-        GameRegistry.register(blockFrame = new BlockFrame("frame"));
-        itemFrame = GameRegistry.register(new ItemPortalFrame("frame", new BlockFrame("frame")));
+        itemFrame = new ItemPortalFrame(new BlockFrame("frame"));
+        registerBlock(blockFrame = new BlockFrame("frame"), itemFrame);
 
-
-        GameRegistry.register(blockStabilizer = new BlockStabilizer("dbs"));
         itemStabilizer = GameRegistry.register(new ItemStabilizer("dbs", new BlockStabilizer("dbs")));
+        GameRegistry.register(blockStabilizer = new BlockStabilizer("dbs"));
 
-        registerBlocks(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
-        registerBlocks(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));
+        registerBlock(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
+        registerBlock(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));
 
 
     }

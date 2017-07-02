@@ -7,12 +7,12 @@ public class ItemDiamondNugget extends Item
 {
     public static ItemDiamondNugget instance;
 
-    public ItemDiamondNugget()
+    public ItemDiamondNugget(String n)
     {
         setMaxStackSize(64);
         setCreativeTab(CommonProxy.creativeTab);
         instance = this;
-        setRegistryName("diamondNugget");
+        setRegistryName(n);
         setUnlocalizedName(getRegistryName().toString());
     }
 }

@@ -1,59 +1,31 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "textures": {
-      "all": "enhancedportals:blocks/frameB"
-    }
-  },
   "variants": {
-    "normal": {
-      "model": "cube_all"
+    "frame_type=frame": {
+      "model": "enhancedportals:block_frame_frame"
     },
-    "inventory": {
-      "model": "cube_all"
+    "frame_type=controller": {
+      "model": "enhancedportals:block_frame_controller"
     },
-    "frame_type": {
-      "controller": {
-        "model": "enhancedportals:controller",
-        "textures": {
-          "all": "enhancedportals:blocks/controllerB"
-        }
-      },
-      "redstone_interface": {
-        "textures": {
-          "all": "enhancedportals:blocks/redstone_interfaceB"
-        }
-      },
-      "network_interface": {
-        "textures": {
-          "all": "enhancedportals:blocks/network_interfaceB"
-        }
-      },
-      "dialling_device": {
-        "textures": {
-          "all": "enhancedportals:blocks/dialling_deviceB"
-        }
-      },
-      "module_manipulator": {
-        "textures": {
-          "all": "enhancedportals:blocks/module_manipulatorB"
-        }
-      },
-      "transfer_fluid": {
-        "textures": {
-          "all": "enhancedportals:blocks/transfer_fluidB"
-        }
-      },
-      "transfer_item": {
-        "textures": {
-          "all": "enhancedportals:blocks/transfer_itemB"
-        }
-      },
-      "transfer_energy": {
-        "textures": {
-          "all": "enhancedportals:blocks/transfer_energyB"
-        }
-      }
+    "frame_type=redstone_interface":{
+      "model": "enhancedportals:block_frame_redstone_interface"
+    },
+    "frame_type=network_interface":{
+      "model": "enhancedportals:block_frame_network_interface"
+    },
+    "frame_type=dialling_device":{
+      "model": "enhancedportals:block_frame_dialling_device"
+    },
+    "frame_type=module_manipulator":{
+      "model": "enhancedportals:block_frame_module_manipulator"
+    },
+    "frame_type=transfer_fluid":{
+      "model": "enhancedportals:block_frame_transfer_fluid"
+    },
+    "frame_type=transfer_item": {
+      "model": "enhancedportals:block_frame_transfer_item"
+    },
+    "frame_type=transfer_energy":{
+      "model": "enhancedportals:block_frame_transfer_energy"
     }
   }
 }

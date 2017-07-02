@@ -1,6 +1,7 @@
 package enhancedportals.registration;
 
 import enhancedportals.item.*;
+import enhancedportals.utility.ConfigurationHandler;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -30,8 +31,8 @@ public class RegisterItems
         itemBlankUpgrade = GameRegistry.register(new ItemBlankUpgrade("blank_upgrade"));
         itemAddressBook = GameRegistry.register(new ItemAddressBook("address_book"));
 
-        // itemDiamondNugget  = GameRegistry.register(new ItemDiamondNugget("diamondNugget));
+        if (ConfigurationHandler.CONFIG_RECIPES_TE) {
+            itemDiamondNugget  = GameRegistry.register(new ItemDiamondNugget("diamondNugget"));
+        }
     }
-
-
 }

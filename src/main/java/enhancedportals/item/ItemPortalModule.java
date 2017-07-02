@@ -28,14 +28,38 @@ import java.util.List;
 
 public class ItemPortalModule extends Item implements IPortalModule
 {
-    public static enum PortalModules
+    public static enum PortalModule
     {
-        REMOVE_PARTICLES, RAINBOW_PARTICLES, REMOVE_SOUNDS, KEEP_MOMENTUM, INVISIBLE_PORTAL, TINTSHADE_PARTICLES, FACING, FEATHERFALL;
+        REMOVE_PARTICLES(0, "remove_particles"),
+        RAINBOW_PARTICLES(1, "rainbow_particles"),
+        REMOVE_SOUNDS(2, "remove_sounds"),
+        KEEP_MOMENTUM(3, "keep_momentum"),
+        INVISIBLE_PORTAL(4, "invisible_portal"),
+        TINTSHADE_PARTICLES(5, "tintshade_particles"),
+        FACING(6, "facing"),
+        FEATHERFALL(7, "featherfall");
 
+
+        private final String name;
+        private final int id;
+
+        private PortalModule (int id, String name) {
+            this.name = name;
+            this.id = id;
+        }
         public String getUniqueID()
         {
             ItemStack s = new ItemStack(instance, 1, ordinal());
             return ((IPortalModule) s.getItem()).getID(s);
+        }
+
+        public int getMetadata(){
+            return this.id;
+        }
+
+        public String getName()
+        {
+            return name;
         }
     }
 
@@ -61,7 +85,7 @@ public class ItemPortalModule extends Item implements IPortalModule
     {
         list.add("Portal Module");
 
-        if (stack.getItemDamage() == PortalModules.FACING.ordinal())
+        if (stack.getItemDamage() == PortalModule.FACING.ordinal())
         {
             NBTTagCompound t = stack.getTagCompound();
             int i = 0;
@@ -92,13 +116,13 @@ public class ItemPortalModule extends Item implements IPortalModule
     @Override
     public boolean disableParticles(TilePortalManipulator moduleManipulator, ItemStack upgrade)
     {
-        return upgrade.getItemDamage() == PortalModules.REMOVE_PARTICLES.ordinal();
+        return upgrade.getItemDamage() == PortalModule.REMOVE_PARTICLES.ordinal();
     }
 
     @Override
     public boolean disablePortalRendering(TilePortalManipulator modulemanipulator, ItemStack upgrade)
     {
-        return upgrade.getItemDamage() == PortalModules.INVISIBLE_PORTAL.ordinal();
+        return upgrade.getItemDamage() == PortalModule.INVISIBLE_PORTAL.ordinal();
     }
 
     @Override
@@ -110,11 +134,11 @@ public class ItemPortalModule extends Item implements IPortalModule
     @Override
     public EnumRarity getRarity(ItemStack itemStack)
     {
-        if (itemStack.getItemDamage() == PortalModules.INVISIBLE_PORTAL.ordinal())
+        if (itemStack.getItemDamage() == PortalModule.INVISIBLE_PORTAL.ordinal())
         {
             return EnumRarity.EPIC;
         }
-        else if (itemStack.getItemDamage() == PortalModules.KEEP_MOMENTUM.ordinal())
+        else if (itemStack.getItemDamage() == PortalModule.KEEP_MOMENTUM.ordinal())
         {
             return EnumRarity.RARE;
         }
@@ -127,7 +151,7 @@ public class ItemPortalModule extends Item implements IPortalModule
     @Override
     public void getSubItems(Item item, CreativeTabs creativeTab, List list)
     {
-        for (int i = 0; i < PortalModules.values().length; i++)
+        for (int i = 0; i < PortalModule.values().length; i++)
         {
             list.add(new ItemStack(item, 1, i));
         }
@@ -141,19 +165,19 @@ public class ItemPortalModule extends Item implements IPortalModule
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName() + "." + stack.getItemDamage();
+        return super.getUnlocalizedName() + "." + PortalModule.values()[stack.getItemDamage()].getName();
     }
 
     @Override
     public boolean keepMomentumOnTeleport(TilePortalManipulator tileModuleManipulator, ItemStack i)
     {
-        return i.getItemDamage() == PortalModules.KEEP_MOMENTUM.ordinal();
+        return i.getItemDamage() == PortalModule.KEEP_MOMENTUM.ordinal();
     }
 
     @Override
     public void onEntityTeleportEnd(Entity entity, TilePortalManipulator moduleManipulator, ItemStack upgrade)
     {
-        if (upgrade.getItemDamage() == PortalModules.FEATHERFALL.ordinal())
+        if (upgrade.getItemDamage() == PortalModule.FEATHERFALL.ordinal())
         {
             if (entity instanceof EntityPlayer)
             {
@@ -169,7 +193,7 @@ public class ItemPortalModule extends Item implements IPortalModule
     @Override
     public boolean onEntityTeleportStart(Entity entity, TilePortalManipulator moduleManipulator, ItemStack upgrade)
     {
-        if (upgrade.getItemDamage() == PortalModules.FEATHERFALL.ordinal())
+        if (upgrade.getItemDamage() == PortalModule.FEATHERFALL.ordinal())
         {
             if (entity instanceof EntityPlayer)
             {
@@ -187,7 +211,7 @@ public class ItemPortalModule extends Item implements IPortalModule
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
     {
-        if (player.isSneaking() && stack.getItemDamage() == PortalModules.FACING.ordinal())
+        if (player.isSneaking() && stack.getItemDamage() == PortalModule.FACING.ordinal())
         {
             NBTTagCompound tag = stack.getTagCompound();
 
@@ -217,11 +241,11 @@ public class ItemPortalModule extends Item implements IPortalModule
     @Override
     public void onParticleCreated(TilePortalManipulator moduleManipulator, ItemStack upgrade, PortalParticleFX particle)
     {
-        if (upgrade.getItemDamage() == PortalModules.RAINBOW_PARTICLES.ordinal())
+        if (upgrade.getItemDamage() == PortalModule.RAINBOW_PARTICLES.ordinal())
         {
             particle.setRBGColorF((float) Math.random(), (float) Math.random(), (float) Math.random());
         }
-        else if (upgrade.getItemDamage() == PortalModules.TINTSHADE_PARTICLES.ordinal())
+        else if (upgrade.getItemDamage() == PortalModule.TINTSHADE_PARTICLES.ordinal())
         {
             float particleRed = particle.getRedColorF(), particleGreen = particle.getGreenColorF(), particleBlue = particle.getBlueColorF();
             int i = ClientProxy.random.nextInt(3);

@@ -26,7 +26,7 @@ public class ClientProxy extends CommonProxy
     public void preInit(FMLPreInitializationEvent e)
     {
         super.preInit(e);
-
+        BlockRenderRegister.preInit();
         ItemRenderRegister.preinit();
         GuideAPI.setModel(WormholeTunnelManual.epManual);
     }
@@ -34,15 +34,11 @@ public class ClientProxy extends CommonProxy
 
     public void init(FMLInitializationEvent e){
         super.init(e);
-
-        ItemRenderRegister.init();
-        BlockRenderRegister.init();
     }
 
     public void postInit(FMLPostInitializationEvent e) {
 
     }
-
 
     public class ParticleSet
     {
@@ -63,8 +59,6 @@ public class ClientProxy extends CommonProxy
     public static String saveName;
     public static int editingID = -1;
 
-//    public static ArrayList<IIcon> customFrameTextures = new ArrayList<IIcon>();
-//    public static ArrayList<IIcon> customPortalTextures = new ArrayList<IIcon>();
     public static ArrayList<ParticleSet> particleSets = new ArrayList<ParticleSet>();
     public static Random random = new Random();
 
