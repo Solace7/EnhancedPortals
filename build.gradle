@@ -7,7 +7,7 @@ buildscript {
         }
         maven { url = "http://maven.cil.li/" }
         maven {
-            url = ","
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
 
     }
