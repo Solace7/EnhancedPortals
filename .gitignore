@@ -28,3 +28,5 @@ gradle.properties
 /*.ipr
 /*.iws
 /atlassian-ide-plugin.xml
+/EnhancedPortals/nbproject/private/
+/.nb-gradle/
