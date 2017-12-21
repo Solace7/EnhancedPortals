@@ -1,14 +1,18 @@
 package enhancedportals.network;
 
 import amerifrance.guideapi.api.GuideAPI;
+import enhancedportals.Reference;
 import enhancedportals.client.render.blocks.BlockRenderRegister;
 import enhancedportals.client.render.items.ItemRenderRegister;
 import enhancedportals.guidebook.WormholeTunnelManual;
 import enhancedportals.portal.GlyphIdentifier;
 import enhancedportals.portal.PortalTextureManager;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -27,10 +31,8 @@ public class ClientProxy extends CommonProxy
     {
         super.preInit(e);
         BlockRenderRegister.preInit();
-        ItemRenderRegister.preinit();
         GuideAPI.setModel(WormholeTunnelManual.epManual);
     }
-
 
     public void init(FMLInitializationEvent e){
         super.init(e);

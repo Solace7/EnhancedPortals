@@ -20,6 +20,8 @@ public class ItemUpgrade extends Item
 
     public static ItemUpgrade instance;
 
+    //Todo ENUM all the things
+
     public ItemUpgrade(String n)
     {
         super();

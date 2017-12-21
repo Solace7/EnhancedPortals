@@ -26,7 +26,7 @@ public class BlockStabilizer extends Block
 {
     public static BlockStabilizer instance;
 
-    public static final PropertyEnum STABILIZER_PART = PropertyEnum.create("stabilizer", BlockStabilizer.StabilizerPart.class);
+    public static final PropertyEnum STABILIZER_PART = PropertyEnum.create("stabilizer_part", BlockStabilizer.StabilizerPart.class);
 
     public enum StabilizerPart implements IStringSerializable {
         STABILIZER(0,"stabilizer"),
@@ -93,26 +93,13 @@ public class BlockStabilizer extends Block
 
     @Override
     public int getMetaFromState(IBlockState state) {
-        StabilizerPart part = (StabilizerPart) state.getValue(STABILIZER_PART);
 
-        return part.ordinal();
+        return ((StabilizerPart) state.getValue(STABILIZER_PART)).getMetadata();
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
 
-/*        StabilizerPart part;
-        switch(meta)
-        {
-        case 0:
-            part = StabilizerPart.STABILIZER;
-            break;
-        case 1:
-            part = StabilizerPart.MAIN;
-            break;
-        default:
-            part = StabilizerPart.MAIN;
-        }*/
         return this.getDefaultState().withProperty(STABILIZER_PART, meta == 0 ? StabilizerPart.MAIN : StabilizerPart.STABILIZER);
     }
 

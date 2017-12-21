@@ -2,17 +2,13 @@ package enhancedportals.network;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import enhancedportals.EnhancedPortals;
-import enhancedportals.Reference;
 import enhancedportals.portal.NetworkManager;
 import enhancedportals.registration.*;
 import enhancedportals.utility.ConfigurationHandler;
 import enhancedportals.utility.CreativeTabEP3;
 import enhancedportals.utility.LogHelper;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.DimensionManager;
@@ -43,8 +39,8 @@ public class CommonProxy
     public void preInit(FMLPreInitializationEvent event)
     {
         LogHelper.info("Common Proxy Pre-preInit");
-        RegisterItems.preinit();
         RegisterBlocks.preinit();
+        RegisterItems.preinit();
         RegisterPackets.preinit();
         RegisterPotions.preinit();
         RegisterTiles.preinit();
@@ -59,12 +55,6 @@ public class CommonProxy
     public void postInit(FMLPostInitializationEvent event)
     {
 
-    }
-
-    public void registerModelBakery(){
-        ModelBakery.registerItemVariants(Item.getItemFromBlock(RegisterBlocks.blockFrame),
-                new ResourceLocation(Reference.EPMod.mod_id, "block_frame_frame"),
-                new ResourceLocation(Reference.EPMod.mod_id, "block_frame_controller"));
     }
 
     public void waitForController(ChunkPos controller, ChunkPos frame)

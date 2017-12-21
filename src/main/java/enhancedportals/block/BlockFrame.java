@@ -9,7 +9,6 @@ import enhancedportals.utility.IDismantleable;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -50,15 +49,15 @@ public class BlockFrame extends Block implements IDismantleable
         TRANSFER_ENERGY(8, "transfer_energy");
 
         private final String name;
-        private final int id;
+        private final int meta;
 
-        private FrameType(int id, String name){
-            this.name = name;
-            this.id = id;
+        private FrameType(int id, String unlocalizedName){
+            this.name = unlocalizedName;
+            this.meta = id;
         }
 
-        public int getID(){
-            return this.id;
+        public int getMeta(){
+            return this.meta;
         }
 
         @Override
@@ -82,30 +81,24 @@ public class BlockFrame extends Block implements IDismantleable
         setSoundType(SoundType.STONE);
     }
 
-    /*@Override
+    @Override
     public boolean hasTileEntity(IBlockState state) {
         return true;
-    }*/
+    }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {FRAME_TYPE});
+        return new BlockStateContainer(this, FRAME_TYPE);
     }
 
     @Override
     public IBlockState getStateFromMeta(int meta){
-        System.out.println("Debugging: MetaValue: " + meta );
-        System.out.println("Debugging: getStateFromMeta " + this.getDefaultState().withProperty(FRAME_TYPE, FrameType.values()[meta]));
         return this.getDefaultState().withProperty(FRAME_TYPE, FrameType.values()[meta]);
     }
 
-
     @Override
     public int getMetaFromState(IBlockState state){
-        System.out.println("Debugging getFromState stateValue: " + state);
-        System.out.println("Debugging getMetaFromState metaValue: " + ((BlockFrame.FrameType)state.getValue(FRAME_TYPE)).getID());
-
-       return state.getValue(FRAME_TYPE).getID();
+       return state.getValue(FRAME_TYPE).getMeta();
     }
 
     @Override
@@ -210,8 +203,7 @@ public class BlockFrame extends Block implements IDismantleable
     {
         FrameType[] allFrames = FrameType.values();
         for (FrameType frame: allFrames) {
-            System.out.println("Debugging SubBlocks: " + frame);
-            list.add(new ItemStack(par1, 1, frame.getID()));
+            list.add(new ItemStack(par1, 1, frame.getMeta()));
         }
     }
 
