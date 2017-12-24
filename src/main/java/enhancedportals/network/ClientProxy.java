@@ -30,12 +30,13 @@ public class ClientProxy extends CommonProxy
     public void preInit(FMLPreInitializationEvent e)
     {
         super.preInit(e);
-        BlockRenderRegister.preInit();
         GuideAPI.setModel(WormholeTunnelManual.epManual);
     }
 
     public void init(FMLInitializationEvent e){
+
         super.init(e);
+
     }
 
     public void postInit(FMLPostInitializationEvent e) {

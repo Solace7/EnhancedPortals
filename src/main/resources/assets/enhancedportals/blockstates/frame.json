@@ -1,0 +1,64 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "enhancedportals:blocks/block_frame_frame"
+    },
+    "model": "cube_all"
+  },
+  "variants": {
+    "normal": {
+      "model": "cube_all"
+    },
+    "inventory": {
+      "model": "cube_all"
+    },
+    "frame_type": {
+      "frame": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_frame"
+        }
+      },
+      "dialling_device": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_dialling_device"
+        }
+      },
+      "redstone_interface": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_redstone_interface"
+        }
+      },
+      "network_interface": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_network_interface"
+        }
+      },
+      "transfer_fluid": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_transfer_fluid"
+        }
+      },
+      "module_manipulator": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_module_manipulator"
+        }
+      },
+      "transfer_item": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_transfer_item"
+        }
+      },
+      "transfer_energy": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_transfer_energy"
+        }
+      },
+      "controller": {
+        "textures": {
+          "all": "enhancedportals:blocks/block_frame_controller"
+        }
+      }
+    }
+  }
+}

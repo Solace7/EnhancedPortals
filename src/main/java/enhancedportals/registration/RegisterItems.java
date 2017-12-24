@@ -1,6 +1,7 @@
 package enhancedportals.registration;
 
 import enhancedportals.block.BlockFrame;
+import enhancedportals.block.BlockStabilizer;
 import enhancedportals.client.render.items.ItemRenderRegister;
 import enhancedportals.item.*;
 import enhancedportals.utility.ConfigurationHandler;
@@ -20,10 +21,6 @@ public class RegisterItems
     public static Item itemBlankUpgrade;
     public static Item itemAddressBook;
     public static Item itemDiamondNugget;
-
-    public static void register(Item item, int metadata, String name) {
-        GameRegistry.register(item);
-    }
 
     public static void preinit()
     {
@@ -48,10 +45,6 @@ public class RegisterItems
         itemAddressBook = GameRegistry.register(new ItemAddressBook("address_book"));
         ItemRenderRegister.registerRender(itemAddressBook);
 
-        for(int i = 0; i < BlockFrame.FrameType.values().length; i++) {
-            ItemRenderRegister.registerRender(RegisterBlocks.itemFrame, i, "block_frame_" + BlockFrame.FrameType.values()[i].getName());
-        }
-
         itemPortalModule = GameRegistry.register(new ItemPortalModule("portal_module"));
         for(int i = 0; i < ItemPortalModule.PortalModule.values().length; i++) {
             ItemRenderRegister.registerRender(RegisterItems.itemPortalModule, i, "portal_module_" + ItemPortalModule.PortalModule.values()[i].getName());
@@ -66,5 +59,13 @@ public class RegisterItems
             itemDiamondNugget  = GameRegistry.register(new ItemDiamondNugget("diamondNugget"));
             ItemRenderRegister.registerRender(itemDiamondNugget);
         }
+
+/*        for(int i = 0; i < BlockFrame.FrameType.values().length; i++) {
+            ItemRenderRegister.registerRender(RegisterBlocks.itemFrame, i, "block_frame_" + BlockFrame.FrameType.values()[i].getName());
+        }
+
+        for(int i = 0; i < BlockStabilizer.StabilizerPart.values().length; i++) {
+            ItemRenderRegister.registerRender(RegisterBlocks.itemStabilizer,i);
+        }*/
     }
 }

@@ -2,11 +2,10 @@ package enhancedportals.block;
 
 import enhancedportals.Reference;
 import enhancedportals.network.CommonProxy;
-import enhancedportals.tile.TileFrame;
-import enhancedportals.tile.TileFrameTransfer;
-import enhancedportals.tile.TileRedstoneInterface;
+import enhancedportals.tile.*;
 import enhancedportals.utility.IDismantleable;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -18,9 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
@@ -35,7 +32,8 @@ public class BlockFrame extends Block implements IDismantleable
 {
     public static BlockFrame instance;
 
-    public static final PropertyEnum<BlockFrame.FrameType> FRAME_TYPE = PropertyEnum.<BlockFrame.FrameType>create("frame_type", BlockFrame.FrameType.class);
+    public static final PropertyEnum<BlockFrame.FrameType> FRAME_TYPE = PropertyEnum.create("frame_type", BlockFrame.FrameType.class);
+
 
     public enum FrameType implements IStringSerializable {
         FRAME(0,"frame"),
@@ -51,7 +49,7 @@ public class BlockFrame extends Block implements IDismantleable
         private final String name;
         private final int meta;
 
-        private FrameType(int id, String unlocalizedName){
+        FrameType(int id, String unlocalizedName){
             this.name = unlocalizedName;
             this.meta = id;
         }
@@ -66,7 +64,6 @@ public class BlockFrame extends Block implements IDismantleable
             return name;
         }
     }
-
 
     public BlockFrame(String n)
     {
@@ -89,7 +86,7 @@ public class BlockFrame extends Block implements IDismantleable
     @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FRAME_TYPE);
-    }
+}
 
     @Override
     public IBlockState getStateFromMeta(int meta){
@@ -125,49 +122,44 @@ public class BlockFrame extends Block implements IDismantleable
         return true;
     }
 
-    /*@Override
-    public TileEntity createTileEntity(World world, IBlockState state)
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item par1, CreativeTabs creativeTab, List list)
     {
-        if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.FRAME))
-        {
-            System.out.println("Debugging: TileFrameBasic Created");
-            return new TileFrameBasic();
+        FrameType[] allFrames = FrameType.values();
+        for (FrameType frame: allFrames) {
+            list.add(new ItemStack(par1, 1, frame.getMeta()));
         }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.PORTAL_CONTROLLER))
-        {
-            System.out.println("Debugging: TileController Created");
-            return new TileController();
-        }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.REDSTONE_INTERFACE))
-        {
-            return new TileRedstoneInterface();
-        }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.NETWORK_INTERFACE))
-        {
-            return new TileNetworkInterface();
-        }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.DIALLING_DEVICE))
-        {
-            return new TileDialingDevice();
-        }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.MODULE_MANIPULATOR))
-        {
-            return new TilePortalManipulator();
-        }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.TRANSFER_FLUID))
-        {
-            return new TileTransferFluid();
-        }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.TRANSFER_ITEM))
-        {
-            return new TileTransferItem();
-        }
-        else if (state == getDefaultState().withProperty(FRAME_TYPE, FrameType.TRANSFER_ENERGY))
-        {
-            return new TileTransferEnergy();
-        }
+    }
 
-        return null;
+    @Override
+    public TileEntity createTileEntity(World worldIn, IBlockState state) {
+        return new TileFrameBasic();
+    }
+
+/*    @Override
+    public TileEntity createNewTileEntity(World worldIn, int metadata) {
+        switch (metadata) {
+            case 1:
+                return new TileController();
+            case 2:
+                return new TileRedstoneInterface();
+            case 3:
+                return new TileNetworkInterface();
+            case 4:
+                return new TileDialingDevice();
+            case 5:
+                return new TilePortalManipulator();
+            case 6:
+                return new TileTransferFluid();
+            case 7:
+                return new TileTransferItem();
+            case 8:
+                return new TileTransferEnergy();
+            default:
+                return new TileFrameBasic();
+        }
     }*/
 
     @Override
@@ -196,54 +188,19 @@ public class BlockFrame extends Block implements IDismantleable
         }
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item par1, CreativeTabs creativeTab, List list)
-    {
-        FrameType[] allFrames = FrameType.values();
-        for (FrameType frame: allFrames) {
-            list.add(new ItemStack(par1, 1, frame.getMeta()));
-        }
-    }
-
-/*    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()
     {
         return BlockRenderLayer.SOLID;
-    }*/
+    }
 
-/*    @Override
+
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
-    }*/
-
-/*    @Override
-    @Deprecated
-    public boolean isOpaqueCube(IBlockState state)
-    {
-        return true;
     }
-
-    @Override
-    @Deprecated
-    public boolean isFullCube(IBlockState state) {
-        return true;
-    }*/
-
-/*    @Override
-    public boolean isBlockSolid(IBlockAccess p_149747_1_, BlockPos pos, EnumFacing side)
-    {
-        return true;
-    }*/
-
-    /*    @Override
-    public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
-    {
-        return true;
-    }*/
 
 /*    @Override
     public boolean isNormalCube(IBlockState state, IBlockAccess world, BlockPos pos)
@@ -258,6 +215,12 @@ public class BlockFrame extends Block implements IDismantleable
         if (blockAccess.getBlockState(pos).getBlock() == this) return false;
         return super.shouldSideBeRendered(state, blockAccess, pos, side);
     }*/
+
+    @Override
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+
+        return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
+    }
 
     public int isProvidingStrongPower(IBlockAccess blockAccess, BlockPos pos, int side)
     {
@@ -308,12 +271,6 @@ public class BlockFrame extends Block implements IDismantleable
         {
             ((TileFrameTransfer) tile).onNeighborChanged();
         }
-    }
-
-    @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-
-        return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(world.getBlockState(pos)));
     }
 
 }

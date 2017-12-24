@@ -1,6 +1,7 @@
 package enhancedportals.registration;
 
 import enhancedportals.block.*;
+import enhancedportals.client.render.blocks.BlockRenderRegister;
 import enhancedportals.item.ItemPortalFrame;
 import enhancedportals.item.ItemStabilizer;
 import net.minecraft.block.Block;
@@ -10,10 +11,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class RegisterBlocks
 {
     public static BlockFrame blockFrame;
-    public static ItemPortalFrame itemFrame;
+    public static ItemBlock itemFrame;
 
     public static BlockStabilizer blockStabilizer;
-    public static ItemStabilizer itemStabilizer;
+    public static ItemBlock itemStabilizer;
 
     public static BlockDecorBorderedQuartz blockDecorBorderedQuartz;
 
@@ -38,14 +39,31 @@ public class RegisterBlocks
 
     public static void preinit()
     {
-        registerBlock(blockPortal = new BlockPortal("portal"));
+        blockFrame = new BlockFrame("frame");
+        itemFrame = new ItemPortalFrame(blockFrame);
+        registerBlock(blockFrame, itemFrame);
+        BlockRenderRegister.registerRender(RegisterBlocks.blockFrame);
+        for(int i = 0; i < BlockFrame.FrameType.values().length; i++)
+        {
+            BlockRenderRegister.registerRender(RegisterBlocks.blockFrame, i, "block_frame_" + BlockFrame.FrameType.values()[i].getName());
+        }
 
-        itemFrame = new ItemPortalFrame(new BlockFrame("frame"));
-        registerBlock(blockFrame = new BlockFrame("frame"), itemFrame);
+        blockStabilizer = new BlockStabilizer("dbs");
+        itemStabilizer = new ItemStabilizer(blockStabilizer);
+        registerBlock(blockStabilizer,itemStabilizer);
 
-        itemStabilizer = GameRegistry.register(new ItemStabilizer("dbs", new BlockStabilizer("dbs")));
-        GameRegistry.register(blockStabilizer = new BlockStabilizer("dbs"));
+        for(int i = 0; i < BlockStabilizer.StabilizerPart.values().length; i++) {
+            BlockRenderRegister.registerRender(RegisterBlocks.blockStabilizer,i);
+        }
 
         registerBlock(blockDecorBorderedQuartz = new BlockDecorBorderedQuartz("decor_frame"));
-        registerBlock(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));    }
+        BlockRenderRegister.registerRender(RegisterBlocks.blockDecorBorderedQuartz);
+
+        registerBlock(blockDecorEnderInfusedMetal = new BlockDecorEnderInfusedMetal("decor_dbs"));
+        BlockRenderRegister.registerRender(RegisterBlocks.blockDecorEnderInfusedMetal);
+
+        registerBlock(blockPortal = new BlockPortal("portal"));
+        BlockRenderRegister.registerRender(RegisterBlocks.blockPortal);
+
+    }
 }

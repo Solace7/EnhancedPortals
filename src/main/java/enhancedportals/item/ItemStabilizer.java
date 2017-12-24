@@ -12,12 +12,12 @@ import java.util.List;
 
 public class ItemStabilizer extends ItemBlock
 {
-    public ItemStabilizer(String n, Block block)
+    public ItemStabilizer(Block block)
     {
         super(block);
         setMaxDamage(0);
         setHasSubtypes(true);
-        setRegistryName(Reference.EPMod.mod_id, n);
+        setRegistryName(block.getRegistryName());
         setUnlocalizedName(getRegistryName().toString());
     }
 

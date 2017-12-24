@@ -5,6 +5,7 @@ import enhancedportals.network.CommonProxy;
 import enhancedportals.tile.TileStabilizer;
 import enhancedportals.tile.TileStabilizerMain;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -35,7 +36,7 @@ public class BlockStabilizer extends Block
         private String name;
         private int id;
 
-        private StabilizerPart(int id, String name){
+        StabilizerPart(int id, String name){
             this.name = name;
             this.id = id;
         }
@@ -58,18 +59,12 @@ public class BlockStabilizer extends Block
         setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.STONE);
         setCreativeTab(CommonProxy.creativeTab);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(STABILIZER_PART, StabilizerPart.MAIN));
     }
 
     //todo DynamicProperty == getActualState method, check for surrounding by other Stabilizer Blocks
 
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
-        return EnumBlockRenderType.MODEL;
-    }
 
-    @Override
+/*    @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state)
     {
         TileEntity tile = world.getTileEntity(pos);
@@ -84,13 +79,9 @@ public class BlockStabilizer extends Block
         }
 
         super.breakBlock(world, pos, state);
-    }
+    }*/
 
-    @Override
-    public BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, STABILIZER_PART);
-    }
-
+/*
     @Override
     public int getMetaFromState(IBlockState state) {
 
@@ -103,10 +94,16 @@ public class BlockStabilizer extends Block
         return this.getDefaultState().withProperty(STABILIZER_PART, meta == 0 ? StabilizerPart.MAIN : StabilizerPart.STABILIZER);
     }
 
+
     @Override
+    public BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, STABILIZER_PART);
+    }*/
+
+/*   @Override
     public boolean hasTileEntity(IBlockState state) {
         return true;
-    }
+    }*/
 
     @Override
     public TileEntity createTileEntity (World world, IBlockState state)
@@ -122,7 +119,6 @@ public class BlockStabilizer extends Block
 
         return null;
     }
-
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)

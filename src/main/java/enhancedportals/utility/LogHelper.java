@@ -18,7 +18,7 @@ public class LogHelper
 
     public static void debug(Object object)
     {
-        log(Level.DEBUG, object);
+        log(Level.DEBUG, "Debugging: " + object);
     }
 
     public static void error(Object object)
