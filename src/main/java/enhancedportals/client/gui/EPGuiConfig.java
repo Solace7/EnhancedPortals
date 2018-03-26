@@ -21,7 +21,7 @@ public class EPGuiConfig extends GuiConfig
                 getConfigElements(),
                 Reference.EPMod.mod_id,
                 false,
-                false,
+                true,
                 GuiConfig.getAbridgedConfigPath(ConfigurationHandler.config.toString()));
     }
 

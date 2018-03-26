@@ -17,7 +17,7 @@ import enhancedportals.item.ItemBlankPortalModule;
 import enhancedportals.item.ItemBlankUpgrade;
 import enhancedportals.item.ItemLocationCard;
 import enhancedportals.item.ItemWrench;
-import enhancedportals.registration.registerRecipes;
+import enhancedportals.registration.RegisterRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
@@ -79,24 +79,24 @@ public class WormholeTunnelManual
         List<IPage> stabalizingDim = new ArrayList<IPage>();
         stabalizingDim.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.2.p.0")));
         stabalizingDim.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.2.p.1")));
-        stabalizingDim.add(new PageIRecipe(registerRecipes.blockStabilizer));
-        stabalizingDim.add(new PageIRecipe(registerRecipes.itemWrench));
+        stabalizingDim.add(new PageIRecipe(RegisterRecipes.blockStabilizer));
+        stabalizingDim.add(new PageIRecipe(RegisterRecipes.itemWrench));
         stabalizingDim.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.2.p.2")));
 
         List<IPage> buildingTheHarness = new ArrayList<IPage>();
         buildingTheHarness.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.3.p.0")));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.blockFrame));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.blockFrame));
         buildingTheHarness.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.3.p.1")));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.itemLocationCard));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.blockPortalController));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.itemLocationCard));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.blockPortalController));
         buildingTheHarness.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.3.p.2")));
-        buildingTheHarness.add(new PageIRecipe(registerRecipes.blockNetworkInterface));
+        buildingTheHarness.add(new PageIRecipe(RegisterRecipes.blockNetworkInterface));
         buildingTheHarness.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.3.p.3")));
 
 
         List<IPage> ignitingBlackhole = new ArrayList<IPage>();
         ignitingBlackhole.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.4.p.0")));
-        ignitingBlackhole.add(new PageIRecipe(registerRecipes.blockRedstoneInterface));
+        ignitingBlackhole.add(new PageIRecipe(RegisterRecipes.blockRedstoneInterface));
         ignitingBlackhole.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.4.p.1")));
 
         entries.add(new EntryUniText(stabalizingDim, "enhancedportals.manual.chapter.2.title"));
@@ -112,15 +112,15 @@ public class WormholeTunnelManual
         List<IPage> phoneHome = new ArrayList<IPage>();
 
         phoneHome.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.5.p.0")));
-        phoneHome.add(new PageIRecipe(registerRecipes.blockDiallingDevice));
+        phoneHome.add(new PageIRecipe(RegisterRecipes.blockDiallingDevice));
 
         List<IPage> accessorizing = new ArrayList<IPage>();
         //recipe for nanobrush, portal manipulator, and blank portal module
         accessorizing.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.6.p.0")));
         accessorizing.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.6.p.1")));
-        accessorizing.add(new PageIRecipe(registerRecipes.itemNanobrush));
+        accessorizing.add(new PageIRecipe(RegisterRecipes.itemNanobrush));
         accessorizing.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.6.p.2")));
-        accessorizing.add(new PageIRecipe(registerRecipes.blockModuleManipulator));
+        accessorizing.add(new PageIRecipe(RegisterRecipes.blockModuleManipulator));
         accessorizing.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.chapter.6.p.3")));
 
         entries.add(new EntryUniText(phoneHome, "enhancedportals.manual.chapter.5.title"));
@@ -136,43 +136,43 @@ public class WormholeTunnelManual
 
         List<IPage> dbs = new ArrayList<IPage>();
         dbs.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.dbs.info")));
-        dbs.add(new PageIRecipe(registerRecipes.blockStabilizer));
+        dbs.add(new PageIRecipe(RegisterRecipes.blockStabilizer));
 
         List<IPage> portalFrame = new ArrayList<IPage>();
         portalFrame.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame0.info")));
-        portalFrame.add(new PageIRecipe(registerRecipes.blockFrame));
+        portalFrame.add(new PageIRecipe(RegisterRecipes.blockFrame));
 
         List<IPage> portalController = new ArrayList<IPage>();
         portalController.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame1.info")));
-        portalController.add(new PageIRecipe(registerRecipes.blockPortalController));
+        portalController.add(new PageIRecipe(RegisterRecipes.blockPortalController));
 
         List<IPage> redstoneInterface = new ArrayList<IPage>();
         redstoneInterface.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame2.info")));
-        redstoneInterface.add(new PageIRecipe(registerRecipes.blockRedstoneInterface));
+        redstoneInterface.add(new PageIRecipe(RegisterRecipes.blockRedstoneInterface));
 
         List<IPage> networkInterface = new ArrayList<IPage>();
         networkInterface.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame3.info")));
-        networkInterface.add(new PageIRecipe(registerRecipes.blockNetworkInterface));
+        networkInterface.add(new PageIRecipe(RegisterRecipes.blockNetworkInterface));
 
         List<IPage> diallingDevice = new ArrayList<IPage>();
         diallingDevice.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame4.info")));
-        diallingDevice.add(new PageIRecipe(registerRecipes.blockDiallingDevice));
+        diallingDevice.add(new PageIRecipe(RegisterRecipes.blockDiallingDevice));
 
         List<IPage> portalManipulator = new ArrayList<IPage>();
         portalManipulator.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame6.info")));
-        portalManipulator.add(new PageIRecipe(registerRecipes.blockModuleManipulator));
+        portalManipulator.add(new PageIRecipe(RegisterRecipes.blockModuleManipulator));
 
         List<IPage> fluidTransportModule = new ArrayList<IPage>();
         fluidTransportModule.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame7.info")));
-        fluidTransportModule.add(new PageIRecipe(registerRecipes.blockFluidTransfer));
+        fluidTransportModule.add(new PageIRecipe(RegisterRecipes.blockFluidTransfer));
 
         List<IPage> itemTransportModule = new ArrayList<IPage>();
         itemTransportModule.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame8.info")));
-        itemTransportModule.add(new PageIRecipe(registerRecipes.blockItemTranfer));
+        itemTransportModule.add(new PageIRecipe(RegisterRecipes.blockItemTranfer));
 
         List<IPage> energyTransportModule = new ArrayList<IPage>();
         energyTransportModule.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.frame9.info")));
-        energyTransportModule.add(new PageIRecipe(registerRecipes.blockEnergyTransfer));
+        energyTransportModule.add(new PageIRecipe(RegisterRecipes.blockEnergyTransfer));
 
         entries.add(new EntryUniText(dbs, "enhancedportals.manual.dbs.title"));
         entries.add(new EntryUniText(portalFrame, "enhancedportals.manual.frame0.title"));
@@ -195,38 +195,38 @@ public class WormholeTunnelManual
         List<IPage> blankModule = new ArrayList<IPage>();
 
         blankModule.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.blank_module.info")));
-        blankModule.add(new PageIRecipe(registerRecipes.blockModuleManipulator));
+        blankModule.add(new PageIRecipe(RegisterRecipes.blockModuleManipulator));
 
         List<IPage> particleDestroy = new ArrayList<IPage>();
         particleDestroy.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal_module.0.desc")));
-        particleDestroy.add(new PageIRecipe(registerRecipes.particleRemoveModule));
+        particleDestroy.add(new PageIRecipe(RegisterRecipes.particleRemoveModule));
 
         List<IPage> particleRainbow = new ArrayList<IPage>();
         particleRainbow.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal_module.1.desc")));
-        particleRainbow.add(new PageIRecipe(registerRecipes.rainbowParticlesModule));
+        particleRainbow.add(new PageIRecipe(RegisterRecipes.rainbowParticlesModule));
 
         List<IPage> silencer = new ArrayList<IPage>();
         silencer.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal_module.2.desc")));
-        silencer.add(new PageIRecipe(registerRecipes.silencerUpgrade));
+        silencer.add(new PageIRecipe(RegisterRecipes.silencerUpgrade));
 
         List<IPage> momentum = new ArrayList<IPage>();
         momentum.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal_module.3.dec")));
-        momentum.add(new PageIRecipe(registerRecipes.keepMomentumUpgrade));
+        momentum.add(new PageIRecipe(RegisterRecipes.keepMomentumUpgrade));
 
         List<IPage> cloaking = new ArrayList<IPage>();
         cloaking.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal.module.4.desc")));
 
         List<IPage> particleShader = new ArrayList<IPage>();
         particleShader.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal_module.5.desc")));
-        particleShader.add(new PageIRecipe(registerRecipes.tintUpgrade));
+        particleShader.add(new PageIRecipe(RegisterRecipes.tintUpgrade));
 
         List<IPage> facing = new ArrayList<IPage>();
         facing.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal_module.6.desc")));
-        facing.add(new PageIRecipe(registerRecipes.facingUpgrade));
+        facing.add(new PageIRecipe(RegisterRecipes.facingUpgrade));
 
         List<IPage> featherfall = new ArrayList<IPage>();
         featherfall.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal_module.7.desc")));
-        featherfall.add(new PageIRecipe(registerRecipes.featherfallUpgrade));
+        featherfall.add(new PageIRecipe(RegisterRecipes.featherfallUpgrade));
 
         List<IPage> lookingGlass = new ArrayList<IPage>();
         lookingGlass.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("item.portal.module.8.desc")));
@@ -253,23 +253,23 @@ public class WormholeTunnelManual
         List<IPage> wrench = new ArrayList<IPage>();
 
         wrench.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.wrench.info")));
-        wrench.add(new PageIRecipe(registerRecipes.itemWrench));
+        wrench.add(new PageIRecipe(RegisterRecipes.itemWrench));
 
         List<IPage> nanobrush = new ArrayList<IPage>();
         nanobrush.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.nanobrush.info")));
-        nanobrush.add(new PageIRecipe(registerRecipes.itemNanobrush));
+        nanobrush.add(new PageIRecipe(RegisterRecipes.itemNanobrush));
 
         List<IPage> glasses = new ArrayList<IPage>();
         glasses.addAll((PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.glasses.info"))));
-        glasses.add(new PageIRecipe(registerRecipes.itemGlasses));
+        glasses.add(new PageIRecipe(RegisterRecipes.itemGlasses));
 
         List<IPage> locationCard = new ArrayList<IPage>();
         locationCard.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.location_card.info")));
-        locationCard.add(new PageIRecipe(registerRecipes.itemLocationCard));
+        locationCard.add(new PageIRecipe(RegisterRecipes.itemLocationCard));
 
         List<IPage> addressBook = new ArrayList<IPage>();
         addressBook.addAll(PageHelper.pagesForLongText(StatCollector.translateToLocal("enhancedportals.manual.address_book.info")));
-        //addressBook.add(new PageIRecipe(registerRecipes.itemAddressBook));
+        //addressBook.add(new PageIRecipe(RegisterRecipes.itemAddressBook));
 
         entries.add(new EntryUniText(wrench, "enhancedportals.manual.wrench.title"));
         entries.add(new EntryUniText(nanobrush, "enhancedportals.manual.nanobrush.title"));

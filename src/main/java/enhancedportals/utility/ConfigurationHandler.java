@@ -1,5 +1,9 @@
 package enhancedportals.utility;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import enhancedportals.Reference;
+import enhancedportals.Reference.EPConfiguration;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
@@ -17,7 +21,7 @@ public class ConfigurationHandler
     public static boolean CONFIG_UPDATE_NOTIFIER;
     public static boolean CONFIG_RECIPES_VANILLA;
     public static boolean CONFIG_RECIPES_TE;
-    public static int CONFIG_POTION_FEATHERFALL_ID;
+    public static int CONFIG_POTION_FEATHERFALL_ID = 40;
     public static double CONFIG_POWER_MULTIPLIER, CONFIG_POWER_STORAGE_MULTIPLIER;
 
     public static Configuration config;
@@ -31,7 +35,13 @@ public class ConfigurationHandler
 
     public static void setupConfiguration(File configFile)
     {
-        config = new Configuration(configFile);
+        if(config == null ) {
+            config = new Configuration(configFile);
+            loadConfig();
+        }
+    }
+
+    public static void loadConfig() {
 
         CONFIG_FORCE_FRAME_OVERLAY = config.get("Misc", "ForceShowFrameOverlays", false).getBoolean(false);
         CONFIG_DISABLE_SOUNDS = config.get("Overrides", "DisableSounds", false).getBoolean(false);
@@ -48,8 +58,7 @@ public class ConfigurationHandler
         CONFIG_RECIPES_VANILLA = config.get("Crafting", "Vanilla", true).getBoolean(true);
         CONFIG_RECIPES_TE = config.get("Crafting", "ThermalExpansion", true).getBoolean(true);
 
-        if (config.hasChanged())
-        {
+        if(config.hasChanged()) {
             config.save();
         }
 
@@ -62,17 +71,20 @@ public class ConfigurationHandler
         {
             CONFIG_POWER_STORAGE_MULTIPLIER = 0.01;
         }
+
+        if (!EPConfiguration.requirePower) {
+            EPConfiguration.initializationCost = 0;
+            EPConfiguration.entityBaseCost = 0;
+            EPConfiguration.keepAliveCost = 0;
+        }
     }
 
-
-
-    /* @SubscribeEvent
+    @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
         if (event.modID.equalsIgnoreCase(Reference.EPMod.mod_id))
         {
-
-            //Resync configs
+            loadConfig();
         }
-    } */
+    }
 }

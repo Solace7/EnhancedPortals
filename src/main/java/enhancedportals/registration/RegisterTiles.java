@@ -3,9 +3,9 @@ package enhancedportals.registration;
 import cpw.mods.fml.common.registry.GameRegistry;
 import enhancedportals.tile.*;
 
-public class registerTiles
+public class RegisterTiles
 {
-    public static final void init()
+    public static final void preInit()
     {
         GameRegistry.registerTileEntity(TilePortal.class, "epP");
         GameRegistry.registerTileEntity(TileFrameBasic.class, "epF");

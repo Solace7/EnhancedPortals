@@ -39,6 +39,5 @@ public class Reference
         public static int initializationCost = 10000;
         public static int entityBaseCost = 1000;
         public static int keepAliveCost = 10;
-        public static int potionIDFeatherfall = 40;
     }
 }

@@ -19,7 +19,7 @@ import enhancedportals.network.CommonProxy;
 import enhancedportals.network.GuiHandler;
 import enhancedportals.network.PacketPipeline;
 import enhancedportals.portal.NetworkManager;
-import enhancedportals.registration.*;
+import enhancedportals.registration.RegisterPotions;
 import enhancedportals.utility.LogHelper;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
@@ -61,12 +61,6 @@ public class EnhancedPortals
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        registerBlocks.init();
-        registerItems.init();
-        registerPackets.init();
-        registerPotions.init();
-        registerTiles.init();
-
         proxy.preInit(event);
         packetPipeline.initalise();
     }
@@ -95,7 +89,7 @@ public class EnhancedPortals
         try
         {
             Class computerCraft = Class.forName("dan200.computercraft.ComputerCraft");
-            Method computerCraft_registerPeripheralProvider = computerCraft.getMethod("registerPeripheralProvider", new Class[]{Class.forName("dan200.computercraft.api.peripheral.IPeripheralProvider")});
+            Method computerCraft_registerPeripheralProvider = computerCraft.getMethod("registerPeripheralProvider", Class.forName("dan200.computercraft.api.peripheral.IPeripheralProvider"));
             computerCraft_registerPeripheralProvider.invoke(null, BlockFrame.instance);
         }
         catch (Exception e)
@@ -127,15 +121,15 @@ public class EnhancedPortals
     @SubscribeEvent
     public void onEntityUpdate(LivingUpdateEvent event)
     {
-        PotionEffect effect = event.entityLiving.getActivePotionEffect(registerPotions.featherfallPotion);
+        PotionEffect effect = event.entityLiving.getActivePotionEffect(RegisterPotions.featherfallPotion);
 
         if (effect != null)
         {
             event.entityLiving.fallDistance = 0f;
 
-            if (event.entityLiving.getActivePotionEffect(registerPotions.featherfallPotion).getDuration() <= 0)
+            if (event.entityLiving.getActivePotionEffect(RegisterPotions.featherfallPotion).getDuration() <= 0)
             {
-                event.entityLiving.removePotionEffect(registerPotions.featherfallPotion.id);
+                event.entityLiving.removePotionEffect(RegisterPotions.featherfallPotion.id);
             }
         }
     }

@@ -11,7 +11,7 @@ import enhancedportals.Reference;
 import enhancedportals.crafting.ThermalExpansion;
 import enhancedportals.item.ItemPortalModule;
 import enhancedportals.portal.NetworkManager;
-import enhancedportals.registration.registerRecipes;
+import enhancedportals.registration.*;
 import enhancedportals.utility.ConfigurationHandler;
 import enhancedportals.utility.CreativeTabEP3;
 import enhancedportals.utility.LogHelper;
@@ -37,7 +37,6 @@ import static enhancedportals.utility.ConfigurationHandler.*;
 public class CommonProxy
 {
 
-
     public int gogglesRenderIndex = 0;
     public NetworkManager networkManager;
 
@@ -47,6 +46,11 @@ public class CommonProxy
     public void preInit(FMLPreInitializationEvent event)
     {
         ConfigurationHandler.setupConfiguration(new File(event.getSuggestedConfigurationFile().getParentFile(), MOD_NAME + File.separator + "config.cfg"));
+        RegisterBlocks.preInit();
+        RegisterItems.preInit();
+        RegisterPackets.preInit();
+        RegisterPotions.preInit();
+        RegisterTiles.preInit();
     }
 
     public void init(FMLInitializationEvent event)
@@ -114,8 +118,8 @@ public class CommonProxy
     {
         if (CONFIG_RECIPES_VANILLA)
         {
-            registerRecipes.initShaped();
-            registerRecipes.initShapeless();
+            RegisterRecipes.initShaped();
+            RegisterRecipes.initShapeless();
         }
         if (CONFIG_RECIPES_TE && Loader.isModLoaded(Reference.Dependencies.MODID_THERMALEXPANSION))
         {
