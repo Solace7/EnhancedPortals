@@ -5,6 +5,7 @@ import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;
 import enhancedportals.Reference;
 import enhancedportals.utility.ConfigurationHandler;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 
@@ -14,32 +15,33 @@ import java.util.Set;
 
 public class EPGuiConfig extends GuiConfig
 {
-
     public EPGuiConfig(GuiScreen guiScreen)
     {
-        super(guiScreen,
-                getConfigElements(),
-                Reference.EPMod.mod_id,
-                false,
-                true,
-                GuiConfig.getAbridgedConfigPath(ConfigurationHandler.config.toString()));
+        super(guiScreen, getConfigElements(), Reference.EPMod.mod_id, false, true, "EnhancedPortals");
+        titleLine2 = GuiConfig.getAbridgedConfigPath(ConfigurationHandler.config.toString());
     }
 
-    public static List<IConfigElement> getConfigElements()
+    private static List<IConfigElement> getConfigElements()
     {
-        List<IConfigElement> list = new ArrayList();
+        List<IConfigElement> list = new ArrayList<>();
 
         Set<String> categories = ConfigurationHandler.config.getCategoryNames();
-        for (String s : categories)
+        for (String category : categories)
         {
-            if (!s.contains("."))
-            {
-                list.add(new DummyConfigElement.DummyCategoryElement(s, s, new ConfigElement(ConfigurationHandler.config.getCategory(s)).getChildElements()));
-            }
+                list.add(new DummyConfigElement.DummyCategoryElement(category, category, new ConfigElement(ConfigurationHandler.config.getCategory(category)).getChildElements()));
         }
 
         return list;
     }
 
+    @Override
+    public void initGui() {
+        super.initGui();
+    }
 
+    @Override
+    protected  void actionPerformed(GuiButton button) {
+        super.actionPerformed(button);
+        ConfigurationHandler.loadConfig();
+    }
 }

@@ -31,7 +31,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static enhancedportals.EnhancedPortals.MOD_NAME;
 import static enhancedportals.utility.ConfigurationHandler.*;
 
 public class CommonProxy
@@ -45,7 +44,7 @@ public class CommonProxy
 
     public void preInit(FMLPreInitializationEvent event)
     {
-        ConfigurationHandler.setupConfiguration(new File(event.getSuggestedConfigurationFile().getParentFile(), MOD_NAME + File.separator + "config.cfg"));
+        ConfigurationHandler.setupConfiguration(new File(event.getSuggestedConfigurationFile().getParent(), "EnhancedPortals.cfg"));
         RegisterBlocks.preInit();
         RegisterItems.preInit();
         RegisterPackets.preInit();
